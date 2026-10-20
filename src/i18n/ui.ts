@@ -106,15 +106,188 @@ export const ui = {
     'contact.phoneLabel': 'Phone',
     'contact.hqLabel': 'Headquarters',
 
-    // About Page
-    'about.title': 'About Us',
-    'about.subtitle': 'Building the ultimate open-source SEO theme for Astro.',
-    'about.missionTitle': 'Our Mission',
-    'about.missionText':
-      "We believe that technical SEO shouldn't be an afterthought. It should be baked into the foundation of every marketing website. That's why we created Astro SEO Theme—to provide a robust, lightning-fast starting point for B2B SaaS companies.",
-    'about.openSourceTitle': 'Open Source',
-    'about.openSourceText':
-      'This project is 100% open-source and free to use under the MIT license. We encourage contributions from the community to help make this the best SEO template available.',
+     // About Page
+    'about.title': 'About Musicallydown – Free TikTok Video & MP3 Downloader', // meta title
+    'about.metaDescription': 'Learn what Musicallydown is, how our free TikTok downloader works, what we do with your data, and how we encourage responsible, permission-based downloading.',
+    'about.titleStart': 'About ',
+    'about.titleHighlight': 'Musicallydown',
+
+    'about.intro1': 'Musicallydown is a free, browser-based tool that helps you save TikTok videos as MP4 files and extract the audio as MP3, when those formats are available. There is nothing to install and no account to create. You copy a video link, paste it into the box on our homepage and choose the file you want.',
+    'about.intro2': "We built Musicallydown because saving a TikTok you made or a clip you have permission to keep, should not require an app, a login or a pile of pop-ups. Our goal is simple: a fast, clear tool that works on iPhone, Android and desktop browsers.",
+
+    'about.doesTitle': 'What Musicallydown does',
+    'about.does1.title': 'Downloads TikTok videos as MP4.',
+    'about.does1.text': ' Where the source offers it, you can choose a clean version without the TikTok watermark in SD or HD.',
+    'about.does2.title': 'Converts TikTok to MP3.',
+    'about.does2.text': ' Extract the sound from a supported video and save it as an audio file.',
+    'about.does3.title': 'Works in your browser.',
+    'about.does3.text': ' Chrome, Safari, Firefox, Edge and other modern browsers on phones, tablets and computers.',
+    'about.does4.title': 'Needs no sign-up.',
+    'about.does4.text': ' We never ask for your TikTok username or password.',
+    'about.does5.title': 'Speaks your language.',
+    'about.does5.text': ' The site is available in English, <a href="/es">Spanish</a>, <a href="/id">Indonesian</a> and <a href="/vi">Vietnamese</a>, with more planned.',
+
+    'about.howTitle': 'How it works',
+    'about.how1': 'Open TikTok, find the video and tap Share, then Copy Link.',
+    'about.how2': 'Paste the link into the Musicallydown box.',
+    'about.how3': 'Choose an available format or quality.',
+    'about.how4': 'Save the file to your device.',
+    'about.howNote': 'Results depend on the original video. Private, deleted, age-restricted or region-limited videos cannot be downloaded, and not every video offers every format. We save audio the way TikTok stores it, so we do not offer a 320 kbps option; a higher label would not add real quality.',
+
+    'about.principlesTitle': 'Our principles',
+    'about.principle1.title': 'Free and simple.',
+    'about.principle1.text': ' The tool is free to use and supported by advertising. We keep the interface as uncluttered as we can.',
+    'about.principle2.title': 'Privacy first.',
+    'about.principle2.text': ' We do not ask you to register, and we do not need your TikTok credentials. Read our <a href="/privacy">Privacy Policy</a> for exactly what is processed.',
+    'about.principle3.title': 'Respect for creators.',
+    'about.principle3.text': 'Videos and music on TikTok belong to their creators. Please download only your own content or content you have permission to save and do not repost other peoples work as your own. See our <a href="/privacy">Privacy Policy</a>.',
+    'about.principle4.title': 'Honest expectations.',
+    'about.principle4.text': ' TikTok changes often. When something stops working we would rather say so than overpromise. If a download fails, check the <a href="/faq">FAQ</a> or contact us.',
+
+    'about.independentTitle': 'Independent service',
+    'about.independentText': 'MusicallyIO is an independent tool. It is not affiliated with, endorsed by or sponsored by TikTok or ByteDance Ltd. TikTok is a trademark of its respective owner and is used only to describe the content our tool works with.',
+
+    'about.contactTitle': 'Contact',
+    'about.contactText': 'Questions, bug reports, removal requests or business enquiries: <a href="mailto:support@musicallyio.com">support@musicallyio.com</a>. We read every message and aim to reply within 2–3 business days.',
+    
+        // ───────────── Privacy Page ─────────────
+    'privacy.metaTitle': 'Privacy Policy – MusicallyIO',
+    'privacy.metaDescription': 'How MusicallyIO handles TikTok links, device data, cookies and advertising. No account needed and no TikTok login requested.',
+    'privacy.title': 'Privacy Policy',
+    'privacy.effective': 'Effective date: October 20, 2026',
+    'privacy.updated': 'Last updated: October 20, 2026',
+    'privacy.intro': 'This Privacy Policy explains what information MusicallyIO (“we”, “us”, “our”) collects when you use musicallyio.com and its language versions (the “Site”), how we use it and what choices you have. By using the Site you agree to this policy.',
+
+    'privacy.s1.title': '1. Information we collect',
+    'privacy.s1.provided.title': 'Information you provide.',
+    'privacy.s1.provided.text': ' When you use the downloader you paste a TikTok video URL. We use that URL only to fetch the public video or audio information you asked for. You do not need to create an account, and we never ask for your TikTok username or password. If you contact us by email, we receive your email address and the contents of your message.',
+    'privacy.s1.auto.title': 'Information collected automatically.',
+    'privacy.s1.auto.text': ' Like most websites, our servers and service providers may collect technical data such as:',
+    'privacy.s1.auto1': 'IP address and approximate location (country or region)',
+    'privacy.s1.auto2': 'Browser type and version, device type and operating system',
+    'privacy.s1.auto3': 'Pages visited, referring page, date and time of visit and language settings',
+    'privacy.s1.auto4': 'Error logs and performance data',
+    'privacy.s1.cookies.title': 'Cookies and similar technologies.',
+    'privacy.s1.cookies.text': ' We and our partners use cookies, local storage and similar technologies to remember your language choice, measure traffic and show advertising. See section 4.',
+
+    'privacy.s2.title': '2. How we use information',
+    'privacy.s2.item1': 'To provide the downloader and return the files you request',
+    'privacy.s2.item2': 'To detect abuse, prevent automated misuse and keep the Site secure',
+    'privacy.s2.item3': 'To understand which pages and features are used, and to improve speed and reliability',
+    'privacy.s2.item4': 'To show advertising that supports a free service',
+    'privacy.s2.item5': 'To respond to messages and legal requests',
+    'privacy.s2.item6': 'To comply with applicable law',
+    'privacy.s2.note': 'We do not sell your personal information for money.',
+
+    'privacy.s3.title': '3. Downloaded files and submitted links',
+    'privacy.s3.text': 'Video and audio files are delivered to your browser from the original source or through our processing service. We do not intentionally keep copies of the videos you download, and we do not build user profiles from the links you submit. Technical logs that include the submitted URL may be kept for a limited time for security and debugging, as described in section 7.',
+
+    'privacy.s4.title': '4. Advertising and third-party services',
+    'privacy.s4.p1': 'The Site is supported by advertising. Advertising partners such as Google AdSense may use cookies and identifiers to show and measure ads, including personalised ads where permitted by law. These partners have their own privacy policies and we do not control their practices.',
+    'privacy.s4.p2': 'We may also use analytics tools such as Google Analytics and hosting and infrastructure providers such as Vercel and Cloudflare to run and measure the Site.',
+    'privacy.s4.choicesIntro': 'You can manage advertising choices through:',
+    'privacy.s4.choice1': 'Your browser settings, to block or delete cookies',
+    'privacy.s4.choice2': 'Google Ads Settings (<a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer">adssettings.google.com</a>) to control personalised ads',
+    'privacy.s4.choice3': 'The Digital Advertising Alliance (<a href="https://optout.aboutads.info" target="_blank" rel="noopener noreferrer">optout.aboutads.info</a>) and the Your Online Choices site (<a href="https://www.youronlinechoices.com" target="_blank" rel="noopener noreferrer">youronlinechoices.com</a>) for EU users',
+    'privacy.s4.note': 'Blocking cookies may affect how some parts of the Site work.',
+
+    'privacy.s5.title': '5. Legal bases (EEA, UK and similar regions)',
+    'privacy.s5.text': 'Where data protection law such as the GDPR applies, we process personal data on these bases: our legitimate interests in operating, securing and improving the Site; your consent for non-essential cookies and personalised advertising, which you can withdraw at any time; and compliance with legal obligations.',
+
+    'privacy.s6.title': '6. Sharing of information',
+    'privacy.s6.text': 'We share information only with service providers that help us run the Site (hosting, analytics, advertising, security), when required by law or to protect our rights and users, and in connection with a business transfer such as a merger or sale. These providers may process data only for the purposes described here.',
+
+    'privacy.s7.title': '7. Data retention',
+    'privacy.s7.text': 'We keep technical logs for as long as needed for security and troubleshooting, generally no more than 90 days, unless a longer period is required by law. Emails you send us are kept as long as needed to handle your request. Third-party partners follow their own retention periods.',
+
+    'privacy.s8.title': '8. International transfers',
+    'privacy.s8.text': 'Our providers may process data in countries other than your own, including the United States. Where required, we rely on appropriate safeguards for those transfers.',
+
+    'privacy.s9.title': '9. Your rights',
+    'privacy.s9.text': 'Depending on where you live, you may have the right to access, correct, delete or restrict the use of your personal data, to object to processing, to withdraw consent and to complain to your local data protection authority. California residents may also have the right to know what is collected and to opt out of the “sale” or “sharing” of personal information for cross-context advertising. To make a request, email <a href="mailto:support@musicallyio.com">support@musicallyio.com</a>. We may need to verify your identity first.',
+
+    'privacy.s10.title': "10. Children's privacy",
+    'privacy.s10.text': 'The Site is not directed to children under 13 (or under 16 where local law requires). We do not knowingly collect personal information from children. If you believe a child has provided us data, contact us and we will delete it.',
+
+    'privacy.s11.title': '11. Security',
+    'privacy.s11.text': 'We use reasonable technical and organisational measures, including HTTPS, to protect information. No method of transmission or storage is completely secure, so we cannot guarantee absolute security.',
+
+    'privacy.s12.title': '12. External links',
+    'privacy.s12.text': 'The Site may link to other websites. We are not responsible for their content or privacy practices.',
+
+    'privacy.s13.title': '13. Changes to this policy',
+    'privacy.s13.text': 'We may update this policy from time to time. The “Last updated” date at the top shows the latest version. Continued use of the Site after changes means you accept the updated policy.',
+
+    'privacy.s14.title': '14. Contact',
+    'privacy.s14.name': 'MusicallyIO',
+    'privacy.s14.emailLabel': 'Email:',
+    'privacy.s14.websiteLabel': 'Website:',
+
+    // ───────────── Terms Page ─────────────
+    'terms.metaTitle': 'Terms of Service – MusicallyIO',
+    'terms.metaDescription': "The rules for using MusicallyIO's free TikTok video and MP3 downloader, including permitted use, copyright, disclaimers and liability.",
+    'terms.title': 'Terms of Service',
+    'terms.effective': 'Effective date: October 20, 2026',
+    'terms.intro': 'These Terms of Service (“Terms”) govern your use of musicallyio.com and its language versions (the “Site”) and the TikTok downloader and related tools we provide (the “Service”). By using the Service you agree to these Terms. If you do not agree, please do not use it.',
+
+    'terms.s1.title': '1. The Service',
+    'terms.s1.text': 'MusicallyIO lets you submit a link to a public TikTok video and, where available, receive the video as an MP4 file or the audio as an MP3 file. The Service is provided free of charge and is supported by advertising. Availability, quality and formats depend on the original content and on third-party platforms, and may change or stop at any time.',
+
+    'terms.s2.title': '2. Eligibility',
+    'terms.s2.text': 'You must be old enough to form a binding contract in your country, or have permission from a parent or guardian, and you must not be barred from using the Service under applicable law.',
+
+    'terms.s3.title': '3. Permitted use',
+    'terms.s3.intro': 'You may use the Service for personal, non-commercial purposes only to save:',
+    'terms.s3.item1': 'content that you created and own, or',
+    'terms.s3.item2': 'content that you have permission from the rights holder to download, or',
+    'terms.s3.item3': 'content that you are otherwise legally allowed to save.',
+
+    'terms.s4.title': '4. Prohibited use',
+    'terms.s4.intro': 'You agree not to:',
+    'terms.s4.item1': 'Download, copy, republish or distribute content in a way that infringes copyright, trademark, privacy or other rights',
+    'terms.s4.item2': "Repost another creator's content as your own or remove credit from it",
+    'terms.s4.item3': 'Use the Service for any unlawful, harmful, harassing or deceptive purpose',
+    'terms.s4.item4': 'Download content depicting minors in a harmful way, or private content you are not authorised to access',
+    'terms.s4.item5': 'Use bots, scrapers or automated scripts to overload, test or abuse the Service, or attempt to bypass rate limits or security measures',
+    'terms.s4.item6': 'Reverse engineer, resell or provide the Service to others as your own',
+    'terms.s4.item7': 'Interfere with ads, disrupt the Site or attempt to gain unauthorised access to our systems',
+
+    'terms.s5.title': '5. Your responsibility for content',
+    'terms.s5.text': "You are solely responsible for the content you download and how you use it. We do not host the videos on TikTok, we do not review them, and we do not verify that you have the right to download them. Saving content may also be restricted by TikTok's own terms of service, which you are responsible for reading.",
+
+    'terms.s6.title': '6. No affiliation',
+    'terms.s6.text': 'MusicallyIO is an independent service. It is not affiliated with, endorsed or sponsored by TikTok or ByteDance Ltd. All trademarks, logos and content belong to their respective owners.',
+
+    'terms.s7.title': '7. Intellectual property',
+    'terms.s7.text': "The Site's design, text, code and branding (excluding third-party content) belong to MusicallyIO or its licensors and are protected by law. You may not copy or reuse them without permission. Content downloaded through the Service remains the property of its respective creators and rights holders.",
+
+    'terms.s8.title': '8. Copyright complaints (DMCA)',
+    'terms.s8.text': 'We respect intellectual property rights. If you believe content processed through the Service infringes your copyright, email <a href="mailto:support@musicallyio.com">support@musicallyio.com</a> with: your name and contact details; a description of the copyrighted work; the URL of the material; a statement that you have a good-faith belief the use is unauthorised; and a statement, under penalty of perjury, that your notice is accurate and that you are the owner or authorised to act for the owner. We will review valid notices and take appropriate action, which may include blocking the specific link and restricting repeat infringers. Because we do not host the original videos, the original platform is the best place to request removal of the video itself.',
+
+    'terms.s9.title': '9. Advertising and third-party links',
+    'terms.s9.text': 'The Site displays advertisements and may link to third-party websites. We are not responsible for third-party ads, sites, products or services, and your dealings with them are your own responsibility. Please be careful with downloads or offers that appear outside our tool.',
+
+    'terms.s10.title': '10. Disclaimer of warranties',
+    'terms.s10.text': 'The Service is provided “as is” and “as available” without warranties of any kind, express or implied, including fitness for a particular purpose, accuracy, non-infringement or uninterrupted or error-free operation. We do not guarantee that any video or audio will be available, that any specific quality or format will be offered, or that files will be free of errors.',
+
+    'terms.s11.title': '11. Limitation of liability',
+    'terms.s11.text': 'To the fullest extent permitted by law, MusicallyIO and its owners and affiliates will not be liable for any indirect, incidental, special, consequential or punitive damages, or any loss of data, profits or goodwill, arising from your use of or inability to use the Service. Our total liability for any claim relating to the Service will not exceed USD 100. Some jurisdictions do not allow certain limitations, so parts of this section may not apply to you.',
+
+    'terms.s12.title': '12. Indemnification',
+    'terms.s12.text': "You agree to indemnify and hold harmless MusicallyIO and its owners from claims, losses and expenses (including reasonable legal fees) arising from your misuse of the Service, your violation of these Terms or your infringement of any third party's rights.",
+
+    'terms.s13.title': '13. Suspension and termination',
+    'terms.s13.text': 'We may limit, suspend or block access to the Service at any time, without notice, for any reason, including suspected abuse or violation of these Terms.',
+
+    'terms.s14.title': '14. Changes to the Service and Terms',
+    'terms.s14.text': 'We may modify or discontinue the Service and update these Terms at any time. The effective date above shows the latest version. Continued use after changes means you accept them.',
+
+    'terms.s15.title': '15. Governing law',
+    'terms.s15.text': 'These Terms are governed by the laws of the Islamic Republic of Pakistan, without regard to conflict-of-law rules. Disputes will be resolved in the courts of [city, jurisdiction], unless mandatory consumer law in your country says otherwise.',
+
+    'terms.s16.title': '16. Contact',
+    'terms.s16.text': 'Questions about these Terms: <a href="mailto:support@musicallyio.com">support@musicallyio.com</a>.',
+
 
     // Misc
     skipToContent: 'Skip to main content',

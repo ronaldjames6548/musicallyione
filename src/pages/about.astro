@@ -2,33 +2,62 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// Helper so numbered keys like `about.does${n}.title` type-check
+const k = (key: string) => t(key as Parameters<typeof t>[0]);
+
+const doesItems = [1, 2, 3, 4, 5];
+const howSteps = [1, 2, 3, 4];
+const principles = [1, 2, 3, 4];
 ---
 
-<BaseLayout title="About Us" description="Learn more about Astro SEO Theme and the team behind it.">
+<BaseLayout title={t('about.title')} description={t('about.metaDescription')}>
   <Header slot="header" />
 
-  <main class="mx-auto max-w-4xl px-6 py-20 md:py-32">
+  <main class="mx-auto max-w-4xl bg-white px-6 py-20 md:py-32">
     <header class="text-center md:mb-16">
       <h1 class="font-display text-4xl font-extrabold tracking-tight text-[var(--text-primary)] sm:text-5xl">
-        About Us
+        {t('about.titleStart')}<span class="text-[#ef124e]">{t('about.titleHighlight')}</span>
       </h1>
-      <p class="mt-6 text-lg text-[var(--text-secondary)]">
-        Building the ultimate open-source SEO theme for Astro.
-      </p>
     </header>
 
-    <div class="prose prose-zinc prose-lg mx-auto dark:prose-invert">
-      <h2>Our Mission</h2>
-      <p>
-        We believe that technical SEO shouldn't be an afterthought. It should be baked into the
-        foundation of every marketing website. That's why we created Astro SEO Theme—to provide a
-        robust, lightning-fast starting point for B2B SaaS companies.
-      </p>
-      <h2>Open Source</h2>
-      <p>
-        This project is 100% open-source and free to use under the MIT license. We encourage
-        contributions from the community to help make this the best SEO template available.
-      </p>
+    <div class="prose prose-zinc prose-lg mx-auto dark:prose-invert prose-a:text-[#ef124e] prose-a:no-underline hover:prose-a:underline">
+      <p>{t('about.intro1')}</p>
+      <p>{t('about.intro2')}</p>
+
+      <h2>{t('about.doesTitle')}</h2>
+      <ul>
+        {doesItems.map((n) => (
+          <li>
+            <strong>{k(`about.does${n}.title`)}</strong><Fragment set:html={k(`about.does${n}.text`)} />
+          </li>
+        ))}
+      </ul>
+
+      <h2>{t('about.howTitle')}</h2>
+      <ol>
+        {howSteps.map((n) => (
+          <li>{k(`about.how${n}`)}</li>
+        ))}
+      </ol>
+      <p>{t('about.howNote')}</p>
+
+      <h2>{t('about.principlesTitle')}</h2>
+      {principles.map((n) => (
+        <p>
+          <strong>{k(`about.principle${n}.title`)}</strong><Fragment set:html={k(`about.principle${n}.text`)} />
+        </p>
+      ))}
+
+      <h2>{t('about.independentTitle')}</h2>
+      <p>{t('about.independentText')}</p>
+
+      <h2>{t('about.contactTitle')}</h2>
+      <p set:html={t('about.contactText')} />
     </div>
   </main>
 

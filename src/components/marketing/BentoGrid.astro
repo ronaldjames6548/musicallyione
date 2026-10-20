@@ -1,0 +1,89 @@
+---
+/**
+ * BentoGrid.astro — Feature Highlights Grid
+ *
+ * A modern, CSS grid-based layout for highlighting key features.
+ * Features span different rows/cols to create an asymmetric, "bento box" look.
+ */
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+interface BentoItem {
+  title: string;
+  description: string;
+  icon?: string; // SVG string or we can use an icon slot/component
+  colSpan?: 1 | 2; // Span 1 or 2 columns
+  rowSpan?: 1 | 2; // Span 1 or 2 rows
+}
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  items: BentoItem[];
+}
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const {
+  bentotitle = t('bento.title'),
+  bentohighlight = t('bento.highlight'),
+  bentoparagraph = t('bento.paragraph'),
+  bentoparagraph1 = t('bento.paragraph1'),
+} = Astro.props;
+---
+
+<section id="features" class="py-8 md:py-8">
+  <div class="mx-auto max-w-7xl px-6">
+    <div class="mx-auto max-w-6xl text-center">
+    <h2 class="font-display text-3xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-4xl">{bentotitle} <span class="text-[#ef124e]"> {bentohighlight}</span></h2>
+          <p class="mt-3 text-[var(--text-secondary)] leading-relaxed">{bentoparagraph} {bentoparagraph1}</p>
+
+    </div>
+
+    <section class="mx-auto max-w-7xl py-8 space-y-6 px-6 pb-10">
+      <article id="how-to" class="scroll-mt-20 rounded-3xl border border-[var(--border)] bg-white p-8 md:p-10">
+        <h2 class="font-display text-2xl font-bold tracking-tight text-[var(--text-primary)] sm:text-3xl">How to Download TikTok Videos</h2><p class="mt-3 leading-relaxed text-[var(--text-secondary)]">Use Musicaldown to process a supported TikTok link in a few simple steps. Video availability, quality, and download formats depend on the original source.</p>
+          <ol class="mt-3 leading-relaxed text-[var(--text-secondary)] list-decimal space-y-1 pl-6 marker:text-[var(--text-tertiary)]">
+              <li>Open TikTok and find the video you want to save.</li>
+              <li>Tap <strong class="font-semibold text-[var(--text-primary)] text-red-600">Share</strong> and choose <strong class="font-semibold text-[var(--text-primary)] text-red-600">Copy Link</strong>.</li>
+              <li>Paste the link into the downloader above.</li>
+              <li>Select an available format or quality.</li>
+              <li>Save the returned file to your device.</li>
+          </ol>
+      </article>
+      
+      <article class="scroll-mt-20 rounded-3xl border border-[var(--border)] bg-white p-8 md:p-10">
+        <h2 class="font-display text-2xl font-bold tracking-tight text-[var(--text-primary)] sm:text-3xl">TikTok to MP3 Converter: Save TikTok Audio</h2>
+          <p class="mt-3 leading-relaxed text-[var(--text-secondary)]">Sometimes you only need the sound from a video. A TikTok to MP3 converter can help you save supported audio as an MP3 file when audio extraction is available.</p>
+          <p class="mt-3 leading-relaxed text-[var(--text-secondary)]">People search for terms such as <strong class="font-semibold text-[var(--text-primary)]">TikTok audio to MP3 converter</strong>, <strong class="font-semibold text-[var(--text-primary)]">TikTok sound to MP3</strong>, <strong class="font-semibold text-[var(--text-primary)]">TikTok URL to MP3</strong>, <strong class="font-semibold text-[var(--text-primary)]">save TikTok audio</strong> and <strong class="font-semibold text-[var(--text-primary)]">TikTok MP3 download</strong>. These phrases generally describe the same goal: saving audio from a supported TikTok link.</p>
+            <h3 class="mt-8 text-xl font-semibold text-[var(--text-primary)]">Can I download TikTok audio in 320 kbps?</h3>
+              <p class="mt-3 leading-relaxed text-[var(--text-secondary)]">Audio quality depends on the original source and the options actually provided. A higher output bitrate cannot restore detail that was missing from the original recording.</p>
+      </article>
+      
+      <article class="scroll-mt-20 rounded-3xl border border-[var(--border)] bg-white p-8 md:p-10">
+        <h2 class="font-display text-2xl font-bold tracking-tight text-[var(--text-primary)] sm:text-3xl">Musicaldown TikTok Downloader for MP4 and MP3</h2>
+          <p class="mt-3 leading-relaxed text-[var(--text-secondary)]">Musicaldown is an online tool concept for processing supported TikTok links and checking available video or audio download options. Availability, quality, and formats depend on the source and the downloader service.</p>
+          <p class="mt-3 leading-relaxed text-[var(--text-secondary)]">Paste a supported TikTok link above to check whether a downloadable video or audio result is available. Only download content you own or have permission to save.</p>
+    
+          <div class="mt-6 flex flex-wrap gap-2">
+              <span class="rounded-full border border-[var(--border)] bg-[var(--bg-secondary)] px-3 py-1.5 text-xs text-[var(--text-secondary)]">MP4 video</span>
+              <span class="rounded-full border border-[var(--border)] bg-[var(--bg-secondary)] px-3 py-1.5 text-xs text-[var(--text-secondary)]">MP3 audio when supported</span>
+              <span class="rounded-full border border-[var(--border)] bg-[var(--bg-secondary)] px-3 py-1.5 text-xs text-[var(--text-secondary)]">Mobile and desktop</span>
+              <span class="rounded-full border border-[var(--border)] bg-[var(--bg-secondary)] px-3 py-1.5 text-xs text-[var(--text-secondary)]">Browser-based</span>
+          </div>
+      </article>
+      
+
+      <article class="scroll-mt-20 rounded-3xl border border-[var(--border)] bg-white p-8 md:p-10">
+        <h2 class="font-display text-2xl font-bold tracking-tight text-[var(--text-primary)] sm:text-3xl">Why Choose Musicaldown?</h2>
+        <ul class="mt-3 leading-relaxed text-[var(--text-secondary)] list-disc space-y-1 pl-6 marker:text-[var(--border-hover)]">
+          <li><strong class="font-semibold text-[var(--text-primary)]">Easy to use:</strong> start with a copied TikTok link.</li>
+          <li><strong class="font-semibold text-[var(--text-primary)]">MP4 downloads:</strong> use the video format when available.</li>
+          <li><strong class="font-semibold text-[var(--text-primary)]">Audio options:</strong> download MP3 when supported.</li>
+          <li><strong class="font-semibold text-[var(--text-primary)]">Watermark options:</strong> check whether a clean video file is available for your link.</li>
+          <li><strong class="font-semibold text-[var(--text-primary)]">Multiple devices:</strong> use a compatible mobile or desktop browser.</li>
+        </ul>
+        <p class="mt-3 leading-relaxed text-[var(--text-secondary)]">Not every video supports every format. Private, deleted, restricted, or region-limited content may not be available. Please respect creators' rights, privacy, and applicable platform terms.</p>
+      </article>
+    </section>
+  </div>
+</section>

@@ -12,7 +12,7 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://musicallyio.com',
   output: 'static',
-  adapter: vercel(),
+  adapter: vercel({ maxDuration: 30 }),
 
   i18n: {
     defaultLocale: 'en',

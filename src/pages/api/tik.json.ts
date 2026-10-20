@@ -153,127 +153,74 @@ function transformLibraryResponse(libraryData: any) {
   };
 }
 
-async function tryLibraryDownloader(url: string) {
-  const versions = ["v3", "v2", "v1"];
-  let lastError = null;
+const UA_MOBILE =
+  'Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.1 Mobile/15E148 Safari/604.1';
 
-  for (const version of versions) {
-    try {
-      console.log(`\n=== Trying TikTok library version ${version} ===`);
-      
-      const result = await TikTok.Downloader(url, {
-        version: version,
-        showOriginalResponse: false
-      });
-
-      console.log(`Raw ${version} response status:`, result.status);
-      
-      if (result.status === "success" && result.result) {
-        const transformedData = transformLibraryResponse(result);
-        if (transformedData && transformedData.result) {
-          console.log(`✅ Success with library version ${version}`);
-          return transformedData;
-        }
-      }
-      
-      throw new Error(result.message || `Library version ${version} returned no valid data`);
-      
-    } catch (error: any) {
-      console.log(`❌ Library version ${version} failed:`, error.message);
-      lastError = error;
-      await new Promise(resolve => setTimeout(resolve, 500));
-    }
-  }
-
-  throw lastError || new Error("All library downloader versions failed");
+function withTimeout<T>(p: Promise<T>, ms: number, label: string): Promise<T> {
+  return new Promise((resolve, reject) => {
+    const t = setTimeout(() => reject(new Error(`${label} timeout`)), ms);
+    p.then(
+      (v) => { clearTimeout(t); resolve(v); },
+      (e) => { clearTimeout(t); reject(e); }
+    );
+  });
 }
 
-async function fallbackToExternalServices(url: string) {
-  const services = [
-    {
-      name: 'TikWM',
-      url: `https://www.tikwm.com/api/?url=${encodeURIComponent(url.trim())}`,
-      transform: (data: any) => {
-        console.log("=== TIKWM FULL RESPONSE ===");
-        console.log(JSON.stringify(data, null, 2));
-        
-        const likes = data.data?.digg_count || 0;
-        const views = data.data?.play_count || 0;
-        const comments = data.data?.comment_count || 0;
-        const shares = data.data?.share_count || 0;
-        
-        console.log("TikWM extracted stats:", { likes, views, comments, shares });
-        
-        // Extract avatar with multiple fallback options
-        const avatar = data.data?.author?.avatar_thumb?.url_list?.[0]
-          || data.data?.author?.avatar_larger?.url_list?.[0]
-          || data.data?.author?.avatar_medium?.url_list?.[0]
-          || data.data?.author?.avatar
-          || null;
-
-        console.log("TikWM avatar extraction:", {
-          raw: data.data?.author?.avatar,
-          avatar_thumb: data.data?.author?.avatar_thumb,
-          avatar_larger: data.data?.author?.avatar_larger,
-          finalAvatar: avatar
-        });
-        
-        return {
-          status: "success",
-          result: {
-            type: data.data?.images ? "image" : "video",
-            author: {
-              avatar: data.data?.author?.avatar || null,
-              nickname: data.data?.author?.unique_id || data.data?.author?.nickname || "Unknown Author"
-            },
-            desc: data.data?.title || "No description available",
-            videoSD: data.data?.play || null,
-            videoHD: data.data?.hdplay || data.data?.play || null,
-            video_hd: data.data?.hdplay || null,
-            videoWatermark: data.data?.wmplay || null,
-            music: data.data?.music || null,
-            uploadDate: data.data?.create_time ? new Date(data.data.create_time * 1000).toISOString() : null,
-            images: data.data?.images || null,
-            thumbnail: data.data?.cover || data.data?.origin_cover || data.data?.dynamic_cover || null,
-            likes: likes,
-            views: views,
-            comments: comments,
-            shares: shares
-          }
-        };
-      }
-    }
-  ];
-
-  for (const service of services) {
-    try {
-      console.log(`\n=== Trying fallback service: ${service.name} ===`);
-      
-      const response = await fetch(service.url, {
-        method: 'GET',
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.1 Mobile/15E148 Safari/604.1',
-        },
-        signal: AbortSignal.timeout(10000)
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
-
-      const data = await response.json();
-      
-      if (service.name === 'TikWM' && data.code === 0 && data.data) {
-        console.log(`✅ ${service.name} succeeded`);
-        return service.transform(data);
-      }
-      
-    } catch (error: any) {
-      console.log(`❌ ${service.name} fallback failed:`, error.message);
-    }
+async function libraryVersion(url: string, version: string) {
+  const result: any = await withTimeout(
+    TikTok.Downloader(url, { version: version as any, showOriginalResponse: false }),
+    8000,
+    `library ${version}`
+  );
+  if (result.status === "success" && result.result) {
+    const t = transformLibraryResponse(result);
+    if (t && t.result) return t;
   }
+  throw new Error(result.message || `library ${version} returned no valid data`);
+}
 
-  throw new Error("All fallback services failed");
+async function tikwm(url: string) {
+  const res = await fetch(`https://www.tikwm.com/api/?url=${encodeURIComponent(url.trim())}`, {
+    headers: { 'User-Agent': UA_MOBILE },
+    signal: AbortSignal.timeout(8000),
+  });
+  if (!res.ok) throw new Error(`TikWM HTTP ${res.status}`);
+  const data: any = await res.json();
+  if (data.code !== 0 || !data.data) throw new Error(data.msg || "TikWM returned no data");
+  const d = data.data;
+  return {
+    status: "success",
+    result: {
+      type: d.images ? "image" : "video",
+      author: {
+        avatar: d.author?.avatar || null,
+        nickname: d.author?.unique_id || d.author?.nickname || "Unknown Author",
+      },
+      desc: d.title || "No description available",
+      videoSD: d.play || null,
+      videoHD: d.hdplay || d.play || null,
+      video_hd: d.hdplay || null,
+      videoWatermark: d.wmplay || null,
+      music: d.music || null,
+      uploadDate: d.create_time ? new Date(d.create_time * 1000).toISOString() : null,
+      images: d.images || null,
+      thumbnail: d.cover || d.origin_cover || d.dynamic_cover || null,
+      likes: d.digg_count || 0,
+      views: d.play_count || 0,
+      comments: d.comment_count || 0,
+      shares: d.share_count || 0,
+    },
+  };
+}
+
+// Run the fastest sources in parallel; the first valid answer wins.
+async function fetchTikTokData(url: string) {
+  try {
+    return await Promise.any([tikwm(url), libraryVersion(url, "v3")]);
+  } catch (e) {
+    console.log("Primary sources failed, trying older library versions in parallel");
+  }
+  return await Promise.any([libraryVersion(url, "v2"), libraryVersion(url, "v1")]);
 }
 
 export const GET: APIRoute = async ({ request, url: requestUrl }) => {
@@ -325,27 +272,25 @@ export const GET: APIRoute = async ({ request, url: requestUrl }) => {
     }
     
     let processedUrl = url;
+    try {
+      const u = new URL(url);
+      if (/tiktok\.com$/.test(u.hostname) && u.pathname.includes('/video/')) {
+        processedUrl = u.origin + u.pathname; // drop ?is_from_webapp=1&sender_device=pc
+      }
+    } catch {}
     if (url.includes('/t/') || url.includes('vm.tiktok.com')) {
       processedUrl = await resolveShortUrl(url);
     }
     
     console.log("Processing URL:", processedUrl);
 
-    let data;
+    let data: any;
     try {
-      data = await tryLibraryDownloader(processedUrl);
-    } catch (libraryError: any) {
-      console.log("\n⚠️ Library failed, trying fallback services...");
-      console.log("Library error:", libraryError.message);
-      
-      try {
-        data = await fallbackToExternalServices(processedUrl);
-      } catch (fallbackError: any) {
-        console.log("❌ All services failed");
-        throw new Error("Both library and fallback services failed to return valid data");
-      }
+      data = await fetchTikTokData(processedUrl);
+    } catch (e: any) {
+      throw new Error("Both library and fallback services failed to return valid data");
     }
-    
+
     if (!data || !data.result) {
       throw new Error("No data returned from any service");
     }

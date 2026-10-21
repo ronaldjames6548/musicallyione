@@ -35,6 +35,11 @@ export const ui = {
     'nav.contact': 'FAQ',
 
     // Hero
+    'hero.badge': 'v1.0 is now live',
+    'hero.badge1': 'No Watermark',
+    'hero.badge2': 'HD Quality',
+    'hero.badge3': 'MP4 & MP3',
+    'hero.badge4': 'Free, No Sign-up',
     'hero.titleStart': 'TikTok video downloader',
     'hero.titleHighlight': ' without watermark',
     'hero.description': 'Download TikTok videos without watermark and Convert TikTok to MP3 free',
@@ -312,6 +317,10 @@ export const ui = {
 
     // Hero
     'hero.badge': 'v1.0 disponible',
+    'hero.badge1': 'Sin marca de agua',
+    'hero.badge2': 'Calidad HD',
+    'hero.badge3': 'MP4 y MP3',
+    'hero.badge4': 'Gratis, sin registro',
     'hero.titleStart': 'Descargador de videos de TikTok',
     'hero.titleHighlight': 'sin marca de agua',
     'hero.description': 'Descarga videos de TikTok sin marca de agua en PC, iPhone y Android',
@@ -378,6 +387,10 @@ export const ui = {
     'nav.contact': 'FAQ',
 
     // Hero
+    'hero.badge1': 'Tanpa Watermark',
+    'hero.badge2': 'Kualitas HD',
+    'hero.badge3': 'MP4 & MP3',
+    'hero.badge4': 'Gratis, Tanpa Daftar',
     'hero.titleStart': 'Pengunduh video TikTok',
     'hero.titleHighlight': 'tanpa watermark',
     'hero.description': 'Unduh video TikTok tanpa watermark ke PC, iPhone, dan Android',
@@ -401,6 +414,10 @@ export const ui = {
     'nav.contact': 'Câu hỏi thường gặp',
 
     // Hero
+    'hero.badge1': 'Không logo',
+    'hero.badge2': 'Chất lượng HD',
+    'hero.badge3': 'MP4 & MP3',
+    'hero.badge4': 'Miễn phí, không cần đăng ký',
     'hero.titleStart': 'Tải video TikTok',
     'hero.titleHighlight': 'không logo',
     'hero.description': 'Tải video TikTok không có watermark về máy tính, iPhone và Android',

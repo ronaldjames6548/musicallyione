@@ -30,13 +30,9 @@ const {
     {titleStart}<span class="underline decoration-white underline-offset-4"> {titleHighlight}</span>
   </h1>
 
-  <p class="mx-auto mt-4 max-w-3xl text-lg text-white md:text-xl">
-    {description}
-  </p>
+  <p class="mx-auto mt-4 max-w-3xl text-lg text-white md:text-xl">{description}</p>
 
-  <div class="mt-2 w-full max-w-4xl">
-    <InputScreen client:only="solid-js" />
-  </div>
+  <div class="mt-2 w-full max-w-4xl"><InputScreen client:only="solid-js" /></div>
 
   {badges.length > 0 && (
     <ul class="mt-6 grid w-full max-w-4xl grid-cols-2 gap-3 sm:flex sm:flex-row sm:flex-wrap sm:items-center sm:justify-center">
@@ -48,5 +44,4 @@ const {
       ))}
     </ul>
   )}
-  
 </section>

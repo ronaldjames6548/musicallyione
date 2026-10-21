@@ -3,6 +3,7 @@ import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 import InputScreen from '../downloader/InputScreen';
 
 interface Props {
+  badges?: string[];
   titleStart?: string;
   titleHighlight?: string;
   description?: string;
@@ -12,6 +13,12 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 const {
+  badges = [
+    t('hero.badge1'),
+    t('hero.badge2'),
+    t('hero.badge3'),
+    t('hero.badge4'),
+  ],
   titleStart = t('hero.titleStart'),
   titleHighlight = t('hero.titleHighlight'),
   description = t('hero.description'),
@@ -19,7 +26,7 @@ const {
 ---
 
 <section class="flex flex-col items-center justify-center bg-[#ef124e] px-6 py-12 text-center">
-  <h1 class="mx-auto max-w-4xl font-display text-3xl text-white font-semibold leading-tight tracking-tight text-white md:text-4xl">
+  <h1 class="mx-auto max-w-4xl font-display text-3xl font-semibold leading-tight tracking-tight text-white md:text-4xl">
     {titleStart}<span class="underline decoration-white underline-offset-4"> {titleHighlight}</span>
   </h1>
 
@@ -30,4 +37,15 @@ const {
   <div class="mt-2 w-full max-w-4xl">
     <InputScreen client:only="solid-js" />
   </div>
+
+  {badges.length > 0 && (
+    <ul class="mt-6 grid w-full max-w-4xl grid-cols-2 gap-3 sm:flex sm:flex-row sm:flex-wrap sm:items-center sm:justify-center">
+      {badges.map((badge) => (
+        <li class="inline-flex items-center justify-center gap-2 rounded border border-white/40 bg-white px-3 py-2 text-center text-xs font-medium text-black backdrop-blur-sm sm:px-4 sm:py-1.5 sm:text-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check size-4 shrink-0 text-green-400" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg>
+          {badge}
+        </li>
+      ))}
+    </ul>
+  )}
 </section>

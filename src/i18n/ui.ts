@@ -422,6 +422,7 @@ export const ui = {
     'hero.titleHighlight': 'không logo',
     'hero.description': 'Tải video TikTok không có watermark về máy tính, iPhone và Android',
 
+    
     // Footer
     'footer.privacyPolicy': 'Chính sách bảo mật',
     'footer.termsOfService': 'Điều khoản dịch vụ',

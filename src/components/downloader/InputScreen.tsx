@@ -1,6 +1,6 @@
 // src/components/InputScreen.tsx
 import { toast, Toaster } from "solid-toast";
-import { createSignal, Show, createEffect } from "solid-js";
+import { createSignal, Show, createEffect, onCleanup } from "solid-js";
 import InputSection from "./InputSection";
 import ResultSection from "./ResultSection";
 import { SITE_NAME } from "./siteConfig";
@@ -36,7 +36,26 @@ function InputScreen({}: Props) {
   const [loading, setLoading] = createSignal(false);
   const [error, setError] = createSignal("");
   const [autoProcessing, setAutoProcessing] = createSignal(false);
+  const [progress, setProgress] = createSignal(0);
   const AD_URL = "https://www.profitablecpmratenetwork.com/f244ejywkg?key=56c64db7c52c93bc3de06a5fd6054221";
+
+  // Simulated progress for the bar in InputSection (eases towards 90%, jumps to 100% when done)
+  let progressTimer: ReturnType<typeof setInterval> | undefined;
+  const startProgress = () => {
+    if (progressTimer) clearInterval(progressTimer);
+    setProgress(5);
+    progressTimer = setInterval(() => {
+      setProgress((p) => (p < 90 ? p + Math.max(1, (90 - p) * 0.08) : p));
+    }, 250);
+  };
+  const stopProgress = (done: boolean) => {
+    if (progressTimer) clearInterval(progressTimer);
+    progressTimer = undefined;
+    setProgress(done ? 100 : 0);
+  };
+  onCleanup(() => {
+    if (progressTimer) clearInterval(progressTimer);
+  });
 
   createEffect(() => {
     const currentData = data();
@@ -97,6 +116,7 @@ function InputScreen({}: Props) {
     setLoading(true);
     setError("");
     setData(null);
+    startProgress();
 
     try {
       const tiktokUrl = url().trim();
@@ -137,11 +157,13 @@ function InputScreen({}: Props) {
         }
       };
 
+      stopProgress(true);
       setData(normalizedData);
       toast.success("Video loaded successfully!", { duration: 2000, position: "bottom-center" });
 
     } catch (error: any) {
       console.error("FETCH ERROR:", error);
+      stopProgress(false);
       toast.error(error.message || "An error occurred", {
         duration: 5000,
         position: "bottom-center",
@@ -149,6 +171,7 @@ function InputScreen({}: Props) {
       setError(error.message);
     }
     setLoading(false);
+    setAutoProcessing(false);
   };
 
   const handlePaste = async () => {
@@ -208,6 +231,15 @@ function InputScreen({}: Props) {
     }
   };
 
+  // "Download another" – go back to the input box without reloading the page
+  const handleReset = () => {
+    setData(null);
+    setUrl("");
+    setError("");
+    setAutoProcessing(false);
+    stopProgress(false);
+  };
+
   const getVideoUrl = () => {
     const result = data()?.result;
     return result?.videoSD || result?.videoHD || result?.video_hd || result?.videoWatermark || result?.music || "";
@@ -241,6 +273,7 @@ function InputScreen({}: Props) {
           url={url()}
           setUrl={setUrl}
           loading={loading()}
+          progress={progress()}
           autoProcessing={autoProcessing()}
           onSubmit={handleSubmit}
           onPaste={handlePaste}
@@ -255,10 +288,12 @@ function InputScreen({}: Props) {
       <Show when={data() && data()?.result}>
         <ResultSection
           data={data()!}
+          sourceUrl={cleanTikTokUrl(url())}
           getVideoUrl={getVideoUrl}
           getAuthorInfo={getAuthorInfo}
           getSafeFilename={getSafeFilename}
           onDownloadClick={handleDownloadClick}
+          onReset={handleReset}
         />
       </Show>
     </div>

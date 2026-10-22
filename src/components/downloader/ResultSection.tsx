@@ -1,4 +1,5 @@
 // src/components/ResultSection.tsx
+import { createSignal, For, Show } from "solid-js";
 import AdBanner from "./AdBanner";
 import { SITE_NAME, DOWNLOAD_PROXY } from "./siteConfig";
 
@@ -25,432 +26,547 @@ interface ResultSectionProps {
       shares?: number;
     } | null;
   };
+  /** The cleaned TikTok link the user submitted (used by "Copy link" / "Share"). */
+  sourceUrl: string;
   getVideoUrl: () => string;
   getAuthorInfo: () => { avatar: string; nickname: string };
   getSafeFilename: () => string;
   onDownloadClick: (downloadUrl: string, filename: string) => void;
+  /** Called by "Download another" – resets the page back to the input box. */
+  onReset: () => void;
 }
 
-function ResultSection(props: ResultSectionProps) {
-  console.log("🎨 ResultSection rendering");
-  console.log("📦 Props data:", props.data);
-  console.log("📊 Result stats:", {
-    views: props.data?.result?.views,
-    likes: props.data?.result?.likes,
-    comments: props.data?.result?.comments,
-    shares: props.data?.result?.shares,
-    avatar: props.data?.result?.author?.avatar
-  });
+type FileKind = "video" | "audio" | "watermark" | "avatar" | "cover";
+type FileExt = ".mp4" | ".mp3" | ".jpg";
 
+interface FileRow {
+  key: string;
+  label: string;
+  sub: string;
+  kind: FileKind;
+  ext: FileExt;
+  url: string;
+  /** Avatar downloads don't open the ad tab (same as the old behaviour). */
+  noAd?: boolean;
+}
+
+// ─── Small helpers ──────────────────────────────────────────────────────────
+const fmt = (n: number) =>
+  n >= 1_000_000
+    ? (n / 1_000_000).toFixed(1).replace(/\.0$/, "") + "M"
+    : n >= 1_000
+    ? (n / 1_000).toFixed(1).replace(/\.0$/, "") + "k"
+    : String(n);
+
+const TikTokIcon = (p: { size: number }) => (
+  <svg width={p.size} height={p.size} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M16.6 3h-2.7v12.4a2.6 2.6 0 1 1-2.6-2.6c.3 0 .6 0 .8.1V10a5.3 5.3 0 1 0 4.5 5.2V9a6.6 6.6 0 0 0 3.8 1.2V7.5A3.8 3.8 0 0 1 16.6 3z" />
+  </svg>
+);
+
+const DownloadIcon = (p: { size: number }) => (
+  <svg width={p.size} height={p.size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 4v12m0 0-5-5m5 5 5-5M5 20h14" />
+  </svg>
+);
+
+const RowIcon = (p: { kind: FileKind }) => {
+  if (p.kind === "audio") {
+    return (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 18V5l12-2v13" />
+        <circle cx="6" cy="18" r="3" />
+        <circle cx="18" cy="16" r="3" />
+      </svg>
+    );
+  }
+  if (p.kind === "cover") {
+    return (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="2" />
+        <circle cx="9" cy="9" r="2" />
+        <path d="m21 15-5-5L5 21" />
+      </svg>
+    );
+  }
+  if (p.kind === "avatar") {
+    return (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="8" r="4" />
+        <path d="M4 21c0-4 4-6 8-6s8 2 8 6" />
+      </svg>
+    );
+  }
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <rect x="3" y="3" width="18" height="18" rx="2" />
+      <path d="M7 3v18M17 3v18M3 8h4M3 16h4M17 8h4M17 16h4" />
+    </svg>
+  );
+};
+
+function ResultSection(props: ResultSectionProps) {
   if (!props.data || !props.data.result) {
-    console.log("❌ No data or result, returning null");
     return null;
   }
 
   const result = props.data.result;
+  const authorInfo = props.getAuthorInfo();
 
-  // ─── Ad banner ref ────────────────────────────────────────────────────────
-  // AdBanner calls this once it is mounted, giving us a direct handle to the
-  // rendered ad container so we can programmatically fire a click on it.
+  const [preview, setPreview] = createSignal(false);
+  // Image preview (cover photo / profile picture)
+  const [imagePreview, setImagePreview] = createSignal<{ src: string; alt: string } | null>(null);
+  const [activeThumb, setActiveThumb] = createSignal<"cover" | "avatar">("cover");
+  const [flash, setFlash] = createSignal("");
+  const [saved, setSaved] = createSignal<Record<string, boolean>>({});
+
+  // ─── Ad banner ref + programmatic click ───────────────────────────────────
+  // AdBanner calls this once mounted, giving us a handle to the ad container
+  // so a download click can also fire a click on the banner ad.
   let adBannerEl: HTMLDivElement | undefined;
 
   const handleAdRef = (el: HTMLDivElement) => {
     adBannerEl = el;
-    console.log("AdBanner ref captured:", el);
   };
 
   /**
    * Fires a synthetic click on the banner ad.
-   * Strategy: try the deepest <a> or <iframe> first, then fall back to the
-   * whole container div.  Ad networks render different DOM shapes so we cast
-   * a wide net.
+   * Tries the deepest <a> / <iframe> / [onclick] first, then the container.
    */
   const triggerBannerAdClick = () => {
-    if (!adBannerEl) {
-      console.warn("AdBanner ref not ready yet");
-      return;
-    }
+    if (!adBannerEl) return;
 
-    // 1. Any real anchor inside the ad
-    const anchor = adBannerEl.querySelector<HTMLAnchorElement>('a[href]');
+    const anchor = adBannerEl.querySelector<HTMLAnchorElement>("a[href]");
     if (anchor) {
-      console.log("Clicking ad anchor:", anchor.href);
       anchor.click();
       return;
     }
 
-    // 2. Any iframe (open its src in a new tab)
-    const iframe = adBannerEl.querySelector<HTMLIFrameElement>('iframe');
+    const iframe = adBannerEl.querySelector<HTMLIFrameElement>("iframe");
     if (iframe && iframe.src) {
-      console.log("Opening iframe ad src:", iframe.src);
-      window.open(iframe.src, '_blank');
+      window.open(iframe.src, "_blank");
       return;
     }
 
-    // 3. Any element with an onclick attribute
-    const clickable = adBannerEl.querySelector<HTMLElement>('[onclick]');
+    const clickable = adBannerEl.querySelector<HTMLElement>("[onclick]");
     if (clickable) {
-      console.log("Clicking ad element with onclick");
       clickable.click();
       return;
     }
 
-    // 4. Last resort – click the container itself
-    console.log("Falling back to container click");
     adBannerEl.click();
   };
 
   /**
-   * Triple-action download handler:
-   *  1. Triggers the parent's download logic (actual file download + direct ad link)
-   *  2. Programmatically clicks the banner ad shown on the page
+   * Download + ads:
+   *  1. parent handler → opens the direct-link ad tab and starts the file download
+   *  2. then clicks the banner ad shown on the page (small delay so the browser's
+   *     popup heuristics don't swallow it)
    */
-  const handleDownloadWithAd = (downloadUrl: string, filename: string) => {
-    // 1 & 2 – file download + direct-link ad (handled by parent InputScreen)
-    props.onDownloadClick(downloadUrl, filename);
-
-    // 3 – click the banner ad
-    // Small delay so the click doesn't get swallowed by popup-blocker heuristics
-    // that fire when multiple window operations happen in the same tick.
-    setTimeout(() => {
-      triggerBannerAdClick();
-    }, 150);
+  const handleDownloadWithAd = (href: string, filename: string) => {
+    props.onDownloadClick(href, filename);
+    setTimeout(triggerBannerAdClick, 150);
   };
 
-  // ─── Helpers ─────────────────────────────────────────────────────────────
+  // ─── Filename + proxy helpers (unchanged behaviour) ───────────────────────
+  const generateFilename = (baseName: string, type: FileKind) => {
+    let filename = (baseName || "tiktok-video").trim();
 
-  // Generate filename based on type
-  const generateFilename = (baseName: string, type: 'video' | 'audio' | 'watermark' | 'avatar') => {
-    let filename = (baseName || 'tiktok-video').trim();
-
-    if (type === 'audio') {
-      filename += '_audio';
-    } else if (type === 'watermark') {
-      filename += '_watermark';
-    } else if (type === 'avatar') {
-      filename += '_avatar';
-    }
+    if (type === "audio") filename += "_audio";
+    else if (type === "watermark") filename += "_watermark";
+    else if (type === "avatar") filename += "_avatar";
+    else if (type === "cover") filename += "_cover";
 
     if (!filename.startsWith(SITE_NAME)) {
       filename = `${SITE_NAME}_${filename}`;
     }
 
-    if (type === 'avatar') {
-      if (!filename.toLowerCase().endsWith('.jpg')) filename += '.jpg';
-    } else if (type === 'audio') {
-      if (!filename.toLowerCase().endsWith('.mp3')) filename += '.mp3';
+    if (type === "avatar" || type === "cover") {
+      if (!filename.toLowerCase().endsWith(".jpg")) filename += ".jpg";
+    } else if (type === "audio") {
+      if (!filename.toLowerCase().endsWith(".mp3")) filename += ".mp3";
     } else {
-      if (!filename.toLowerCase().endsWith('.mp4')) filename += '.mp4';
+      if (!filename.toLowerCase().endsWith(".mp4")) filename += ".mp4";
     }
 
     return filename;
   };
 
-  // Build proxy URL; `title` is the final branded filename so the saved file carries the site name
-  const proxyUrl = (mediaUrl: string, ext: '.mp4' | '.mp3' | '.jpg', filename: string) =>
+  // `title` is the final branded filename so the saved file carries the site name
+  const proxyUrl = (mediaUrl: string, ext: FileExt, filename: string) =>
     `${DOWNLOAD_PROXY}?url=${encodeURIComponent(mediaUrl)}&type=${ext}&title=${encodeURIComponent(filename)}`;
 
-  // Download avatar directly without modal using proxy
-  const downloadAvatar = (e: Event) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    const avatarUrl = props.getAuthorInfo().avatar;
-    if (!avatarUrl) {
-      console.error("No avatar URL available");
-      return;
-    }
-
-    const finalFilename = generateFilename(props.getSafeFilename(), 'avatar');
-    console.log("Downloading avatar as:", finalFilename);
-
-    const link = document.createElement('a');
-    link.href = proxyUrl(avatarUrl, '.jpg', finalFilename);
-    link.download = finalFilename;
-    link.style.display = 'none';
+  const triggerFileDownload = (href: string, filename: string) => {
+    const link = document.createElement("a");
+    link.href = href;
+    link.download = filename;
+    link.style.display = "none";
     document.body.appendChild(link);
     link.click();
     setTimeout(() => document.body.removeChild(link), 100);
-
-    console.log("✅ Avatar download started with filename:", finalFilename);
   };
 
-  // Stats with defaults
-  const views    = result.views    || 0;
-  const likes    = result.likes    || 0;
-  const comments = result.comments || 0;
-  const shares   = result.shares   || 0;
+  // ─── Rows shown in the card ───────────────────────────────────────────────
+  const hdUrl = result.videoHD || result.video_hd;
+  const rows: FileRow[] = [];
 
-  const thumbnail  = result.thumbnail;
-  const authorInfo = props.getAuthorInfo();
-  const avatarUrl  = authorInfo.avatar;
+  if (hdUrl) {
+    rows.push({ key: "hd", label: "HD · No watermark", sub: "MP4", kind: "video", ext: ".mp4", url: hdUrl });
+  }
+  if (result.videoSD) {
+    rows.push({ key: "sd", label: "SD · No watermark", sub: "MP4", kind: "video", ext: ".mp4", url: result.videoSD });
+  }
+  if (result.videoWatermark) {
+    rows.push({ key: "wm", label: "With watermark", sub: "MP4", kind: "watermark", ext: ".mp4", url: result.videoWatermark });
+  }
+  if (result.music) {
+    rows.push({ key: "mp3", label: "Audio only", sub: "MP3", kind: "audio", ext: ".mp3", url: result.music });
+  }
+  if (result.thumbnail) {
+    rows.push({ key: "cover", label: "Cover photo", sub: "JPG", kind: "cover", ext: ".jpg", url: result.thumbnail, noAd: true });
+  }
+  if (authorInfo.avatar) {
+    rows.push({ key: "avatar", label: "Profile picture", sub: "JPG", kind: "avatar", ext: ".jpg", url: authorInfo.avatar, noAd: true });
+  }
 
-  console.log("🖼️ Thumbnail URL:", thumbnail);
-  console.log("👤 Avatar URL:", avatarUrl);
-  console.log("👤 Full avatar object:", props.data.result.author);
+  // "Download all" = best no-watermark video + audio
+  const bestVideo = rows.find((r) => r.key === "hd") || rows.find((r) => r.key === "sd");
+  const audioRow = rows.find((r) => r.key === "mp3");
+  const allRows = [bestVideo, audioRow].filter(Boolean) as FileRow[];
 
-  const handleAvatarError = (e: Event) => {
-    const img = e.currentTarget as HTMLImageElement;
-    console.error("❌ Avatar failed to load:", avatarUrl);
-    if (img.hasAttribute('referrerpolicy')) {
-      img.removeAttribute('referrerpolicy');
-      img.removeAttribute('crossorigin');
-      const src = img.src;
-      img.src = '';
-      img.src = src;
+  // The banner ad sits right after the HD row (or after the first row if there is no HD)
+  const adAfterKey = rows.find((r) => r.key === "hd")?.key ?? rows[0]?.key;
+
+  const markSaved = (key: string) => setSaved((s) => ({ ...s, [key]: true }));
+
+  const downloadRow = (row: FileRow) => {
+    const fn = generateFilename(props.getSafeFilename(), row.kind);
+    const href = proxyUrl(row.url, row.ext, fn);
+    if (row.noAd) {
+      triggerFileDownload(href, fn);
     } else {
-      img.style.display = 'none';
+      handleDownloadWithAd(href, fn);
+    }
+    markSaved(row.key);
+  };
+
+  const downloadAll = () => {
+    allRows.forEach((row, i) => {
+      const fn = generateFilename(props.getSafeFilename(), row.kind);
+      const href = proxyUrl(row.url, row.ext, fn);
+      if (i === 0) {
+        // First file goes through the ad handler (ad tab + banner click + toast)
+        handleDownloadWithAd(href, fn);
+      } else {
+        // Stagger the rest so the browser doesn't block them
+        setTimeout(() => triggerFileDownload(href, fn), 900 * i);
+      }
+      markSaved(row.key);
+    });
+  };
+
+  // ─── Copy / share actions ─────────────────────────────────────────────────
+  const flashLabel = (id: string) => {
+    setFlash(id);
+    setTimeout(() => setFlash(""), 1400);
+  };
+
+  const copyText = async (text: string, id: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      flashLabel(id);
+    } catch {
+      /* clipboard not available */
     }
   };
 
+  const shareLink = async () => {
+    const link = props.sourceUrl;
+    if (navigator.share) {
+      try {
+        await navigator.share({ url: link, text: result.desc || undefined });
+      } catch {
+        /* user cancelled */
+      }
+    } else {
+      copyText(link, "share");
+    }
+  };
+
+  // ─── Stats text: "171.6k views · 195k likes · 236 comments" ────────────────
+  const statsText = [
+    (result.views || 0) > 0 && `${fmt(result.views!)} views`,
+    (result.likes || 0) > 0 && `${fmt(result.likes!)} likes`,
+    (result.comments || 0) > 0 && `${fmt(result.comments!)} comments`,
+    (result.shares || 0) > 0 && `${fmt(result.shares!)} shares`,
+  ]
+    .filter(Boolean)
+    .join(" · ");
+
+  const thumbnail = result.thumbnail;
+
   return (
-    <div class="py-8">
-      <div class="mt-4 max-w-6xl mx-auto">
-        <div
-          class="relative rounded-lg overflow-hidden border border-white/10 p-4"
-          style={{ minHeight: '500px' }}
-        >
-          {/* Background Image */}
-          {thumbnail && (
-            <>
+    <div class="mx-auto mt-2 pb-8 text-left text-[#101326]">
+      {/* "TikTok Video detected" pill */}
+      <div class="mb-3 flex justify-start">
+        <span class="inline-flex items-center gap-1.5 rounded bg-white px-3 py-1.5 text-sm font-semibold shadow-lg ring-1 ring-[#ecebf6]">
+          <span class="grid h-6 w-6 place-items-center rounded-full bg-[#101326] text-white">
+            <TikTokIcon size={24} />
+          </span>
+          TikTok Video detected
+        </span>
+      </div>
+
+      {/* Result card */}
+      <div class="rounded-3xl bg-gradient-to-r from-rose-100 to-teal-100 p-4 shadow-2xl ring-1 ring-[#ecebf6]">
+        {/* Mobile: thumbnail on top, info below. sm+: side by side */}
+        <div class="flex flex-col gap-4 sm:flex-row">
+          {/* Thumbnail (tap to preview) */}
+          <button
+            type="button"
+            onClick={() => setPreview(true)}
+            aria-label="Play preview"
+            class="group relative aspect-[9/16] max-h-[70vh] w-full shrink-0 overflow-hidden rounded-xl bg-gradient-to-br from-amber-200 via-slate-500 to-slate-800 sm:aspect-auto sm:h-44 sm:max-h-none sm:w-28"
+          >
+            <Show when={thumbnail}>
               <img
-                src={thumbnail}
-                alt="background"
-                class="absolute top-0 left-0 w-full h-full object-cover"
-                style={{ zIndex: 1, pointerEvents: 'none' }}
-                onLoad={() => console.log("✅ Background image loaded")}
-                onError={(e) => {
-                  console.error("❌ Background image failed to load");
-                  e.currentTarget.style.display = 'none';
-                }}
+                src={thumbnail!}
+                alt="Video thumbnail"
+                class="h-full w-full object-cover"
+                referrerpolicy="no-referrer"
+                onError={(e) => (e.currentTarget.style.display = "none")}
               />
-              {/* White overlay */}
-              <div
-                class="absolute top-0 left-0 w-full h-full bg-white"
-                style={{ zIndex: 2, opacity: 0.5, pointerEvents: 'none' }}
-              />
-            </>
-          )}
+            </Show>
+            <span class="absolute inset-0 grid place-items-center bg-black/10 transition-colors group-hover:bg-black/25">
+              <span class="grid h-9 w-9 place-items-center rounded-full bg-white/90 text-[#101326] shadow">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </span>
+            </span>
+          </button>
 
-          {/* Content Layer */}
-          <div class="relative" style={{ zIndex: 10 }}>
-            <div class="flex flex-col md:flex-row gap-4">
-              {/* Left Column - Video Preview */}
-              <div class="md:w-1/3 flex-shrink-0">
-                <div class="relative rounded-lg overflow-hidden max-h-[430px] bg-black">
-                  {props.getVideoUrl() && (
-                    <video
-                      controls
-                      src={props.getVideoUrl()}
-                      class="w-full h-full object-cover"
-                      referrerpolicy="no-referrer"
-                    >
-                      Your browser does not support the video tag.
-                    </video>
-                  )}
-                </div>
-              </div>
+          {/* Info */}
+          <div class="min-w-0 w-full sm:flex-1">
+            <p class="flex items-center gap-1.5 text-xs text-[#6b6f85]">
+              <span class="grid h-6 w-6 place-items-center rounded bg-[#101326] text-white">
+                <TikTokIcon size={16} />
+              </span>
+              TikTok · Video
+            </p>
 
-              {/* Right Column - Author Info, Stats, Ad Banner & Download Buttons */}
-              <div class="md:w-2/3 flex flex-col justify-between">
-                <div class="mb-3">
-                  {/* Author Info with Avatar Download */}
-                  <div class="flex items-center gap-3 mb-4">
-                    {avatarUrl ? (
-                      <div class="relative group">
-                        <img
-                          src={avatarUrl}
-                          alt={authorInfo.nickname}
-                          class="rounded-full w-20 h-20 object-cover border-2 border-gray-300 shadow-md"
-                          referrerpolicy="no-referrer"
-                          crossorigin="anonymous"
-                          onLoad={() => console.log("✅ Avatar loaded successfully:", avatarUrl)}
-                          onError={handleAvatarError}
-                        />
-                        {/* Download button overlay */}
-                        <button
-                          onClick={downloadAvatar}
-                          class="absolute inset-0 flex items-center justify-center rounded-full transition-all duration-200 cursor-pointer"
-                          title="Download profile picture"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                          </svg>
-                        </button>
-                      </div>
-                    ) : (
-                      <div class="rounded-full w-20 h-20 bg-gray-300 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                        </svg>
-                      </div>
-                    )}
-                    <div>
-                      <h2 class="text-xl font-bold text-gray-900">
-                        {authorInfo.nickname}
-                      </h2>
-                      {avatarUrl && (
-                        <button
-                          onClick={downloadAvatar}
-                          class="text-sm text-blue-600 hover:text-blue-800 underline mt-1 flex items-center gap-1"
-                        >
-                          <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                          </svg>
-                          Download Profile Picture
-                        </button>
-                      )}
-                    </div>
-                  </div>
+            <h2 class="mt-1.5 line-clamp-4 break-words text-base font-bold sm:text-lg leading-snug text-[#101326]">
+              {result.desc || "No description available"}
+            </h2>
 
-                  {/* Description */}
-                  <div class="text-gray-900 text-base mb-4 bg-white/70 p-3 rounded-lg">
-                    {result.desc || "No description available"}
-                  </div>
-
-                  {/* Stats Section */}
-                  {(views > 0 || likes > 0 || comments > 0 || shares > 0) && (
-                    <div class="bg-[#1a2332] rounded-lg py-4 px-3 mb-4">
-                      <div class="flex items-center justify-around">
-                        {/* Views */}
-                        {views > 0 && (
-                          <div class="flex flex-col items-center gap-1">
-                            <svg aria-label="Views" class="flex-shrink-0" fill="#00d4ff" height="24" role="img" viewBox="0 0 24 24" width="24">
-                              <title>Views</title>
-                              <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path>
-                            </svg>
-                            <span class="font-bold text-white text-base">{views >= 1000000 ? (views / 1000000).toFixed(1) + 'M' : views >= 1000 ? (views / 1000).toFixed(1) + 'K' : views.toLocaleString()}</span>
-                            <span class="text-gray-400 text-xs">Views</span>
-                          </div>
-                        )}
-
-                        {/* Likes */}
-                        {likes > 0 && (
-                          <div class="flex flex-col items-center gap-1">
-                            <svg aria-label="Like" class="flex-shrink-0" fill="#ff0050" height="24" role="img" viewBox="0 0 24 24" width="24">
-                              <title>Like</title>
-                              <path d="M16.792 3.904A4.989 4.989 0 0 1 21.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0 0 1 4.708-5.218 4.21 4.21 0 0 1 3.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0 0 1 3.679-1.938m0-2a6.04 6.04 0 0 0-4.797 2.127 6.052 6.052 0 0 0-4.787-2.127A6.985 6.985 0 0 0 .5 9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 0 0 3.518 3.018 2 2 0 0 0 2.174 0 45.263 45.263 0 0 0 3.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025 4.98-4.32 4.98-7.94a6.985 6.985 0 0 0-6.708-7.218Z"></path>
-                            </svg>
-                            <span class="font-bold text-white text-base">{likes >= 1000000 ? (likes / 1000000).toFixed(1) + 'M' : likes >= 1000 ? (likes / 1000).toFixed(1) + 'K' : likes.toLocaleString()}</span>
-                            <span class="text-gray-400 text-xs">Likes</span>
-                          </div>
-                        )}
-
-                        {/* Comments */}
-                        {comments > 0 && (
-                          <div class="flex flex-col items-center gap-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                              <g fill="none" stroke="#19ac05" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
-                                <title>Comment</title>
-                                <path fill="#19ac05" d="M17 12.5a.5.5 0 1 0 0-1a.5.5 0 0 0 0 1m-5 0a.5.5 0 1 0 0-1a.5.5 0 0 0 0 1m-5 0a.5.5 0 1 0 0-1a.5.5 0 0 0 0 1"/>
-                                <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2S2 6.477 2 12c0 1.821.487 3.53 1.338 5L2.5 21.5l4.5-.838A9.96 9.96 0 0 0 12 22"/>
-                              </g>
-                            </svg>
-                            <span class="font-bold text-white text-base">{comments >= 1000000 ? (comments / 1000000).toFixed(1) + 'M' : comments >= 1000 ? (comments / 1000).toFixed(1) + 'K' : comments.toLocaleString()}</span>
-                            <span class="text-gray-400 text-xs">Comments</span>
-                          </div>
-                        )}
-
-                        {/* Shares */}
-                        {shares > 0 && (
-                          <div class="flex flex-col items-center gap-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                              <title>Share</title>
-                              <path fill="#0089ff" d="m13.12 17.023l-4.199-2.29a4 4 0 1 1 0-5.465l4.2-2.29a4 4 0 1 1 .958 1.755l-4.2 2.29a4 4 0 0 1 0 1.954l4.2 2.29a4 4 0 1 1-.959 1.755M6 14a2 2 0 1 0 0-4a2 2 0 0 0 0 4m11-6a2 2 0 1 0 0-4a2 2 0 0 0 0 4m0 12a2 2 0 1 0 0-4a2 2 0 0 0 0 4"/>
-                            </svg>
-                            <span class="font-bold text-white text-base">{shares >= 1000000 ? (shares / 1000000).toFixed(1) + 'M' : shares >= 1000 ? (shares / 1000).toFixed(1) + 'K' : shares.toLocaleString()}</span>
-                            <span class="text-gray-400 text-xs">Shares</span>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {/* ── Ad Banner (between stats and download buttons) ───────────── */}
-                <AdBanner
-                  onRef={handleAdRef}
-                  class="ad-banner w-full rounded-lg overflow-hidden mb-4"
-                  width="100%"
-                  height="auto"
+            <p class="mt-1.5 flex items-center gap-1.5 text-sm text-muted">
+              <Show when={authorInfo.avatar}>
+                <img
+                  src={authorInfo.avatar}
+                  alt={authorInfo.nickname}
+                  class="h-6 w-6 rounded-full object-cover"
+                  referrerpolicy="no-referrer"
+                  onError={(e) => (e.currentTarget.style.display = "none")}
                 />
+              </Show>
+              <span class="truncate">by {authorInfo.nickname}</span>
+            </p>
 
-                {/* ── Download Buttons ─────────────────────────────────────────── */}
-                <div class="space-y-2">
-                  {/* Download SD */}
-                  {result.videoSD && (
-                    <button
-                      class="download-button bg-amber-600 hover:bg-amber-700 w-full p-3 rounded text-white font-bold flex items-center justify-center cursor-pointer transition-colors"
-                      onClick={() => { const fn = generateFilename(props.getSafeFilename(), 'video'); handleDownloadWithAd(proxyUrl(result.videoSD!, '.mp4', fn), fn); }}
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-                      </svg>
-                      Download SD (No Watermark)
-                    </button>
-                  )}
+            <Show when={statsText}>
+              <p class="mt-0.5 text-sm text-muted">{statsText}</p>
+            </Show>
 
-                  {/* Download HD */}
-                  {(result.videoHD || result.video_hd) && (
-                    <button
-                      class="download-button bg-amber-600 hover:bg-amber-700 w-full p-3 rounded text-white font-bold flex items-center justify-center cursor-pointer transition-colors"
-                      onClick={() => { const fn = generateFilename(props.getSafeFilename(), 'video'); handleDownloadWithAd(proxyUrl((result.videoHD || result.video_hd)!, '.mp4', fn), fn); }}
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-                      </svg>
-                      Download HD (No Watermark)
-                    </button>
-                  )}
-
-                  {/* Download with Watermark */}
-                  {result.videoWatermark && (
-                    <button
-                      class="download-button bg-blue-600 hover:bg-blue-700 w-full p-3 rounded text-white font-bold flex items-center justify-center cursor-pointer transition-colors"
-                      onClick={() => { const fn = generateFilename(props.getSafeFilename(), 'watermark'); handleDownloadWithAd(proxyUrl(result.videoWatermark!, '.mp4', fn), fn); }}
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
-                      </svg>
-                      Download (With Watermark)
-                    </button>
-                  )}
-
-                  {/* Download Audio */}
-                  {result.music && (
-                    <button
-                      class="download-button bg-purple-600 hover:bg-purple-700 w-full p-3 rounded text-white font-bold flex items-center justify-center cursor-pointer transition-colors"
-                      onClick={() => { const fn = generateFilename(props.getSafeFilename(), 'audio'); handleDownloadWithAd(proxyUrl(result.music!, '.mp3', fn), fn); }}
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
-                      </svg>
-                      Download Audio Only
-                    </button>
-                  )}
-
-                  {/* Download Another */}
-                  <button
-                    class="download-button bg-gray-700 hover:bg-gray-800 w-full p-3 rounded text-white font-bold flex items-center justify-center cursor-pointer transition-colors"
-                    onClick={() => window.location.href = '/'}
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                    </svg>
-                    Download Another Video
-                  </button>
-                </div>
-              </div>
+            <div class="mt-3 flex flex-wrap gap-1.5 text-[11px] font-medium">
+              <button
+                type="button"
+                onClick={() => copyText(result.desc || "", "caption")}
+                class="rounded-xl bg-[#f7f6ff] px-3 py-1.5 text-xs font-semibold text-[#101326]"
+              >
+                {flash() === "caption" ? "✓ Copied" : "⧉ Copy caption"}
+              </button>
+              <button
+                type="button"
+                onClick={() => copyText(props.sourceUrl, "link")}
+                class="rounded-xl bg-[#f7f6ff] px-3 py-1.5 text-xs font-semibold text-[#101326]"
+              >
+                {flash() === "link" ? "✓ Copied" : "🔗 Copy link"}
+              </button>
+              <button
+                type="button"
+                onClick={shareLink}
+                class="rounded-xl bg-[#f7f6ff] px-3 py-1.5 text-xs font-semibold text-[#101326] hover:bg-[#ecebf6]"
+              >
+                {flash() === "share" ? "✓ Copied" : "↗ Share"}
+              </button>
             </div>
           </div>
         </div>
+
+        {/* Cover photo + profile image */}
+        <Show when={thumbnail || authorInfo.avatar}>
+          <div class="mt-3 flex gap-2">
+            <Show when={thumbnail}>
+              <button
+                type="button"
+                aria-label="View cover photo"
+                title="View cover photo"
+                onClick={() => {
+                  setActiveThumb("cover");
+                  setImagePreview({ src: thumbnail!, alt: "Cover photo" });
+                }}
+                class={`h-11 w-11 cursor-pointer overflow-hidden rounded-lg bg-gradient-to-br from-amber-200 to-slate-600 transition hover:opacity-90 ${
+                  activeThumb() === "cover" ? "ring-2 ring-[#101326]" : ""
+                }`}
+              >
+                <img
+                  src={thumbnail!}
+                  alt="Cover photo"
+                  class="h-full w-full object-cover"
+                  referrerpolicy="no-referrer"
+                  onError={(e) => (e.currentTarget.style.display = "none")}
+                />
+              </button>
+            </Show>
+            <Show when={authorInfo.avatar}>
+              <button
+                type="button"
+                aria-label="View profile picture"
+                title="View profile picture"
+                onClick={() => {
+                  setActiveThumb("avatar");
+                  setImagePreview({ src: authorInfo.avatar, alt: "Profile picture" });
+                }}
+                class={`h-11 w-11 cursor-pointer overflow-hidden rounded-lg bg-gradient-to-br from-slate-400 to-slate-800 transition hover:opacity-90 ${
+                  activeThumb() === "avatar" ? "ring-2 ring-[#101326]" : ""
+                }`}
+              >
+                <img
+                  src={authorInfo.avatar}
+                  alt="Profile picture"
+                  class="h-full w-full object-cover"
+                  referrerpolicy="no-referrer"
+                  onError={(e) => (e.currentTarget.style.display = "none")}
+                />
+              </button>
+            </Show>
+          </div>
+        </Show>
+
+        {/* Download all */}
+        <Show when={allRows.length > 0}>
+          <button
+            type="button"
+            onClick={downloadAll}
+            class="mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-[#101326] py-3 text-sm font-semibold text-white hover:opacity-90"
+          >
+            <DownloadIcon size={15} />
+            <span>{allRows.length > 1 ? `Download all (${allRows.length})` : "Download"}</span>
+          </button>
+        </Show>
+
+        {/* Individual files */}
+        <ul class="mt-2 grid gap-2">
+          <For each={rows}>
+            {(row) => (
+              <>
+              <li class="flex items-center gap-3 bg-white rounded-xl px-2 py-3">
+                <span class="grid h-8 w-8 place-items-center rounded-lg bg-[#f7f6ff] text-[#6b6f85]">
+                  <RowIcon kind={row.kind} />
+                </span>
+                <span class="min-w-0 flex-1">
+                  <span class="block text-sm font-bold">{row.label}</span>
+                  <span class="block text-xs text-[#6b6f85]">{row.sub}</span>
+                </span>
+                <button
+                  type="button"
+                  onClick={() => downloadRow(row)}
+                  class="flex items-center gap-1.5 rounded-lg bg-[#101326] px-3.5 py-2 text-xs font-semibold text-white hover:opacity-90"
+                >
+                  <DownloadIcon size={13} />
+                  <span>{saved()[row.key] ? "Saved ✓" : "Download"}</span>
+                </button>
+              </li>
+              {/* Banner ad between HD and SD */}
+              <Show when={row.key === adAfterKey}>
+                <li class="overflow-hidden rounded-xl">
+                  <AdBanner
+                    onRef={handleAdRef}
+                    class="ad-banner w-full overflow-hidden rounded-xl"
+                    width="100%"
+                    height="auto"
+                  />
+                </li>
+              </Show>
+              </>
+            )}
+          </For>
+        </ul>
+
+        {/* Download another */}
+        <button
+          type="button"
+          onClick={() => props.onReset()}
+          class="mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-[#101326] py-3 text-sm font-semibold text-white hover:opacity-90"
+        >
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M3 12a9 9 0 0 1 15.5-6.3L21 8M21 3v5h-5M21 12a9 9 0 0 1-15.5 6.3L3 16M3 21v-5h5" />
+          </svg>
+          Download another
+        </button>
       </div>
+
+      {/* Video preview modal */}
+      <Show when={preview() && props.getVideoUrl()}>
+        <div
+          class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
+          onClick={() => setPreview(false)}
+        >
+          <div class="relative w-full max-w-sm" onClick={(e) => e.stopPropagation()}>
+            <video
+              controls
+              autoplay
+              src={props.getVideoUrl()}
+              class="max-h-[85vh] w-full rounded-2xl bg-black"
+              referrerpolicy="no-referrer"
+            >
+              Your browser does not support the video tag.
+            </video>
+            <button
+              type="button"
+              onClick={() => setPreview(false)}
+              aria-label="Close preview"
+              class="absolute -right-2 -top-2 grid h-8 w-8 place-items-center rounded-full bg-white text-sm font-bold text-[#101326] shadow-lg"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      </Show>
+
+      {/* Image preview modal (cover photo / profile picture) */}
+      <Show when={imagePreview()}>
+        <div
+          class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
+          onClick={() => setImagePreview(null)}
+        >
+          <div class="relative w-full max-w-sm" onClick={(e) => e.stopPropagation()}>
+            <img
+              src={imagePreview()!.src}
+              alt={imagePreview()!.alt}
+              class="max-h-[85vh] w-full rounded-2xl bg-black object-contain"
+              referrerpolicy="no-referrer"
+            />
+            <button
+              type="button"
+              onClick={() => setImagePreview(null)}
+              aria-label="Close preview"
+              class="absolute -right-2 -top-2 grid h-8 w-8 place-items-center rounded-full bg-white text-sm font-bold text-[#101326] shadow-lg"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      </Show>
     </div>
   );
 }

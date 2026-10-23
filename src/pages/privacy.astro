@@ -22,7 +22,8 @@ const choiceItems = [1, 2, 3];
         {t('privacy.title')}
       </h1>
       <p class="mt-4 text-lg text-[var(--text-secondary)]">
-        {t('privacy.effective')}<br />
+        {t('privacy.effective')}
+        <br />
         {t('privacy.updated')}
       </p>
     </header>
@@ -33,22 +34,29 @@ const choiceItems = [1, 2, 3];
       <!-- 1 -->
       <h2>{t('privacy.s1.title')}</h2>
       <p>
-        <strong>{t('privacy.s1.provided.title')}</strong>{t('privacy.s1.provided.text')}
+        <strong>{t('privacy.s1.provided.title')}</strong>
+        {t('privacy.s1.provided.text')}
       </p>
       <p>
-        <strong>{t('privacy.s1.auto.title')}</strong>{t('privacy.s1.auto.text')}
+        <strong>{t('privacy.s1.auto.title')}</strong>
+        {t('privacy.s1.auto.text')}
       </p>
       <ul>
-        {autoItems.map((n) => <li>{k(`privacy.s1.auto${n}`)}</li>)}
+        {autoItems.map((n) => (
+          <li>{k(`privacy.s1.auto${n}`)}</li>
+        ))}
       </ul>
       <p>
-        <strong>{t('privacy.s1.cookies.title')}</strong>{t('privacy.s1.cookies.text')}
+        <strong>{t('privacy.s1.cookies.title')}</strong>
+        {t('privacy.s1.cookies.text')}
       </p>
 
       <!-- 2 -->
       <h2>{t('privacy.s2.title')}</h2>
       <ul>
-        {useItems.map((n) => <li>{k(`privacy.s2.item${n}`)}</li>)}
+        {useItems.map((n) => (
+          <li>{k(`privacy.s2.item${n}`)}</li>
+        ))}
       </ul>
       <p>{t('privacy.s2.note')}</p>
 
@@ -62,7 +70,9 @@ const choiceItems = [1, 2, 3];
       <p>{t('privacy.s4.p2')}</p>
       <p>{t('privacy.s4.choicesIntro')}</p>
       <ul>
-        {choiceItems.map((n) => <li set:html={k(`privacy.s4.choice${n}`)} />)}
+        {choiceItems.map((n) => (
+          <li set:html={k(`privacy.s4.choice${n}`)} />
+        ))}
       </ul>
       <p>{t('privacy.s4.note')}</p>
 
@@ -105,9 +115,13 @@ const choiceItems = [1, 2, 3];
       <!-- 14 -->
       <h2>{t('privacy.s14.title')}</h2>
       <p>
-        <strong>{t('privacy.s14.name')}</strong><br />
-        {t('privacy.s14.emailLabel')} <a href="mailto:support@musicallyio.com">support@musicallyio.com</a><br />
-        {t('privacy.s14.websiteLabel')} <a href="https://musicallyio.com">https://musicallyio.com</a>
+        <strong>{t('privacy.s14.name')}</strong>
+        <br />
+        {t('privacy.s14.emailLabel')}{' '}
+        <a href="mailto:support@Musicaldown.com">support@Musicaldown.com</a>
+        <br />
+        {t('privacy.s14.websiteLabel')}{' '}
+        <a href="https://Musicaldown.com">https://Musicaldown.com</a>
       </p>
     </div>
   </main>

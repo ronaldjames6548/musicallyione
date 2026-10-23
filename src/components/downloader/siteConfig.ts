@@ -1,6 +1,6 @@
 // Change this one value to rename every downloaded file.
-// Result: musicallyio.com_<author>.mp4, musicallyio.com_<author>_audio.mp3, ...
-export const SITE_NAME = "musicallyio.com";
+// Result: musicaldown.se_<author>.mp4, musicaldown.se_<author>_audio.mp3, ...
+export const SITE_NAME = "musicaldown.se";
 
 // Where the download buttons fetch files from.
 //  - "/api/download"  -> proxy inside this Astro project (runs on Vercel)

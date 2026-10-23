@@ -10,7 +10,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://musicallyio.com',
+  site: 'https://musicaldown.se',
   output: 'static',
   adapter: vercel({ maxDuration: 30 }),
 

@@ -258,7 +258,7 @@ export const ui = {
       'Videos and music on TikTok belong to their creators. Please download only your own content or content you have permission to save and do not repost other peoples work as your own. See our <a href="/privacy">Privacy Policy</a>.',
     'about.principle4.title': 'Honest expectations.',
     'about.principle4.text':
-      ' TikTok changes often. When something stops working we would rather say so than overpromise. If a download fails, check the <a href="/faq">FAQ</a> or contact us.',
+      ' TikTok changes often. When something stops working we would rather say so than overpromise. If a download fails, check the FAQ or contact us.',
 
     'about.independentTitle': 'Independent service',
     'about.independentText':
@@ -597,7 +597,7 @@ export const ui = {
       'Videos and music on TikTok belong to their creators. Please download only your own content or content you have permission to save and do not repost other peoples work as your own. See our <a href="/privacy">Privacy Policy</a>.',
     'about.principle4.title': 'Honest expectations.',
     'about.principle4.text':
-      ' TikTok changes often. When something stops working we would rather say so than overpromise. If a download fails, check the <a href="/faq">FAQ</a> or contact us.',
+      ' TikTok changes often. When something stops working we would rather say so than overpromise. If a download fails, check the FAQ or contact us.',
     'about.independentTitle': 'Independent service',
     'about.independentText':
       'Musicaldown is an independent tool. It is not affiliated with, endorsed by or sponsored by TikTok or ByteDance Ltd. TikTok is a trademark of its respective owner and is used only to describe the content our tool works with.',
@@ -959,7 +959,7 @@ export const ui = {
       'Videos and music on TikTok belong to their creators. Please download only your own content or content you have permission to save and do not repost other peoples work as your own. See our <a href="/privacy">Privacy Policy</a>.',
     'about.principle4.title': 'Honest expectations.',
     'about.principle4.text':
-      ' TikTok changes often. When something stops working we would rather say so than overpromise. If a download fails, check the <a href="/faq">FAQ</a> or contact us.',
+      ' TikTok changes often. When something stops working we would rather say so than overpromise. If a download fails, check the FAQ or contact us.',
     'about.independentTitle': 'Independent service',
     'about.independentText':
       'Musicaldown is an independent tool. It is not affiliated with, endorsed by or sponsored by TikTok or ByteDance Ltd. TikTok is a trademark of its respective owner and is used only to describe the content our tool works with.',
@@ -1321,7 +1321,7 @@ export const ui = {
       'Videos and music on TikTok belong to their creators. Please download only your own content or content you have permission to save and do not repost other peoples work as your own. See our <a href="/privacy">Privacy Policy</a>.',
     'about.principle4.title': 'Honest expectations.',
     'about.principle4.text':
-      ' TikTok changes often. When something stops working we would rather say so than overpromise. If a download fails, check the <a href="/faq">FAQ</a> or contact us.',
+      ' TikTok changes often. When something stops working we would rather say so than overpromise. If a download fails, check the FAQ or contact us.',
     'about.independentTitle': 'Independent service',
     'about.independentText':
       'Musicaldown is an independent tool. It is not affiliated with, endorsed by or sponsored by TikTok or ByteDance Ltd. TikTok is a trademark of its respective owner and is used only to describe the content our tool works with.',

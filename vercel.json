@@ -1,4 +1,41 @@
 {
+  "redirects": [
+    {
+      "source": "/es/about",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/es/privacy",
+      "destination": "/privacy",
+      "permanent": true
+    },
+    {
+      "source": "/es/terms",
+      "destination": "/terms",
+      "permanent": true
+    },
+    {
+      "source": "/blog/getting-started",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/es/blog/getting-started",
+      "destination": "/es/blog",
+      "permanent": true
+    },
+    {
+      "source": "/case-studies/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/es/case-studies/:path*",
+      "destination": "/es",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -7,10 +44,22 @@
           "key": "Content-Security-Policy",
           "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; media-src 'self' blob: https:; font-src 'self' data: https:; connect-src 'self' https:; frame-src https:;"
         },
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "Strict-Transport-Security", "value": "max-age=31536000; includeSubDomains; preload" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=31536000; includeSubDomains; preload"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
       ]
     }
   ]

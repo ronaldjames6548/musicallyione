@@ -4,22 +4,21 @@ import { getCollection } from 'astro:content';
 export async function GET(context) {
   const blog = await getCollection('blog');
 
-  // Filter out drafts and sort by date
+  // English posts only, no drafts, newest first
   const items = blog
-    .filter((post) => !post.data.draft)
+    .filter((post) => !post.data.draft && post.id.startsWith('en/'))
     .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
     .map((post) => ({
       title: post.data.title,
       pubDate: post.data.pubDate,
       description: post.data.description,
-      // Astro 5 Content Layer API uses post.id for the slug
-      link: `/blog/${post.id}/`,
+      link: `/blog/${post.id.replace(/^en\//, '')}/`,
     }));
 
   return rss({
-    title: 'Astro SEO Theme Blog',
-    description: 'Insights and strategies on technical SEO, B2B marketing, and web performance.',
-    site: context.site || 'https://astro-seo-theme.vercel.app',
+    title: 'MusicalDown Blog',
+    description: 'Guides on saving public TikTok videos, MP4 and MP3 formats, and troubleshooting.',
+    site: context.site || 'https://musicaldown.se',
     items,
     customData: `<language>en-us</language>`,
   });

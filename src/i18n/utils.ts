@@ -1,5 +1,5 @@
 /**
- * i18n utility functions for Astro SEO Theme.
+ * i18n utility functions for MusicalDown.
  *
  * Usage in .astro components:
  *   import { getLangFromUrl, useTranslations, getLocalizedPath } from '../i18n/utils';
@@ -12,15 +12,16 @@ import { ui, languages, defaultLang, type Lang } from './ui';
 
 /**
  * Which pages exist for each language.
- *  - 'all'      -> the language mirrors the whole site (en, es)
- *  - string[]   -> only these paths exist in that language (id, vi: localized routes)
+ *  - 'all'      -> the language mirrors the whole site (en, id, vi)
+ *  - string[]   -> only these paths exist in that language (es)
  * Links to other pages in a limited language fall back to the English page, and
  * hreflang / language-picker entries are only generated where a page really exists.
- * When you add /id/about, add '/about' to the id list.
+ * When you add /es/about, add '/about' to the es list.
  */
 export const LOCALE_PAGES: Record<Lang, 'all' | string[]> = {
   en: 'all',
-  es: 'all',
+  // es has no localized About / Privacy / Terms yet: those links fall back to English.
+  es: ['/', '/download-tiktok-stories', '/tiktok-mp3', '/contact', '/blog', '/blog/using-musicallydown'],
   id: 'all',
   vi: 'all',
 };

@@ -1,19 +1,15 @@
 {
-  "name": "astro-seo-theme",
+  "name": "musicaldown",
   "type": "module",
   "version": "0.1.0",
-  "description": "The ultimate open-source Astro theme for B2B/SaaS marketing websites with advanced SEO, GEO & AEO optimization.",
-  "author": "David Rueda",
+  "description": "MusicalDown: a free, browser-based TikTok video and MP3 downloader built with Astro.",
   "license": "MIT",
   "keywords": [
-    "astro",
-    "seo",
-    "saas",
-    "b2b",
-    "tailwind",
-    "react",
-    "marketing",
-    "theme"
+    "tiktok",
+    "tiktok-downloader",
+    "mp4",
+    "mp3",
+    "astro"
   ],
   "engines": {
     "node": ">=22.12.0"

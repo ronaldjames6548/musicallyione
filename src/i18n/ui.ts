@@ -70,7 +70,7 @@ export const ui = {
     'how.step1.title': 'Copy the video link',
     'how.step1.text': 'Open the TikTok video, select Share, and choose Copy link. Make sure the video is accessible and you have permission to save it.',
     'how.step2.title': 'Paste it into MusicalDown',
-    'how.step2.text': 'Return to this page, paste the URL into the downloader field, and submit it for processing.',
+    'how.step2.text': 'Return to this page, paste the URL into the musical down TikTok downloader field and submit it for processing.',
     'how.step3.title': 'Review and save',
     'how.step3.text': "Choose a format that is actually offered for your link, then follow the download prompt and check your device's downloads.",
 

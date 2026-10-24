@@ -1,0 +1,147 @@
+---
+/**
+ * StoriesArticle.astro: the "Download TikTok stories" article.
+ * All copy comes from STORIES_PAGE in src/i18n/ui.ts, picked by the URL language
+ * (/ = en, /es/, /id/, /vi/). Edit the text there, not here.
+ */
+import { getLangFromUrl, getLocalizedPath } from '../../i18n/utils';
+import { getStoriesContent, type StoriesBlock } from '../../i18n/ui';
+
+const lang = getLangFromUrl(Astro.url);
+const c = getStoriesContent(lang);
+
+const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+/** **bold** and [label](/path | https://url) -> safe HTML; internal paths are localized. */
+function inline(s: string): string {
+  return esc(s)
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_m, label: string, href: string) => {
+      const external = /^https?:\/\//.test(href);
+      const url = external ? href : getLocalizedPath(lang, href);
+      return `<a href="${url}"${external ? ' target="_blank" rel="noopener noreferrer"' : ''}>${label}</a>`;
+    });
+}
+
+const plain = (s: string) => s.replace(/\*\*/g, '').replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
+
+const toc = [
+  ...c.sections.map((s) => ({ id: s.id, title: s.title })),
+  { id: 'faq', title: c.faqTitle },
+  { id: 'final', title: c.finalTitle },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  inLanguage: lang,
+  mainEntity: c.faq.map((f) => ({
+    '@type': 'Question',
+    name: plain(f.question),
+    acceptedAnswer: { '@type': 'Answer', text: plain(f.answer) },
+  })),
+};
+const faqJsonLd = JSON.stringify(faqSchema).replace(/</g, '\\u003c');
+
+const card = 'rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] p-5';
+const badge =
+  'flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#ef124e] font-bold text-white';
+---
+
+<div class="mx-auto max-w-6xl px-6 py-12">
+  <article
+    class="prose prose-zinc prose-lg mx-auto max-w-none [&_a]:underline [&_h2]:scroll-mt-20"
+  >
+
+    {c.intro.map((text) => <p set:html={inline(text)} />)}
+
+   
+
+    {c.sections.map((section) => (
+      <section>
+        <h2 id={section.id}>{section.title}</h2>
+        {section.blocks.map((b: StoriesBlock) => {
+          switch (b.t) {
+            case 'p':
+              return <p set:html={inline(b.text)} />;
+            case 'h3':
+              return <h3 set:html={inline(b.text)} />;
+            case 'ul':
+              return <ul>{b.items.map((i) => <li set:html={inline(i)} />)}</ul>;
+            case 'steps':
+              return (
+                <ol class="not-prose my-6 space-y-4">
+                  {b.items.map((i, n) => (
+                    <li class={`flex gap-4 ${card}`}>
+                      <span class={badge}>{n + 1}</span>
+                      <div class="text-[var(--text-secondary)]">
+                        <strong class="text-[var(--text-primary)]">{i.title}</strong>{' '}
+                        <span set:html={inline(i.text)} />
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              );
+            case 'ol':
+              return (
+                <ol>
+                  {b.items.map((i) => (
+                    <li>
+                      <strong>{i.title}</strong> <span set:html={inline(i.text)} />
+                    </li>
+                  ))}
+                </ol>
+              );
+            case 'cards':
+              return (
+                <div class={`not-prose my-6 grid gap-4 ${b.cols === 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-2'}`}>
+                  {b.items.map((i) => (
+                    <div class={card}>
+                      <h3 class="font-semibold text-[var(--text-primary)]">{i.title}</h3>
+                      <p class="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]" set:html={inline(i.text)} />
+                    </div>
+                  ))}
+                </div>
+              );
+            case 'callout':
+              return (
+                <div
+                  class="not-prose my-6 rounded-2xl border-l-4 border-[#ef124e] bg-[var(--bg-secondary)] p-5 leading-relaxed text-[var(--text-secondary)] [&_a]:text-[#ef124e] [&_a]:underline"
+                  set:html={inline(b.text)}
+                />
+              );
+          }
+        })}
+      </section>
+    ))}
+
+    <section>
+      <h2 id="faq">{c.faqTitle}</h2>
+      <div class="not-prose mt-4 space-y-3">
+        {c.faq.map((f, n) => (
+          <details
+            class="group rounded-2xl border border-[var(--border)] bg-[var(--bg-secondary)] [&_summary::-webkit-details-marker]:hidden"
+            open={n === 0}
+          >
+            <summary class="flex cursor-pointer items-center justify-between gap-4 p-5 font-semibold text-[var(--text-primary)]">
+              <span>{f.question}</span>
+              <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[var(--border)] transition-transform group-open:rotate-180" aria-hidden="true">
+                <svg class="h-4 w-4 text-[var(--text-secondary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" /></svg>
+              </span>
+            </summary>
+            <p class="px-5 pb-5 leading-relaxed text-[var(--text-secondary)]" set:html={inline(f.answer)} />
+          </details>
+        ))}
+      </div>
+      <script type="application/ld+json" set:html={faqJsonLd} />
+    </section>
+
+    <section>
+      <p set:html={inline(c.finalText)} />
+      <p class="not-prose mt-6 text-center">
+        <a href="#main-content" class="inline-block rounded-xl bg-[#ef124e] px-6 py-3 font-semibold text-white no-underline hover:opacity-90">{c.ctaLabel}</a>
+      </p>
+      <p class="text-center text-sm" set:html={inline(c.moreText)} />
+    </section>
+  </article>
+</div>

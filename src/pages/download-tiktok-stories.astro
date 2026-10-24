@@ -3,16 +3,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import HeroSection from '../components/marketing/HeroSection.astro';
+import StoriesArticle from '../components/marketing/StoriesArticle.astro';
+import { getStoriesContent } from '../i18n/ui';
+
+// All text lives in STORIES_PAGE (en) in src/i18n/ui.ts
+const c = getStoriesContent('en');
 ---
-<BaseLayout title="Download TikTok Stories Online | MusicallyDown" description="You can download TikTok stories without a watermark using the MusicallyDown downloader. Paste the story share link to extract and save the video without a watermark.">
+<BaseLayout title={c.metaTitle} description={c.metaDescription} ogType="article">
   <Header slot="header" />
-  <HeroSection />
-  <main class="mx-auto max-w-4xl px-6 py-12">
-    <article class="prose prose-zinc prose-lg mx-auto dark:prose-invert">
-      <h1>Download TikTok Stories</h1><p>Paste a public or otherwise accessible TikTok Story link and review the download options returned. Availability depends on the source and not every Story can be processed.</p><h2>How to save an accessible TikTok Story</h2>
-      <ol><li>Copy the Story link from TikTok.</li><li>Paste the link into the downloader above and submit it.</li><li>Review the available result and save the file if an option is provided.</li></ol>
-      <h2>Important notes</h2><p>Only save content you own or have permission to use. Private, deleted, region-restricted, or unsupported links may not work. Never share your TikTok password with a downloader.</p>
-    </article>
-  </main>
+  <HeroSection
+    titleStart={c.heroTitleStart}
+    titleHighlight={c.heroTitleHighlight}
+    description={c.heroDescription}
+  />
+  <StoriesArticle />
   <Footer slot="footer" />
 </BaseLayout>

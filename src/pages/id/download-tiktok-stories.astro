@@ -3,21 +3,19 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/layout/Header.astro';
 import Footer from '../../components/layout/Footer.astro';
 import HeroSection from '../../components/marketing/HeroSection.astro';
+import StoriesArticle from '../../components/marketing/StoriesArticle.astro';
+import { getStoriesContent } from '../../i18n/ui';
+
+// All text lives in STORIES_PAGE (id) in src/i18n/ui.ts
+const c = getStoriesContent('id');
 ---
-<BaseLayout title="Unduh TikTok Stories | MusicallyDown" description="Tempel tautan TikTok Story yang publik atau dapat diakses. Jika opsi unduhan tersedia, tinjau hasilnya lalu simpan file. Tidak semua tautan dapat diproses.">
-<Header slot="header" /><HeroSection />
-<main class="mx-auto max-w-4xl px-6 py-12">
-    <article class="prose prose-zinc prose-lg mx-auto dark:prose-invert">
-        <h2>Simpan TikTok Stories yang dapat diakses</h2>
-        <p>Tempel tautan TikTok Story yang publik atau dapat diakses. Jika opsi unduhan tersedia, tinjau hasilnya lalu simpan file. Tidak semua tautan dapat diproses.</p>
-        <h2>Cara menggunakan</h2>
-        <ol>
-            <li>Salin tautan dari TikTok.</li>
-            <li>Tempel tautan pada alat di atas.</li>
-            <li>Pilih opsi yang tersedia dan simpan file.</li>
-        </ol>
-        <p><a href="/id/">Kembali ke beranda</a></p>
-    </article>
-</main>
-<Footer slot="footer" />
+<BaseLayout title={c.metaTitle} description={c.metaDescription} ogType="article">
+  <Header slot="header" />
+  <HeroSection
+    titleStart={c.heroTitleStart}
+    titleHighlight={c.heroTitleHighlight}
+    description={c.heroDescription}
+  />
+  <StoriesArticle />
+  <Footer slot="footer" />
 </BaseLayout>

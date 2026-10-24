@@ -3,22 +3,19 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/layout/Header.astro';
 import Footer from '../../components/layout/Footer.astro';
 import HeroSection from '../../components/marketing/HeroSection.astro';
+import StoriesArticle from '../../components/marketing/StoriesArticle.astro';
+import { getStoriesContent } from '../../i18n/ui';
+
+// All text lives in STORIES_PAGE (es) in src/i18n/ui.ts
+const c = getStoriesContent('es');
 ---
-<BaseLayout title="Descargar historias de TikTok | MusicallyDown" description="Pega un enlace público o accesible de TikTok y revisa las opciones de descarga disponibles. No todos los enlaces se pueden procesar.">
-    <Header slot="header" />
-    <HeroSection />
-    <main class="mx-auto max-w-4xl px-6 py-12">
-        <article class="prose prose-zinc prose-lg mx-auto dark:prose-invert">
-            <h2>Descargar historias de TikTok</h2>
-            <p>Pega un enlace público o accesible de TikTok y revisa las opciones de descarga disponibles. No todos los enlaces se pueden procesar.</p>
-            <h2>Cómo funciona</h2>
-            <ol>
-                <li>Copia el enlace desde TikTok.</li>
-                <li>Pégalo en la herramienta de la página.</li>
-                <li>Revisa los formatos disponibles y guarda el archivo.</li>
-            </ol>
-            <p>Descarga únicamente contenido propio o cuyo uso tengas autorizado.</p>
-        </article>
-    </main>
-    <Footer slot="footer" />
+<BaseLayout title={c.metaTitle} description={c.metaDescription} ogType="article">
+  <Header slot="header" />
+  <HeroSection
+    titleStart={c.heroTitleStart}
+    titleHighlight={c.heroTitleHighlight}
+    description={c.heroDescription}
+  />
+  <StoriesArticle />
+  <Footer slot="footer" />
 </BaseLayout>

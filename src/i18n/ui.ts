@@ -1543,3 +1543,667 @@ export const ui = {
       'Bạn cũng có thể tìm MusicallyDown, Musically Down hoặc Musical Down. Bạn đã đến đúng nơi.',
   },
 } as const;
+
+/* =============================================================================
+ * "Download TikTok Stories" page content (one entry per enabled locale)
+ *
+ * Rendered by src/components/marketing/StoriesArticle.astro and used by:
+ *   src/pages/download-tiktok-stories.astro        (en)
+ *   src/pages/es/download-tiktok-stories.astro     (es)
+ *   src/pages/id/download-tiktok-stories.astro     (id)
+ *   src/pages/vi/download-tiktok-stories.astro     (vi)
+ *
+ * Inline markup allowed inside any text string:
+ *   **bold**   [label](/privacy)  -> internal link, localized automatically
+ *   [label](https://...)          -> external link (opens in a new tab)
+ * The record is typed with Lang, so TypeScript errors if a language is added to
+ * `languages` above without adding its entry here.
+ * ========================================================================== */
+
+export type StoriesBlock =
+  | { t: 'p'; text: string }
+  | { t: 'h3'; text: string }
+  | { t: 'ul'; items: string[] }
+  | { t: 'steps'; items: { title: string; text: string }[] }
+  | { t: 'ol'; items: { title: string; text: string }[] }
+  | { t: 'cards'; cols: 2 | 3; items: { title: string; text: string }[] }
+  | { t: 'callout'; text: string };
+
+export interface StoriesPageContent {
+  metaTitle: string;
+  metaDescription: string;
+  heroTitleStart: string;
+  heroTitleHighlight: string;
+  heroDescription: string;
+  byline: string;
+  intro: string[];
+  tocTitle: string;
+  sections: { id: string; title: string; blocks: StoriesBlock[] }[];
+  faqTitle: string;
+  faq: { question: string; answer: string }[];
+  finalTitle: string;
+  finalText: string;
+  ctaLabel: string;
+  moreText: string;
+}
+
+const p = (text: string): StoriesBlock => ({ t: 'p', text });
+const h3 = (text: string): StoriesBlock => ({ t: 'h3', text });
+const ul = (...items: string[]): StoriesBlock => ({ t: 'ul', items });
+const steps = (...items: [string, string][]): StoriesBlock => ({
+  t: 'steps',
+  items: items.map(([title, text]) => ({ title, text })),
+});
+const ol = (...items: [string, string][]): StoriesBlock => ({
+  t: 'ol',
+  items: items.map(([title, text]) => ({ title, text })),
+});
+const cards = (cols: 2 | 3, ...items: [string, string][]): StoriesBlock => ({
+  t: 'cards',
+  cols,
+  items: items.map(([title, text]) => ({ title, text })),
+});
+const callout = (text: string): StoriesBlock => ({ t: 'callout', text });
+
+export const STORIES_PAGE: Record<Lang, StoriesPageContent> = {
+  /* ------------------------------------------------------------------ EN */
+  en: {
+    metaTitle: 'TikTok Story Viewer & Downloader – Free, No Watermark',
+    metaDescription:
+      'View public TikTok stories anonymously and download TikTok Story in HD with no watermark. No login, no app. Paste a story link and save it.',
+    heroTitleStart: 'TikTok Story Viewer &',
+    heroTitleHighlight: 'Downloader',
+    heroDescription:
+      'Paste a public TikTok story link download TikTok Story in HD without a watermark. No app, no login, Free.',
+    byline: 'Oct 24, 2026 · @Baloch · Last updated: Oct 24, 2026',
+    intro: [
+      'An online TikTok story viewer and downloader gets around all three annoyances from an ordinary browser tab. You paste a story link, the public story loads, and you either watch it there or save it as an MP4, JPG or PNG file. There’s no app to install, no login and no fee.',
+      'A TikTok story disappears after 24 hours, and the app gives you very little control over what happens in that window. You can watch it, but only inside TikTok. If you’re logged in, the creator may see your name on the viewer list. And if you hit save, the clip comes out with a TikTok logo and a username stamped across it.',
+      
+    ],
+    tocTitle: 'In this guide',
+    sections: [
+      {
+        id: 'what-is',
+        title: 'What Is a TikTok Story Viewer and Downloader?',
+        blocks: [
+          p('It’s a web tool that fetches a public TikTok story and lets you watch or save it outside the app. It only reads what any visitor could already see on a public account, which is also why it can’t open private profiles.'),
+          p('People look for one for a handful of very ordinary reasons:'),
+          ul(
+            'Stories expire after 24 hours, so anything worth keeping has to be saved quickly.',
+            'Watching inside the app while signed in can put your name on the creator’s viewer list.',
+            'TikTok’s own save option adds a logo and a username to the video.',
+            'Plenty of people don’t have a TikTok account, or don’t want one just to look at a story.',
+          ),
+          p('MusicallyDown was built around exactly those problems.'),
+        ],
+      },
+      {
+        id: 'how-to',
+        title: 'How to Download TikTok Stories in Three Steps',
+        blocks: [
+          p('The whole process takes under a minute, and it’s the same on every device.'),
+          steps(
+            ['Copy the story link.', 'In TikTok, open the story and copy its link. Make sure the account is public and that you copy the story itself, not a regular video.'],
+            ['Paste it and press Download.', 'Paste the link into the box at the top of this page and submit. Wait a few seconds. If nothing appears, see the troubleshooting section below.'],
+            ['Watch or save.', 'Play the story in your browser, or use the download button. Videos arrive as MP4 and photos as JPG or PNG, and you can pick the no-watermark option.'],
+          ),
+        ],
+      },
+      {
+        id: 'why',
+        title: 'Why Use an Online TikTok Story Viewer and Downloader?',
+        blocks: [
+          h3('View TikTok stories anonymously'),
+          p('TikTok can show a creator who has watched their story, so watching while logged in may put your name on that list. This tool loads public story content outside the TikTok app, so your own account isn’t used to view it and shouldn’t appear as a viewer. You can also check TikTok’s own [support center](https://support.tiktok.com) for its current rules on story views.'),
+          h3('Download TikTok stories without a watermark'),
+          p('The in-app save button burns the TikTok logo and the creator’s username into the file. This tool fetches the story file from the source instead, so when you choose the no-watermark option, nothing is added on top.'),
+          h3('Save stories in HD, in their original quality'),
+          p('The tool aims to hand over the file without extra compression or re-encoding. The result still depends on the upload: a story shot in HD saves in HD, while a low-resolution one can’t be improved after the fact.'),
+          h3('Use it online, with no account and no installation'),
+          p('A TikTok story viewer online needs nothing but a browser. Open the site, paste a link, and start. It works on Android, iPhone, Windows, Mac and tablets.'),
+          h3('Searches stay private'),
+          p('Check the [privacy policy](/privacy) for exactly what is and isn’t logged. As with any online tool, read it yourself before relying on it.'),
+        ],
+      },
+      {
+        id: 'uses',
+        title: 'What You Can Do With It',
+        blocks: [
+          ul(
+            'Watch any public TikTok story in your browser, no sign-in needed.',
+            'Save stories you like before the 24-hour clock runs out.',
+            'Back up your own stories as standard MP4 files.',
+            'Check a creator’s stories without opening TikTok.',
+          ),
+        ],
+      },
+      {
+        id: 'who',
+        title: 'Who Uses a TikTok Story Viewer?',
+        blocks: [
+          cards(
+            3,
+            ['Creators & social managers', 'Keep an eye on what rivals, brands and influencers in your niche are posting, without your own account showing up as a viewer.'],
+            ['Marketers & brand teams', 'Track public accounts for competitor analysis or campaign research without a spare TikTok account just for that job.'],
+            ['Everyday viewers', 'Spot a tutorial, product drop or post from a favourite creator and save it in seconds, long before it expires.'],
+          ),
+        ],
+      },
+      {
+        id: 'devices',
+        title: 'TikTok Story Viewer and Downloader for iPhone, Android, PC and Mac',
+        blocks: [
+          p('A browser is all you need. There’s no APK to hunt down, no extension to add and no app to keep updated.'),
+          cards(
+            2,
+            ['iPhone', 'Open the site in Safari, paste the story link, and it loads on the page. Saved files usually land in the Files app or your Downloads list, depending on your iOS version and browser settings.'],
+            ['Android', 'Use Chrome, Firefox or whichever browser you already have. No APK and no side-loading. After downloading, look in your browser’s Downloads section or your file manager.'],
+            ['PC (Windows)', 'Open the site in Chrome or Edge. Viewing and downloading happen on the same page, and files go to your Downloads folder unless you’ve chosen another location.'],
+            ['Mac', 'Safari and Chrome both work. Paste the link, open the story and save it straight to your Mac. The process is identical to Windows.'],
+          ),
+          p('Whatever the device, you need an internet connection to fetch a story; downloaded files can then be opened offline in any media or image app.'),
+        ],
+      },
+      {
+        id: 'troubleshooting',
+        title: 'TikTok Story Not Loading? Troubleshooting',
+        blocks: [
+          p('No downloader is magic. If a result comes back empty or a download fails, work through these causes in order:'),
+          ol(
+            ['The link is wrong.', 'Check for missing characters. Copying it straight from the app is the safest fix.'],
+            ['The account is private.', 'Only public stories are reachable. No tool can legitimately get around TikTok’s private-account restrictions.'],
+            ['The story has expired.', 'Stories vanish after 24 hours, and once one is gone it can’t be fetched.'],
+            ['You pasted the wrong kind of link.', 'A regular TikTok video URL isn’t a story link and may not be recognised. Copy the link to the story itself.'],
+            ['The connection is unstable.', 'Refresh the page, check your internet, wait a moment and try again.'],
+            ['The browser blocked the download.', 'Check your browser’s download permissions and your Downloads folder. Don’t disable security protections or install unknown files to force a download.'],
+          ),
+          p('If it still fails, try a different browser, or confirm the story is still visible on the original profile.'),
+        ],
+      },
+      {
+        id: 'responsible',
+        title: 'Limits and Responsible Use',
+        blocks: [
+          ul(
+            '**Private accounts stay private.** Public stories only.',
+            '**Quality is capped by the upload.** The tool doesn’t upscale anything.',
+            '**Availability can change.** The tool depends on TikTok, so results can vary if TikTok changes how stories are served.',
+          ),
+          callout('Stories belong to the people who made them. Saving a clip for personal reference, a backup of your own posts or competitor research is one thing; reposting someone else’s content without asking is another. Never enter your TikTok password or verification codes into any downloader, and avoid suspicious pop-ups or unexpected downloads. Read the [terms of service](/terms), and keep in mind that this site isn’t affiliated with TikTok or ByteDance.'),
+        ],
+      },
+    ],
+    faqTitle: 'Frequently Asked Questions',
+    faq: [
+      { question: 'Will the account owner know I viewed their story?', answer: 'No, it shouldn’t. The tool reads public story content outside the TikTok app, so your account isn’t used to view the story and shouldn’t appear on the creator’s viewer list.' },
+      { question: 'Can I download TikTok stories without a watermark?', answer: 'Yes. The story file is fetched at the source rather than through TikTok’s save button, so no logo is added when you choose the no-watermark option. A watermark-free file still doesn’t give you the right to repost it.' },
+      { question: 'What file formats do the downloads use?', answer: 'Video stories save as MP4, which plays on practically any phone, tablet or computer. Photo stories save as JPG or PNG, depending on the original.' },
+      { question: 'Can I view stories from a private account?', answer: 'No. Private accounts share content with approved followers only, and this tool works with public accounts alone.' },
+      { question: 'Do I need a TikTok account?', answer: 'No. Paste a story link and it loads without any login.' },
+      { question: 'Is it free?', answer: 'Yes, it’s free with no sign-up. Check the site for any changes.' },
+      { question: 'Why is nothing loading after I paste a link?', answer: 'Most often the link is wrong, the account is private, or the story has expired. The troubleshooting section above lists every common cause.' },
+      { question: 'Does it work on mobile browsers?', answer: 'Yes. It runs in any standard browser on Android and iPhone and behaves the same as on a laptop or desktop.' },
+      { question: 'Can I save someone else’s TikTok story?', answer: 'Technically you may be able to, but being able to and being allowed to are different things. Keep saved clips for personal reference, and ask the creator before reposting or using their content elsewhere.' },
+      { question: 'Can I download my own TikTok stories?', answer: 'Yes, as long as the story is still live and public. For anything important, also keep the original files or use the save options in your own TikTok account, rather than relying on a single third-party site as your only backup.' },
+      { question: 'Is it safe to use an online TikTok story downloader?', answer: 'It’s safe when you use common sense. Never share passwords or codes, read the privacy policy, and ignore any prompt to install an app or extension. No online service can promise perfect anonymity, so stick to public content.' },
+    ],
+    finalTitle: 'Final Thoughts',
+    finalText:
+      'Stories are built to be temporary, but your need to watch or keep them often isn’t. A browser-based viewer and downloader lets you check public stories without logging in, keeps your account off the viewer list, and saves clean files without a logo on top. Just remember its limits: public accounts only, and quality that depends on the original upload.',
+    ctaLabel: 'Paste a story link and try it',
+    moreText: 'Need more than stories? Try the [TikTok video downloader](/) or [TikTok to MP3](/tiktok-mp3).',
+  },
+
+  /* ------------------------------------------------------------------ ES */
+  es: {
+    metaTitle: 'Visor y descargador de historias de TikTok – Gratis, sin marca de agua',
+    metaDescription:
+      'Mira historias públicas de TikTok de forma anónima y descárgalas en HD sin marca de agua. Sin registro ni app. Pega el enlace de la historia y guárdala.',
+    heroTitleStart: 'Visor de historias de TikTok y',
+    heroTitleHighlight: 'descargador',
+    heroDescription:
+      'Pega el enlace de una historia pública, míralo en tu navegador y guárdalo sin marca de agua. Sin app, sin registro y sin coste.',
+    byline: '24 oct 2026 · @Baloch · Última actualización: 24 oct 2026',
+    intro: [
+      'Una historia de TikTok desaparece a las 24 horas y la app te da muy poco control sobre lo que pasa en ese tiempo. Puedes verla, pero solo dentro de TikTok. Si has iniciado sesión, el creador puede ver tu nombre en la lista de espectadores. Y si pulsas guardar, el clip sale con el logo de TikTok y un nombre de usuario encima.',
+      'Un visor y descargador de historias de TikTok online resuelve las tres molestias desde una pestaña normal del navegador. Pegas el enlace de una historia, se carga la historia pública y puedes verla allí mismo o guardarla como archivo MP4, JPG o PNG. No hay que instalar nada, ni iniciar sesión, ni pagar.',
+      'Esta guía explica cómo funciona la herramienta, los pasos exactos, quién la usa, cómo solucionar una historia que no carga y cuáles son sus límites.',
+    ],
+    tocTitle: 'En esta guía',
+    sections: [
+      {
+        id: 'que-es',
+        title: '¿Qué es un visor y descargador de historias de TikTok?',
+        blocks: [
+          p('Es una herramienta web que obtiene una historia pública de TikTok y te permite verla o guardarla fuera de la app. Solo lee lo que cualquier visitante ya podría ver en una cuenta pública, y por eso no puede abrir perfiles privados.'),
+          p('La gente la busca por motivos muy corrientes:'),
+          ul(
+            'Las historias caducan a las 24 horas, así que lo que merece la pena conservar hay que guardarlo rápido.',
+            'Verlas dentro de la app con la sesión iniciada puede poner tu nombre en la lista de espectadores del creador.',
+            'La opción de guardar de TikTok añade un logo y un nombre de usuario al vídeo.',
+            'Mucha gente no tiene cuenta de TikTok, o no quiere crear una solo para ver una historia.',
+          ),
+          p('MusicallyDown nació precisamente para resolver esos problemas.'),
+        ],
+      },
+      {
+        id: 'como-descargar',
+        title: 'Cómo descargar historias de TikTok en tres pasos',
+        blocks: [
+          p('Todo el proceso lleva menos de un minuto y es igual en cualquier dispositivo.'),
+          steps(
+            ['Copia el enlace de la historia.', 'En TikTok, abre la historia y copia su enlace. Comprueba que la cuenta sea pública y que copias la historia en sí, no un vídeo normal.'],
+            ['Pégalo y pulsa Descargar.', 'Pega el enlace en el cuadro de la parte superior de esta página y envíalo. Espera unos segundos. Si no aparece nada, consulta la sección de solución de problemas.'],
+            ['Mírala o guárdala.', 'Reproduce la historia en el navegador o usa el botón de descarga. Los vídeos llegan como MP4 y las fotos como JPG o PNG, y puedes elegir la opción sin marca de agua.'],
+          ),
+        ],
+      },
+      {
+        id: 'por-que',
+        title: '¿Por qué usar un visor y descargador de historias de TikTok online?',
+        blocks: [
+          h3('Ver historias de TikTok de forma anónima'),
+          p('TikTok puede mostrar al creador quién ha visto su historia, así que verla con la sesión iniciada puede poner tu nombre en esa lista. Esta herramienta carga el contenido público fuera de la app de TikTok, por lo que tu cuenta no se usa para verlo y no debería aparecer como espectador. También puedes consultar el [centro de ayuda](https://support.tiktok.com) de TikTok para ver sus normas actuales sobre las visualizaciones de historias.'),
+          h3('Descargar historias de TikTok sin marca de agua'),
+          p('El botón de guardar de la app incrusta el logo de TikTok y el nombre del creador en el archivo. Esta herramienta obtiene el archivo de la historia desde el origen, así que al elegir la opción sin marca de agua no se añade nada encima.'),
+          h3('Guardar historias en HD y en su calidad original'),
+          p('La herramienta intenta entregar el archivo sin compresión ni recodificación adicionales. El resultado depende igualmente de la subida: una historia grabada en HD se guarda en HD, y una de baja resolución no se puede mejorar después.'),
+          h3('Úsalo online, sin cuenta y sin instalar nada'),
+          p('Un visor de historias de TikTok online solo necesita un navegador. Abre el sitio, pega un enlace y empieza. Funciona en Android, iPhone, Windows, Mac y tabletas.'),
+          h3('Tus búsquedas siguen siendo privadas'),
+          p('Consulta la [política de privacidad](/privacy) para saber exactamente qué se registra y qué no. Como con cualquier herramienta online, léela tú mismo antes de fiarte.'),
+        ],
+      },
+      {
+        id: 'que-puedes-hacer',
+        title: 'Qué puedes hacer con ella',
+        blocks: [
+          ul(
+            'Ver cualquier historia pública de TikTok en el navegador, sin iniciar sesión.',
+            'Guardar las historias que te gusten antes de que se acabe el plazo de 24 horas.',
+            'Hacer copia de tus propias historias como archivos MP4 estándar.',
+            'Consultar las historias de un creador sin abrir TikTok.',
+          ),
+        ],
+      },
+      {
+        id: 'quien-lo-usa',
+        title: '¿Quién usa un visor de historias de TikTok?',
+        blocks: [
+          cards(
+            3,
+            ['Creadores y community managers', 'Siguen lo que publican competidores, marcas e influencers de su nicho sin que su propia cuenta aparezca como espectador.'],
+            ['Marketing y equipos de marca', 'Vigilan cuentas públicas para analizar a la competencia o investigar campañas sin necesitar una cuenta de TikTok de repuesto.'],
+            ['Usuarios habituales', 'Ven un tutorial, un lanzamiento de producto o una publicación de su creador favorito y lo guardan en segundos, mucho antes de que caduque.'],
+          ),
+        ],
+      },
+      {
+        id: 'dispositivos',
+        title: 'Visor y descargador de historias de TikTok para iPhone, Android, PC y Mac',
+        blocks: [
+          p('Solo necesitas un navegador. No hay que buscar ningún APK, ni añadir extensiones, ni mantener una app actualizada.'),
+          cards(
+            2,
+            ['iPhone', 'Abre el sitio en Safari, pega el enlace de la historia y se carga en la página. Los archivos guardados suelen ir a la app Archivos o a la lista de descargas, según tu versión de iOS y los ajustes del navegador.'],
+            ['Android', 'Usa Chrome, Firefox o el navegador que ya tengas. Sin APK ni instalaciones externas. Tras descargar, mira en la sección de descargas del navegador o en tu gestor de archivos.'],
+            ['PC (Windows)', 'Abre el sitio en Chrome o Edge. Ver y descargar se hace en la misma página, y los archivos van a la carpeta Descargas salvo que elijas otra ubicación.'],
+            ['Mac', 'Safari y Chrome funcionan bien. Pega el enlace, abre la historia y guárdala directamente en tu Mac. El proceso es idéntico al de Windows.'],
+          ),
+          p('Sea cual sea el dispositivo, necesitas conexión a internet para obtener una historia; después, los archivos descargados se pueden abrir sin conexión en cualquier app de vídeo o imagen.'),
+        ],
+      },
+      {
+        id: 'solucion-de-problemas',
+        title: '¿La historia de TikTok no carga? Solución de problemas',
+        blocks: [
+          p('Ningún descargador hace magia. Si el resultado sale vacío o falla la descarga, repasa estas causas en orden:'),
+          ol(
+            ['El enlace es incorrecto.', 'Comprueba que no falten caracteres. Copiarlo directamente desde la app es la solución más segura.'],
+            ['La cuenta es privada.', 'Solo se puede acceder a historias públicas. Ninguna herramienta puede saltarse legítimamente las restricciones de las cuentas privadas de TikTok.'],
+            ['La historia ha caducado.', 'Las historias desaparecen a las 24 horas y, una vez eliminadas, no se pueden obtener.'],
+            ['Has pegado el tipo de enlace equivocado.', 'La URL de un vídeo normal de TikTok no es un enlace de historia y puede que no se reconozca. Copia el enlace de la propia historia.'],
+            ['La conexión es inestable.', 'Actualiza la página, revisa tu conexión a internet, espera un momento y vuelve a intentarlo.'],
+            ['El navegador bloqueó la descarga.', 'Revisa los permisos de descarga del navegador y tu carpeta de Descargas. No desactives protecciones de seguridad ni instales archivos desconocidos para forzar una descarga.'],
+          ),
+          p('Si sigue fallando, prueba con otro navegador o confirma que la historia sigue visible en el perfil original.'),
+        ],
+      },
+      {
+        id: 'limites',
+        title: 'Límites y uso responsable',
+        blocks: [
+          ul(
+            '**Las cuentas privadas siguen siendo privadas.** Solo historias públicas.',
+            '**La calidad depende de la subida.** La herramienta no aumenta la resolución de nada.',
+            '**La disponibilidad puede cambiar.** La herramienta depende de TikTok, así que los resultados pueden variar si TikTok cambia la forma de servir las historias.',
+          ),
+          callout('Las historias pertenecen a quienes las crearon. Guardar un clip como referencia personal, como copia de tus propias publicaciones o para investigar a la competencia es una cosa; volver a publicar contenido ajeno sin permiso es otra. Nunca introduzcas tu contraseña de TikTok ni códigos de verificación en ningún descargador, y evita ventanas emergentes sospechosas o descargas inesperadas. Lee las [condiciones del servicio](/terms) y ten en cuenta que este sitio no está afiliado a TikTok ni a ByteDance.'),
+        ],
+      },
+    ],
+    faqTitle: 'Preguntas frecuentes',
+    faq: [
+      { question: '¿Sabrá el dueño de la cuenta que he visto su historia?', answer: 'No, no debería. La herramienta lee el contenido público fuera de la app de TikTok, así que tu cuenta no se usa para ver la historia y no debería aparecer en la lista de espectadores del creador.' },
+      { question: '¿Puedo descargar historias de TikTok sin marca de agua?', answer: 'Sí. El archivo de la historia se obtiene en el origen y no mediante el botón de guardar de TikTok, así que no se añade ningún logo al elegir la opción sin marca de agua. Un archivo sin marca de agua tampoco te da derecho a volver a publicarlo.' },
+      { question: '¿Qué formatos de archivo usan las descargas?', answer: 'Las historias en vídeo se guardan como MP4, que se reproduce en prácticamente cualquier móvil, tableta u ordenador. Las historias de foto se guardan como JPG o PNG, según el original.' },
+      { question: '¿Puedo ver historias de una cuenta privada?', answer: 'No. Las cuentas privadas comparten su contenido solo con seguidores aprobados, y esta herramienta funciona únicamente con cuentas públicas.' },
+      { question: '¿Necesito una cuenta de TikTok?', answer: 'No. Pega el enlace de una historia y se carga sin iniciar sesión.' },
+      { question: '¿Es gratis?', answer: 'Sí, es gratis y sin registro. Consulta el sitio por si hubiera cambios.' },
+      { question: '¿Por qué no carga nada después de pegar un enlace?', answer: 'Lo más habitual es que el enlace sea incorrecto, la cuenta sea privada o la historia haya caducado. La sección de solución de problemas de arriba recoge todas las causas habituales.' },
+      { question: '¿Funciona en navegadores móviles?', answer: 'Sí. Funciona en cualquier navegador estándar de Android e iPhone y se comporta igual que en un portátil o un ordenador de sobremesa.' },
+      { question: '¿Puedo guardar la historia de TikTok de otra persona?', answer: 'Técnicamente quizá puedas, pero poder y tener permiso son cosas distintas. Usa los clips guardados como referencia personal y pregunta al creador antes de volver a publicar o usar su contenido en otro sitio.' },
+      { question: '¿Puedo descargar mis propias historias de TikTok?', answer: 'Sí, siempre que la historia siga activa y sea pública. Para lo importante, conserva también los archivos originales o usa las opciones de guardado de tu propia cuenta de TikTok, en lugar de depender de un único sitio de terceros como copia de seguridad.' },
+      { question: '¿Es seguro usar un descargador de historias de TikTok online?', answer: 'Lo es si usas el sentido común. No compartas contraseñas ni códigos, lee la política de privacidad e ignora cualquier petición de instalar una app o extensión. Ningún servicio online puede prometer un anonimato perfecto, así que limítate a contenido público.' },
+    ],
+    finalTitle: 'Reflexión final',
+    finalText:
+      'Las historias están hechas para ser temporales, pero tu necesidad de verlas o conservarlas muchas veces no lo es. Un visor y descargador en el navegador te permite consultar historias públicas sin iniciar sesión, mantiene tu cuenta fuera de la lista de espectadores y guarda archivos limpios sin logo encima. Solo recuerda sus límites: únicamente cuentas públicas y una calidad que depende de la subida original.',
+    ctaLabel: 'Pega un enlace de historia y pruébalo',
+    moreText: '¿Necesitas algo más que historias? Prueba el [descargador de vídeos de TikTok](/) o [TikTok a MP3](/tiktok-mp3).',
+  },
+
+  /* ------------------------------------------------------------------ ID */
+  id: {
+    metaTitle: 'Penampil & Pengunduh Story TikTok – Gratis, Tanpa Watermark',
+    metaDescription:
+      'Lihat story TikTok publik secara anonim dan unduh dalam HD tanpa watermark. Tanpa login, tanpa aplikasi. Tempel tautan story lalu simpan.',
+    heroTitleStart: 'Penampil Story TikTok &',
+    heroTitleHighlight: 'Pengunduh',
+    heroDescription:
+      'Tempel tautan story publik, tonton di browser dan simpan tanpa watermark. Tanpa aplikasi, tanpa login, tanpa biaya.',
+    byline: '24 Okt 2026 · @Baloch · Terakhir diperbarui: 24 Okt 2026',
+    intro: [
+      'Story TikTok menghilang setelah 24 jam, dan aplikasinya hanya memberi sedikit kendali selama waktu itu. Anda bisa menontonnya, tetapi hanya di dalam TikTok. Jika Anda login, kreator mungkin melihat nama Anda di daftar penonton. Dan jika Anda menekan simpan, klipnya keluar dengan logo TikTok dan nama pengguna di atasnya.',
+      'Penampil dan pengunduh story TikTok online mengatasi ketiga masalah itu dari tab browser biasa. Anda menempel tautan story, story publik dimuat, lalu Anda bisa menontonnya di sana atau menyimpannya sebagai file MP4, JPG, atau PNG. Tidak perlu memasang aplikasi, tidak perlu login, dan tidak ada biaya.',
+      'Panduan ini membahas cara kerja alat ini, langkah-langkah yang tepat, siapa yang menggunakannya, cara memperbaiki story yang tidak termuat, dan di mana batasannya.',
+    ],
+    tocTitle: 'Dalam panduan ini',
+    sections: [
+      {
+        id: 'apa-itu',
+        title: 'Apa Itu Penampil dan Pengunduh Story TikTok?',
+        blocks: [
+          p('Ini adalah alat web yang mengambil story TikTok publik dan memungkinkan Anda menonton atau menyimpannya di luar aplikasi. Alat ini hanya membaca apa yang bisa dilihat pengunjung mana pun di akun publik, itulah sebabnya alat ini tidak bisa membuka profil privat.'),
+          p('Orang mencarinya karena beberapa alasan yang sangat umum:'),
+          ul(
+            'Story kedaluwarsa setelah 24 jam, jadi apa pun yang layak disimpan harus disimpan dengan cepat.',
+            'Menonton di dalam aplikasi saat login bisa menempatkan nama Anda di daftar penonton kreator.',
+            'Opsi simpan bawaan TikTok menambahkan logo dan nama pengguna ke video.',
+            'Banyak orang tidak punya akun TikTok, atau tidak mau membuatnya hanya untuk melihat sebuah story.',
+          ),
+          p('MusicallyDown dibuat tepat untuk mengatasi masalah-masalah tersebut.'),
+        ],
+      },
+      {
+        id: 'cara-unduh',
+        title: 'Cara Mengunduh Story TikTok dalam Tiga Langkah',
+        blocks: [
+          p('Seluruh prosesnya kurang dari satu menit dan sama di setiap perangkat.'),
+          steps(
+            ['Salin tautan story.', 'Di TikTok, buka story lalu salin tautannya. Pastikan akunnya publik dan Anda menyalin story itu sendiri, bukan video biasa.'],
+            ['Tempel lalu tekan Unduh.', 'Tempel tautan ke kotak di bagian atas halaman ini lalu kirim. Tunggu beberapa detik. Jika tidak ada yang muncul, lihat bagian pemecahan masalah di bawah.'],
+            ['Tonton atau simpan.', 'Putar story di browser, atau gunakan tombol unduh. Video diterima sebagai MP4 dan foto sebagai JPG atau PNG, dan Anda bisa memilih opsi tanpa watermark.'],
+          ),
+        ],
+      },
+      {
+        id: 'mengapa',
+        title: 'Mengapa Menggunakan Penampil dan Pengunduh Story TikTok Online?',
+        blocks: [
+          h3('Lihat story TikTok secara anonim'),
+          p('TikTok bisa menunjukkan kepada kreator siapa yang menonton story mereka, jadi menonton saat login bisa menempatkan nama Anda di daftar itu. Alat ini memuat konten story publik di luar aplikasi TikTok, sehingga akun Anda tidak digunakan untuk melihatnya dan seharusnya tidak muncul sebagai penonton. Anda juga bisa memeriksa [pusat bantuan](https://support.tiktok.com) TikTok untuk aturan terbaru tentang tayangan story.'),
+          h3('Unduh story TikTok tanpa watermark'),
+          p('Tombol simpan di aplikasi menanamkan logo TikTok dan nama pengguna kreator ke dalam file. Alat ini mengambil file story dari sumbernya, jadi saat Anda memilih opsi tanpa watermark, tidak ada yang ditambahkan di atasnya.'),
+          h3('Simpan story dalam HD, dengan kualitas aslinya'),
+          p('Alat ini berusaha memberikan file tanpa kompresi atau encode ulang tambahan. Hasilnya tetap bergantung pada unggahan: story yang direkam dalam HD tersimpan dalam HD, sedangkan yang beresolusi rendah tidak bisa ditingkatkan setelahnya.'),
+          h3('Gunakan online, tanpa akun dan tanpa instalasi'),
+          p('Penampil story TikTok online hanya butuh browser. Buka situs, tempel tautan, dan mulai. Berfungsi di Android, iPhone, Windows, Mac, dan tablet.'),
+          h3('Pencarian tetap privat'),
+          p('Periksa [kebijakan privasi](/privacy) untuk mengetahui persis apa yang dicatat dan tidak dicatat. Seperti alat online lainnya, baca sendiri sebelum mengandalkannya.'),
+        ],
+      },
+      {
+        id: 'kegunaan',
+        title: 'Yang Bisa Anda Lakukan',
+        blocks: [
+          ul(
+            'Tonton story TikTok publik mana pun di browser, tanpa perlu login.',
+            'Simpan story yang Anda suka sebelum batas 24 jam habis.',
+            'Cadangkan story Anda sendiri sebagai file MP4 standar.',
+            'Lihat story kreator tanpa membuka TikTok.',
+          ),
+        ],
+      },
+      {
+        id: 'siapa-pengguna',
+        title: 'Siapa yang Menggunakan Penampil Story TikTok?',
+        blocks: [
+          cards(
+            3,
+            ['Kreator & pengelola media sosial', 'Memantau apa yang diposting pesaing, merek, dan influencer di niche Anda, tanpa akun Anda sendiri muncul sebagai penonton.'],
+            ['Pemasar & tim merek', 'Melacak akun publik untuk analisis pesaing atau riset kampanye tanpa perlu akun TikTok cadangan khusus untuk pekerjaan itu.'],
+            ['Penonton sehari-hari', 'Menemukan tutorial, peluncuran produk, atau postingan kreator favorit lalu menyimpannya dalam hitungan detik, jauh sebelum kedaluwarsa.'],
+          ),
+        ],
+      },
+      {
+        id: 'perangkat',
+        title: 'Penampil dan Pengunduh Story TikTok untuk iPhone, Android, PC, dan Mac',
+        blocks: [
+          p('Anda hanya butuh browser. Tidak perlu mencari APK, menambah ekstensi, atau memperbarui aplikasi.'),
+          cards(
+            2,
+            ['iPhone', 'Buka situs di Safari, tempel tautan story, dan story termuat di halaman. File yang disimpan biasanya masuk ke aplikasi File atau daftar Unduhan, tergantung versi iOS dan pengaturan browser Anda.'],
+            ['Android', 'Gunakan Chrome, Firefox, atau browser apa pun yang sudah ada. Tanpa APK dan tanpa side-loading. Setelah mengunduh, cek bagian Unduhan di browser atau pengelola file Anda.'],
+            ['PC (Windows)', 'Buka situs di Chrome atau Edge. Menonton dan mengunduh dilakukan di halaman yang sama, dan file masuk ke folder Unduhan kecuali Anda memilih lokasi lain.'],
+            ['Mac', 'Safari dan Chrome sama-sama berfungsi. Tempel tautan, buka story, dan simpan langsung ke Mac Anda. Prosesnya sama dengan Windows.'],
+          ),
+          p('Di perangkat apa pun, Anda butuh koneksi internet untuk mengambil story; file yang sudah diunduh kemudian bisa dibuka offline di aplikasi media atau gambar mana pun.'),
+        ],
+      },
+      {
+        id: 'pemecahan-masalah',
+        title: 'Story TikTok Tidak Termuat? Pemecahan Masalah',
+        blocks: [
+          p('Tidak ada pengunduh yang ajaib. Jika hasil kosong atau unduhan gagal, periksa penyebab berikut secara berurutan:'),
+          ol(
+            ['Tautannya salah.', 'Periksa karakter yang hilang. Menyalinnya langsung dari aplikasi adalah perbaikan paling aman.'],
+            ['Akunnya privat.', 'Hanya story publik yang bisa dijangkau. Tidak ada alat yang secara sah bisa menembus pembatasan akun privat TikTok.'],
+            ['Story sudah kedaluwarsa.', 'Story hilang setelah 24 jam, dan setelah hilang tidak bisa diambil lagi.'],
+            ['Anda menempel jenis tautan yang salah.', 'URL video TikTok biasa bukan tautan story dan mungkin tidak dikenali. Salin tautan story itu sendiri.'],
+            ['Koneksi tidak stabil.', 'Muat ulang halaman, periksa internet, tunggu sebentar, lalu coba lagi.'],
+            ['Browser memblokir unduhan.', 'Periksa izin unduhan browser dan folder Unduhan Anda. Jangan menonaktifkan perlindungan keamanan atau memasang file tidak dikenal untuk memaksa unduhan.'],
+          ),
+          p('Jika masih gagal, coba browser lain, atau pastikan story masih terlihat di profil aslinya.'),
+        ],
+      },
+      {
+        id: 'batasan',
+        title: 'Batasan dan Penggunaan yang Bertanggung Jawab',
+        blocks: [
+          ul(
+            '**Akun privat tetap privat.** Hanya story publik.',
+            '**Kualitas dibatasi oleh unggahan.** Alat ini tidak meningkatkan resolusi apa pun.',
+            '**Ketersediaan bisa berubah.** Alat ini bergantung pada TikTok, jadi hasil bisa bervariasi jika TikTok mengubah cara menyajikan story.',
+          ),
+          callout('Story adalah milik orang yang membuatnya. Menyimpan klip untuk referensi pribadi, cadangan postingan Anda sendiri, atau riset pesaing adalah satu hal; memposting ulang konten orang lain tanpa izin adalah hal lain. Jangan pernah memasukkan kata sandi TikTok atau kode verifikasi ke pengunduh mana pun, dan hindari pop-up mencurigakan atau unduhan tak terduga. Baca [ketentuan layanan](/terms), dan ingat bahwa situs ini tidak berafiliasi dengan TikTok atau ByteDance.'),
+        ],
+      },
+    ],
+    faqTitle: 'Pertanyaan yang Sering Diajukan',
+    faq: [
+      { question: 'Apakah pemilik akun akan tahu saya melihat story mereka?', answer: 'Seharusnya tidak. Alat ini membaca konten story publik di luar aplikasi TikTok, jadi akun Anda tidak digunakan untuk melihat story dan seharusnya tidak muncul di daftar penonton kreator.' },
+      { question: 'Bisakah saya mengunduh story TikTok tanpa watermark?', answer: 'Bisa. File story diambil dari sumbernya, bukan lewat tombol simpan TikTok, jadi tidak ada logo yang ditambahkan saat Anda memilih opsi tanpa watermark. File tanpa watermark tetap tidak memberi Anda hak untuk memposting ulang.' },
+      { question: 'Format file apa yang digunakan untuk unduhan?', answer: 'Story video disimpan sebagai MP4, yang bisa diputar di hampir semua ponsel, tablet, atau komputer. Story foto disimpan sebagai JPG atau PNG, tergantung aslinya.' },
+      { question: 'Bisakah saya melihat story dari akun privat?', answer: 'Tidak. Akun privat hanya membagikan konten kepada pengikut yang disetujui, dan alat ini hanya bekerja dengan akun publik.' },
+      { question: 'Apakah saya perlu akun TikTok?', answer: 'Tidak. Tempel tautan story dan story termuat tanpa login apa pun.' },
+      { question: 'Apakah gratis?', answer: 'Ya, gratis tanpa pendaftaran. Periksa situs jika ada perubahan.' },
+      { question: 'Mengapa tidak ada yang termuat setelah saya menempel tautan?', answer: 'Paling sering tautannya salah, akunnya privat, atau story sudah kedaluwarsa. Bagian pemecahan masalah di atas memuat semua penyebab umum.' },
+      { question: 'Apakah berfungsi di browser ponsel?', answer: 'Ya. Berjalan di browser standar mana pun di Android dan iPhone dan berperilaku sama seperti di laptop atau desktop.' },
+      { question: 'Bisakah saya menyimpan story TikTok milik orang lain?', answer: 'Secara teknis mungkin bisa, tetapi bisa dan diizinkan adalah dua hal berbeda. Gunakan klip yang disimpan untuk referensi pribadi, dan minta izin kreator sebelum memposting ulang atau menggunakan kontennya di tempat lain.' },
+      { question: 'Bisakah saya mengunduh story TikTok saya sendiri?', answer: 'Bisa, selama story masih aktif dan publik. Untuk hal penting, simpan juga file aslinya atau gunakan opsi simpan di akun TikTok Anda sendiri, daripada mengandalkan satu situs pihak ketiga sebagai satu-satunya cadangan.' },
+      { question: 'Apakah aman menggunakan pengunduh story TikTok online?', answer: 'Aman jika Anda menggunakan akal sehat. Jangan bagikan kata sandi atau kode, baca kebijakan privasi, dan abaikan permintaan untuk memasang aplikasi atau ekstensi. Tidak ada layanan online yang bisa menjanjikan anonimitas sempurna, jadi tetaplah pada konten publik.' },
+    ],
+    finalTitle: 'Penutup',
+    finalText:
+      'Story dibuat untuk bersifat sementara, tetapi kebutuhan Anda untuk menonton atau menyimpannya sering kali tidak. Penampil dan pengunduh berbasis browser memungkinkan Anda melihat story publik tanpa login, menjaga akun Anda tetap di luar daftar penonton, dan menyimpan file bersih tanpa logo di atasnya. Ingat saja batasannya: hanya akun publik, dan kualitas yang bergantung pada unggahan asli.',
+    ctaLabel: 'Tempel tautan story dan coba',
+    moreText: 'Butuh lebih dari sekadar story? Coba [pengunduh video TikTok](/) atau [TikTok ke MP3](/tiktok-mp3).',
+  },
+
+  /* ------------------------------------------------------------------ VI */
+  vi: {
+    metaTitle: 'Xem & Tải TikTok Story – Miễn phí, không watermark',
+    metaDescription:
+      'Xem TikTok story công khai ẩn danh và tải về chất lượng HD không watermark. Không cần đăng nhập, không cần ứng dụng. Dán liên kết story rồi lưu.',
+    heroTitleStart: 'Xem & Tải TikTok Story,',
+    heroTitleHighlight: 'không watermark',
+    heroDescription:
+      'Dán liên kết story công khai, xem ngay trên trình duyệt và lưu về không watermark. Không ứng dụng, không đăng nhập, không mất phí.',
+    byline: '24/10/2026 · @Baloch · Cập nhật lần cuối: 24/10/2026',
+    intro: [
+      'TikTok story biến mất sau 24 giờ, và ứng dụng cho bạn rất ít quyền kiểm soát trong khoảng thời gian đó. Bạn có thể xem, nhưng chỉ trong TikTok. Nếu đã đăng nhập, người tạo có thể thấy tên bạn trong danh sách người xem. Và nếu bấm lưu, đoạn clip sẽ có logo TikTok và tên người dùng đè lên.',
+      'Công cụ xem và tải TikTok story trực tuyến giải quyết cả ba phiền toái đó ngay từ một tab trình duyệt bình thường. Bạn dán liên kết story, story công khai được tải lên, rồi xem ngay tại đó hoặc lưu thành tệp MP4, JPG hoặc PNG. Không cần cài ứng dụng, không cần đăng nhập và không mất phí.',
+      'Hướng dẫn này giải thích cách công cụ hoạt động, các bước cụ thể, ai thường dùng, cách xử lý khi story không tải được và những giới hạn của nó.',
+    ],
+    tocTitle: 'Trong hướng dẫn này',
+    sections: [
+      {
+        id: 'la-gi',
+        title: 'Công cụ xem và tải TikTok story là gì?',
+        blocks: [
+          p('Đây là công cụ web lấy TikTok story công khai và cho phép bạn xem hoặc lưu ngoài ứng dụng. Nó chỉ đọc những gì bất kỳ khách truy cập nào cũng đã có thể thấy trên tài khoản công khai, đó cũng là lý do nó không thể mở hồ sơ riêng tư.'),
+          p('Mọi người tìm đến công cụ này vì vài lý do rất bình thường:'),
+          ul(
+            'Story hết hạn sau 24 giờ, nên bất cứ thứ gì đáng giữ lại đều phải lưu nhanh.',
+            'Xem trong ứng dụng khi đã đăng nhập có thể khiến tên bạn xuất hiện trong danh sách người xem của người tạo.',
+            'Tùy chọn lưu của TikTok thêm logo và tên người dùng vào video.',
+            'Nhiều người không có tài khoản TikTok, hoặc không muốn tạo chỉ để xem một story.',
+          ),
+          p('MusicallyDown được tạo ra để giải quyết đúng những vấn đề đó.'),
+        ],
+      },
+      {
+        id: 'cach-tai',
+        title: 'Cách tải TikTok story trong ba bước',
+        blocks: [
+          p('Toàn bộ quá trình mất chưa đến một phút và giống nhau trên mọi thiết bị.'),
+          steps(
+            ['Sao chép liên kết story.', 'Trong TikTok, mở story rồi sao chép liên kết. Hãy chắc chắn tài khoản ở chế độ công khai và bạn sao chép chính story, không phải video thông thường.'],
+            ['Dán rồi bấm Tải xuống.', 'Dán liên kết vào ô ở đầu trang này rồi gửi. Chờ vài giây. Nếu không có gì hiện ra, xem phần khắc phục sự cố bên dưới.'],
+            ['Xem hoặc lưu.', 'Phát story ngay trên trình duyệt, hoặc dùng nút tải xuống. Video được tải về dạng MP4 và ảnh dạng JPG hoặc PNG, và bạn có thể chọn tùy chọn không watermark.'],
+          ),
+        ],
+      },
+      {
+        id: 'tai-sao',
+        title: 'Vì sao nên dùng công cụ xem và tải TikTok story trực tuyến?',
+        blocks: [
+          h3('Xem TikTok story ẩn danh'),
+          p('TikTok có thể cho người tạo biết ai đã xem story của họ, nên xem khi đã đăng nhập có thể đưa tên bạn vào danh sách đó. Công cụ này tải nội dung story công khai bên ngoài ứng dụng TikTok, nên tài khoản của bạn không được dùng để xem và không nên xuất hiện như một người xem. Bạn cũng có thể xem [trung tâm trợ giúp](https://support.tiktok.com) của TikTok để biết quy định hiện hành về lượt xem story.'),
+          h3('Tải TikTok story không watermark'),
+          p('Nút lưu trong ứng dụng gắn cứng logo TikTok và tên người tạo vào tệp. Công cụ này lấy tệp story từ nguồn, nên khi bạn chọn tùy chọn không watermark, sẽ không có gì được thêm lên trên.'),
+          h3('Lưu story chất lượng HD, giữ nguyên bản gốc'),
+          p('Công cụ cố gắng trả tệp mà không nén hay mã hóa lại thêm. Kết quả vẫn phụ thuộc vào bản tải lên: story quay bằng HD sẽ lưu ở HD, còn story độ phân giải thấp thì không thể cải thiện sau đó.'),
+          h3('Dùng trực tuyến, không cần tài khoản, không cần cài đặt'),
+          p('Công cụ xem TikTok story trực tuyến chỉ cần trình duyệt. Mở trang web, dán liên kết và bắt đầu. Hoạt động trên Android, iPhone, Windows, Mac và máy tính bảng.'),
+          h3('Tìm kiếm của bạn vẫn riêng tư'),
+          p('Hãy xem [chính sách quyền riêng tư](/privacy) để biết chính xác điều gì được và không được ghi lại. Như với mọi công cụ trực tuyến, hãy tự đọc trước khi tin tưởng.'),
+        ],
+      },
+      {
+        id: 'lam-duoc-gi',
+        title: 'Bạn có thể làm gì với nó',
+        blocks: [
+          ul(
+            'Xem bất kỳ TikTok story công khai nào trên trình duyệt, không cần đăng nhập.',
+            'Lưu những story bạn thích trước khi hết 24 giờ.',
+            'Sao lưu story của chính bạn thành tệp MP4 chuẩn.',
+            'Xem story của một người tạo nội dung mà không cần mở TikTok.',
+          ),
+        ],
+      },
+      {
+        id: 'ai-dung',
+        title: 'Ai dùng công cụ xem TikTok story?',
+        blocks: [
+          cards(
+            3,
+            ['Người sáng tạo & quản lý mạng xã hội', 'Theo dõi đối thủ, thương hiệu và influencer trong lĩnh vực của bạn đăng gì mà tài khoản của bạn không hiện là người xem.'],
+            ['Marketer & đội ngũ thương hiệu', 'Theo dõi tài khoản công khai để phân tích đối thủ hoặc nghiên cứu chiến dịch mà không cần tài khoản TikTok phụ chỉ cho việc đó.'],
+            ['Người xem thông thường', 'Gặp một video hướng dẫn, đợt ra mắt sản phẩm hoặc bài đăng của người tạo yêu thích và lưu lại trong vài giây, rất lâu trước khi hết hạn.'],
+          ),
+        ],
+      },
+      {
+        id: 'thiet-bi',
+        title: 'Xem và tải TikTok story trên iPhone, Android, PC và Mac',
+        blocks: [
+          p('Bạn chỉ cần một trình duyệt. Không phải tìm APK, không cần thêm tiện ích mở rộng và không cần cập nhật ứng dụng.'),
+          cards(
+            2,
+            ['iPhone', 'Mở trang web bằng Safari, dán liên kết story và story sẽ tải ngay trên trang. Tệp đã lưu thường nằm trong ứng dụng Tệp hoặc danh sách Tải xuống, tùy phiên bản iOS và cài đặt trình duyệt.'],
+            ['Android', 'Dùng Chrome, Firefox hoặc trình duyệt bạn đang có. Không cần APK, không cần cài đặt ngoài. Sau khi tải, hãy xem mục Tải xuống của trình duyệt hoặc trình quản lý tệp.'],
+            ['PC (Windows)', 'Mở trang web bằng Chrome hoặc Edge. Xem và tải đều thực hiện trên cùng một trang, tệp được lưu vào thư mục Downloads trừ khi bạn chọn vị trí khác.'],
+            ['Mac', 'Safari và Chrome đều dùng được. Dán liên kết, mở story và lưu thẳng vào máy Mac. Quy trình giống hệt Windows.'],
+          ),
+          p('Dù dùng thiết bị nào, bạn cũng cần kết nối internet để lấy story; sau đó các tệp đã tải có thể mở ngoại tuyến bằng bất kỳ ứng dụng video hoặc ảnh nào.'),
+        ],
+      },
+      {
+        id: 'khac-phuc-su-co',
+        title: 'TikTok story không tải được? Khắc phục sự cố',
+        blocks: [
+          p('Không có công cụ tải nào là phép màu. Nếu kết quả trống hoặc tải thất bại, hãy kiểm tra lần lượt các nguyên nhân sau:'),
+          ol(
+            ['Liên kết bị sai.', 'Kiểm tra xem có thiếu ký tự không. Sao chép thẳng từ ứng dụng là cách khắc phục an toàn nhất.'],
+            ['Tài khoản ở chế độ riêng tư.', 'Chỉ truy cập được story công khai. Không công cụ nào có thể vượt qua hợp pháp các giới hạn của tài khoản riêng tư trên TikTok.'],
+            ['Story đã hết hạn.', 'Story biến mất sau 24 giờ, và một khi đã biến mất thì không thể lấy lại.'],
+            ['Bạn dán nhầm loại liên kết.', 'URL video TikTok thông thường không phải liên kết story và có thể không được nhận dạng. Hãy sao chép liên kết của chính story.'],
+            ['Kết nối không ổn định.', 'Tải lại trang, kiểm tra internet, đợi một lát rồi thử lại.'],
+            ['Trình duyệt chặn tải xuống.', 'Kiểm tra quyền tải xuống của trình duyệt và thư mục Tải xuống. Đừng tắt các biện pháp bảo mật hay cài tệp lạ để ép tải xuống.'],
+          ),
+          p('Nếu vẫn lỗi, hãy thử trình duyệt khác, hoặc xác nhận story vẫn hiển thị trên hồ sơ gốc.'),
+        ],
+      },
+      {
+        id: 'gioi-han',
+        title: 'Giới hạn và sử dụng có trách nhiệm',
+        blocks: [
+          ul(
+            '**Tài khoản riêng tư vẫn là riêng tư.** Chỉ story công khai.',
+            '**Chất lượng bị giới hạn bởi bản tải lên.** Công cụ không nâng độ phân giải của bất cứ thứ gì.',
+            '**Tình trạng hoạt động có thể thay đổi.** Công cụ phụ thuộc vào TikTok, nên kết quả có thể khác nếu TikTok thay đổi cách phân phối story.',
+          ),
+          callout('Story thuộc về những người đã tạo ra chúng. Lưu clip để tham khảo cá nhân, sao lưu bài đăng của chính bạn hoặc nghiên cứu đối thủ là một chuyện; đăng lại nội dung của người khác mà không xin phép là chuyện khác. Không bao giờ nhập mật khẩu TikTok hay mã xác minh vào bất kỳ công cụ tải nào, và tránh cửa sổ bật lên đáng ngờ hay tệp tải xuống bất ngờ. Hãy đọc [điều khoản dịch vụ](/terms), và lưu ý rằng trang này không liên kết với TikTok hay ByteDance.'),
+        ],
+      },
+    ],
+    faqTitle: 'Câu hỏi thường gặp',
+    faq: [
+      { question: 'Chủ tài khoản có biết tôi đã xem story của họ không?', answer: 'Không, không nên. Công cụ đọc nội dung story công khai bên ngoài ứng dụng TikTok, nên tài khoản của bạn không được dùng để xem story và không nên xuất hiện trong danh sách người xem của người tạo.' },
+      { question: 'Tôi có thể tải TikTok story không watermark không?', answer: 'Có. Tệp story được lấy từ nguồn thay vì qua nút lưu của TikTok, nên không có logo nào được thêm khi bạn chọn tùy chọn không watermark. Tệp không watermark vẫn không cho bạn quyền đăng lại.' },
+      { question: 'Các bản tải xuống dùng định dạng tệp nào?', answer: 'Story video được lưu dạng MP4, phát được trên hầu hết điện thoại, máy tính bảng hoặc máy tính. Story ảnh được lưu dạng JPG hoặc PNG, tùy bản gốc.' },
+      { question: 'Tôi có thể xem story từ tài khoản riêng tư không?', answer: 'Không. Tài khoản riêng tư chỉ chia sẻ nội dung với người theo dõi đã được duyệt, và công cụ này chỉ hoạt động với tài khoản công khai.' },
+      { question: 'Tôi có cần tài khoản TikTok không?', answer: 'Không. Dán liên kết story và story sẽ tải mà không cần đăng nhập.' },
+      { question: 'Có miễn phí không?', answer: 'Có, miễn phí và không cần đăng ký. Hãy kiểm tra trang web nếu có thay đổi.' },
+      { question: 'Tại sao không có gì tải lên sau khi tôi dán liên kết?', answer: 'Thường là do liên kết sai, tài khoản riêng tư hoặc story đã hết hạn. Phần khắc phục sự cố ở trên liệt kê mọi nguyên nhân phổ biến.' },
+      { question: 'Có hoạt động trên trình duyệt di động không?', answer: 'Có. Công cụ chạy trên mọi trình duyệt tiêu chuẩn trên Android và iPhone, và hoạt động giống như trên laptop hoặc máy tính để bàn.' },
+      { question: 'Tôi có thể lưu TikTok story của người khác không?', answer: 'Về mặt kỹ thuật có thể được, nhưng có thể làm và được phép làm là hai chuyện khác nhau. Hãy giữ clip đã lưu để tham khảo cá nhân, và xin phép người tạo trước khi đăng lại hoặc dùng nội dung của họ ở nơi khác.' },
+      { question: 'Tôi có thể tải TikTok story của chính mình không?', answer: 'Có, miễn là story còn hiển thị và ở chế độ công khai. Với những thứ quan trọng, hãy giữ thêm tệp gốc hoặc dùng các tùy chọn lưu trong tài khoản TikTok của bạn, thay vì chỉ dựa vào một trang bên thứ ba làm bản sao lưu duy nhất.' },
+      { question: 'Dùng công cụ tải TikTok story trực tuyến có an toàn không?', answer: 'An toàn nếu bạn dùng theo lẽ thường. Không chia sẻ mật khẩu hay mã, hãy đọc chính sách quyền riêng tư và bỏ qua mọi yêu cầu cài ứng dụng hoặc tiện ích mở rộng. Không dịch vụ trực tuyến nào có thể đảm bảo ẩn danh tuyệt đối, vì vậy hãy chỉ dùng nội dung công khai.' },
+    ],
+    finalTitle: 'Lời kết',
+    finalText:
+      'Story được tạo ra để tồn tại ngắn hạn, nhưng nhu cầu xem hoặc giữ lại chúng của bạn thì thường không. Công cụ xem và tải trên trình duyệt cho phép bạn xem story công khai mà không cần đăng nhập, giữ tài khoản của bạn ngoài danh sách người xem và lưu tệp sạch không logo. Chỉ cần nhớ giới hạn của nó: chỉ tài khoản công khai, và chất lượng phụ thuộc vào bản tải lên gốc.',
+    ctaLabel: 'Dán liên kết story và thử ngay',
+    moreText: 'Cần nhiều hơn story? Hãy thử [công cụ tải video TikTok](/) hoặc [TikTok sang MP3](/tiktok-mp3).',
+  },
+};
+
+/** Content for the "Download TikTok stories" page in the given language (falls back to English). */
+export function getStoriesContent(lang: string): StoriesPageContent {
+  return STORIES_PAGE[(lang in STORIES_PAGE ? lang : defaultLang) as Lang];
+}

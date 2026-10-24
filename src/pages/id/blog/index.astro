@@ -3,4 +3,4 @@ import { getCollection } from 'astro:content';
 import BlogList from '../../../layouts/BlogList.astro';
 const posts = (await getCollection('blog')).filter((post) => !post.data.draft && post.id.startsWith('id/')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
-<BlogList title="Blog MusicallyDown" description="Panduan mengunduh video TikTok, format MP4 dan audio MP3, privasi, serta pemecahan masalah." posts={posts} basePath="/id/blog/" />
+<BlogList title="Blog MusicallyDown" description="Jelajahi blog MusicalDown untuk menemukan panduan download video TikTok tanpa watermark, tips TikTok, dan trik praktis untuk menyimpan video dengan mudah." posts={posts} basePath="/id/blog/" />

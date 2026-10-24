@@ -454,7 +454,7 @@ export const ui = {
   es: {
     'site.name': 'MusicallyDown',
     'site.title':
-      'MusicallyDown – Descargador de videos de TikTok sin marca de agua y TikTok a MP3',
+      'MusicallyDown – Descargar TikTok Sin Marca de Agua y MP3',
     'site.description':
       'Descarga videos públicos de TikTok sin marca de agua cuando esté disponible. Guarda videos en MP4 o extrae audio en MP3 gratis, sin instalar aplicaciones.',
     'nav.home': 'Inicio',
@@ -556,7 +556,7 @@ export const ui = {
     'contact.emailLabel': 'Email',
     'contact.phoneLabel': 'Phone',
     'contact.hqLabel': 'Headquarters',
-    'about.title': 'About Musicallydown – Free TikTok Video & MP3 Downloader',
+    'about.title': 'About Musicallydown – Free TikTok Video Downloader',
     'about.metaDescription':
       'Learn what Musicallydown is, how our free TikTok downloader works, what we do with your data, and how we encourage responsible, permission-based downloading.',
     'about.titleStart': 'About ',
@@ -820,7 +820,7 @@ export const ui = {
   },
   id: {
     'site.name': 'MusicallyDown',
-    'site.title': 'MusicallyDown – Pengunduh Video TikTok Tanpa Watermark dan TikTok ke MP3',
+    'site.title': 'MusicallyDown – Pengunduh Video TikTok Tanpa Tanda Air & MP3',
     'site.description':
       'Unduh video TikTok publik tanpa watermark jika tersedia. Simpan video sebagai MP4 atau ekstrak audio MP3 secara gratis melalui browser tanpa memasang aplikasi.',
     'nav.home': 'Beranda',

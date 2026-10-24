@@ -88,10 +88,16 @@ export function getAlternateLocales(currentPath: string): { lang: Lang; href: st
   // Strip any existing locale prefix
   const cleanPath = currentPath.replace(localePrefix, '') || '/';
 
+  // Always use the trailing-slash form so hreflang matches the canonical and the sitemap
+  // (otherwise '/es' and '/es/' are both seen as "pages for the same language").
+  const withSlash = (p: string) => (p.endsWith('/') ? p : `${p}/`);
+
   return (Object.keys(languages) as Lang[])
     .filter((lang) => hasPage(lang, cleanPath))
     .map((lang) => ({
       lang,
-      href: lang === defaultLang ? cleanPath : `/${lang}${cleanPath === '/' ? '' : cleanPath}`,
+      href: withSlash(
+        lang === defaultLang ? cleanPath : `/${lang}${cleanPath === '/' ? '' : cleanPath}`
+      ),
     }));
 }

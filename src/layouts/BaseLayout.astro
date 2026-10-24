@@ -37,7 +37,7 @@ const {
 } = Astro.props;
 
 const t = useTranslations(detectedLang);
-const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://musicaldown.se ';
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://musicaldown.se';
 const currentUrl = canonicalUrl ?? new URL(Astro.url.pathname, siteUrl).toString();
 const ogImageUrl = new URL(image, siteUrl).toString();
 const siteName = 'MusicallyDown';

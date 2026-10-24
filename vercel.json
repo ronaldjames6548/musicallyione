@@ -1,28 +1,29 @@
 {
+  "trailingSlash": true,
   "redirects": [
     {
       "source": "/es/about",
-      "destination": "/about",
+      "destination": "/about/",
       "permanent": true
     },
     {
       "source": "/es/privacy",
-      "destination": "/privacy",
+      "destination": "/privacy/",
       "permanent": true
     },
     {
       "source": "/es/terms",
-      "destination": "/terms",
+      "destination": "/terms/",
       "permanent": true
     },
     {
       "source": "/blog/getting-started",
-      "destination": "/blog",
+      "destination": "/blog/",
       "permanent": true
     },
     {
       "source": "/es/blog/getting-started",
-      "destination": "/es/blog",
+      "destination": "/es/blog/",
       "permanent": true
     },
     {
@@ -32,7 +33,7 @@
     },
     {
       "source": "/es/case-studies/:path*",
-      "destination": "/es",
+      "destination": "/es/",
       "permanent": true
     }
   ],

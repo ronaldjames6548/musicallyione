@@ -212,7 +212,7 @@ export const ui = {
     'contact.hqLabel': 'Headquarters',
 
     // About Page
-    'about.title': 'About Musicallydown – Free TikTok Video & MP3 Downloader', // meta title
+    'about.title': 'About MusicallyDown – Free TikTok Video & MP3 Downloader', // meta title
     'about.metaDescription':
       'Learn what Musicallydown is, how our free TikTok downloader works, what we do with your data, and how we encourage responsible, permission-based downloading.',
     'about.titleStart': 'About ',
@@ -1757,7 +1757,7 @@ export const STORIES_PAGE: Record<Lang, StoriesPageContent> = {
 
   /* ------------------------------------------------------------------ ES */
   es: {
-    metaTitle: 'Visor y descargador de historias de TikTok – Gratis, sin marca de agua',
+    metaTitle: 'Descargar Historias de TikTok – Gratis | MusicallyDown',
     metaDescription:
       'Mira historias públicas de TikTok de forma anónima y descárgalas en HD sin marca de agua. Sin registro ni app. Pega el enlace de la historia y guárdala.',
     heroTitleStart: 'Visor de historias de TikTok y',
@@ -1906,7 +1906,7 @@ export const STORIES_PAGE: Record<Lang, StoriesPageContent> = {
 
   /* ------------------------------------------------------------------ ID */
   id: {
-    metaTitle: 'Penampil & Pengunduh Story TikTok – Gratis, Tanpa Watermark',
+    metaTitle: 'Pengunduh Story TikTok Tanpa Watermark | MusicallyDown',
     metaDescription:
       'Lihat story TikTok publik secara anonim dan unduh dalam HD tanpa watermark. Tanpa login, tanpa aplikasi. Tempel tautan story lalu simpan.',
     heroTitleStart: 'Penampil Story TikTok &',
@@ -2379,9 +2379,9 @@ export const MP3_PAGE: Record<Lang, ArticleContent> = {
 
   /* ------------------------------------------------------------------ ES */
   es: {
-    metaTitle: 'Convertidor de TikTok a MP3 – Gratis, guarda sonidos de TikTok',
+    metaTitle: 'Convertidor de TikTok a MP3 – Gratis | MusicallyDown',
     metaDescription:
-      'Convierte vídeos públicos de TikTok a MP3 y guarda el sonido como archivo de audio independiente. Gratis y sin registro. Funciona en iPhone, Android, Windows y Mac.',
+      'Convierte vídeos públicos de TikTok a MP3 y guarda el sonido como archivo de audio. Gratis y sin registro. Funciona en iPhone, Android, Windows y Mac.',
     heroTitleStart: 'Convertidor de TikTok a MP3:',
     heroTitleHighlight: 'guarda sonidos de TikTok en MP3',
     heroDescription:
@@ -2533,7 +2533,7 @@ export const MP3_PAGE: Record<Lang, ArticleContent> = {
   id: {
     metaTitle: 'Konverter TikTok ke MP3 – Gratis, Simpan Suara TikTok',
     metaDescription:
-      'Konversi video TikTok publik ke MP3 dan simpan suaranya sebagai file audio tersendiri. Gratis, tanpa pendaftaran. Berfungsi di iPhone, Android, Windows, dan Mac.',
+      'Konversi video TikTok publik ke MP3 dan simpan suaranya sebagai file audio. Gratis, tanpa daftar. Berfungsi di iPhone, Android, Windows, dan Mac.',
     heroTitleStart: 'Konverter TikTok ke MP3:',
     heroTitleHighlight: 'Simpan Suara TikTok sebagai MP3',
     heroDescription:

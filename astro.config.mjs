@@ -11,6 +11,7 @@ import sitemap from '@astrojs/sitemap';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://musicaldown.se',
+  trailingSlash: 'always',
   output: 'static',
   adapter: vercel({ maxDuration: 30 }),
 

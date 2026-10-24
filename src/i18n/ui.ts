@@ -2207,3 +2207,634 @@ export const STORIES_PAGE: Record<Lang, StoriesPageContent> = {
 export function getStoriesContent(lang: string): StoriesPageContent {
   return STORIES_PAGE[(lang in STORIES_PAGE ? lang : defaultLang) as Lang];
 }
+
+/* =============================================================================
+ * "TikTok to MP3" page content (one entry per language)
+ *
+ * Rendered by src/components/marketing/ArticleBody.astro and used by:
+ *   src/pages/tiktok-mp3.astro        (en)
+ *   src/pages/es/tiktok-mp3.astro
+ *   src/pages/id/tiktok-mp3.astro
+ *   src/pages/vi/tiktok-mp3.astro
+ *
+ * Same block format and inline markup as STORIES_PAGE above
+ * (**bold**, [label](/internal-path), [label](https://external)).
+ * ========================================================================== */
+
+/** Generic article content (same shape as StoriesPageContent, byline optional). */
+export type ArticleContent = Omit<StoriesPageContent, 'byline'> & { byline?: string };
+
+export const MP3_PAGE: Record<Lang, ArticleContent> = {
+  /* ------------------------------------------------------------------ EN */
+  en: {
+    metaTitle: 'TikTok to MP3 Converter – Free, Save TikTok Sounds',
+    metaDescription:
+      'Convert public TikTok videos to MP3 and save the sound as a standalone audio file. Free, no sign-up. Works on iPhone, Android, Windows and Mac.',
+    heroTitleStart: 'TikTok to MP3 Converter:',
+    heroTitleHighlight: 'Save TikTok Sounds as MP3',
+    heroDescription:
+      'Paste a public TikTok video link and save the sound as a standalone MP3 file. Free, no sign-up, no video file attached.',
+    intro: [
+      'You hear a few seconds of a track in a TikTok, it gets stuck in your head, and then it’s gone. The video scrolls past, the sound has no obvious name, and the app doesn’t exactly make it easy to keep the audio on its own.',
+      'That’s the gap a TikTok to MP3 converter fills. Paste the link of a public video, pick the audio option if one is offered, and save the sound as a standalone file you can play in any music app, drop into an editing project or use as a ringtone. No video file comes along for the ride.',
+      
+    ],
+    tocTitle: 'In this guide',
+    sections: [
+      {
+        id: 'what-is',
+        title: 'What Is a TikTok to MP3 Converter?',
+        blocks: [
+          p('A TikTok to MP3 converter takes the link of a public TikTok video and checks whether the audio can be saved separately. When it can, you get a plain audio file instead of a video. People also call it a TikTok sound downloader, a TikTok music downloader or a TikTok audio saver. It’s all the same idea.'),
+          p('Two honest caveats first. The converter works with public videos only, since private, deleted or region-restricted posts may not load. And converting a file never improves it: the audio quality you get is whatever the original post carried.'),
+          p('Within those limits, it solves a simple problem. TikTok keeps sounds tied to videos, and a converter lets you pull the sound out and keep it.'),
+        ],
+      },
+      {
+        id: 'how-to',
+        title: 'How to Save TikTok Audio as MP3 in Three Steps',
+        blocks: [
+          p('You don’t need an account, and you never have to enter your TikTok password anywhere.'),
+          steps(
+            ['Copy the video link.', 'In the TikTok app, open the video, tap Share, then Copy link. Use the full link to the individual post, not a profile link. A cut-off or mangled link is the most common reason a download fails, and the video’s account has to be public.'],
+            ['Paste it into the converter.', 'Drop the link into the box at the top of this page and submit. The page takes a few seconds to read the video.'],
+            ['Choose the audio option and save.', 'If an MP3 or audio button appears, tap it and the file goes to your phone or computer. If no audio option is shown, that video may not offer one.'],
+          ),
+          p('The saved file is only the sound, so it’s ready for a playlist or an editor as soon as it lands. Looking for stories instead of sounds? The same site covers that too, from the [MusicalDown homepage](/).'),
+        ],
+      },
+      {
+        id: 'expect',
+        title: 'What to Expect From a TikTok MP3 Download',
+        blocks: [
+          h3('Just the sound, no video'),
+          p('The whole point is separation. You keep the audio and skip the video file, which saves storage and spares you from trimming a clip before you can use it.'),
+          h3('A standard MP3 file'),
+          p('MP3 plays on nearly every phone, laptop and music app, and editing software accepts it without fuss. There’s no special player to hunt for and no extra conversion step.'),
+          h3('Quality that matches the source'),
+          p('A converter can’t add detail that was never there. A clean upload gives you clean audio, and a muffled one stays muffled. That’s true of every tool, so be wary of any page that promises to make audio sound better than the original.'),
+          h3('Often a clip, not the full song'),
+          p('A TikTok sound is frequently a short excerpt, an edited segment or a remix, so the file you save may be only that portion. If you want the complete track, use the saved clip to identify the song, then look for the full version through a licensed music service.'),
+          h3('A quick way to identify a sound'),
+          p('If you’ve been trying to track down a song you heard in a video, saving the audio is often the quickest route. Once the file is on your device you can play it back as many times as you need.'),
+          h3('No sign-up and no software'),
+          p('It runs in the browser you already have open. There’s nothing to install, no extension to add and no registration form to fill in.'),
+        ],
+      },
+      {
+        id: 'uses',
+        title: 'Practical Ways to Use Saved TikTok Sounds',
+        blocks: [
+          ul(
+            'Listen offline on a commute or flight, with no app or connection needed.',
+            'Keep a sound you may want to reference for your own content later.',
+            'Turn a short clip into a ringtone or notification tone.',
+            'Store a voiceover or spoken snippet separately from its video.',
+            'Build a personal collection of tracks, remixes and snippets that are hard to find elsewhere.',
+          ),
+        ],
+      },
+      {
+        id: 'who',
+        title: 'Who Saves TikTok Audio?',
+        blocks: [
+          p('On TikTok the sound often matters more than the picture, and the people who save it tend to know exactly what they want it for.'),
+          cards(
+            3,
+            ['Creators & video editors', 'Want a ready-to-use track they can drop straight onto a timeline, instead of ripping the audio out of a finished video first.'],
+            ['Music fans', 'Find a song, remix or snippet in the app and want to keep it in their own library rather than depend on finding that video again.'],
+            ['Everyday users', 'Have smaller jobs in mind: a ringtone, a funny voice clip, a sound for the walk to work. What they share is a wish to have the audio on their own terms.'],
+          ),
+        ],
+      },
+      {
+        id: 'devices',
+        title: 'TikTok to MP3 on iPhone, Android, PC and Mac',
+        blocks: [
+          p('Because everything happens in a web page, the device matters far less than the browser, and any current one will do.'),
+          cards(
+            2,
+            ['iPhone', 'Open the converter in Safari, paste the link and submit. After the download, look in the Files app, usually in the Downloads folder tied to your browser. The exact save location can vary with your iOS version and browser settings, and you don’t need the App Store at any point.'],
+            ['Android', 'Use Chrome or whichever browser you already have. Paste the link, tap the audio option, and check your browser’s Downloads list or your file manager once it finishes. No APK and no side-loading are involved.'],
+            ['Windows PC', 'Open the page in Chrome or Edge, paste the video URL and choose the MP3 option. The file is saved to your Downloads folder unless you’ve set another location, and you can then play it in any media player or move it into your music library.'],
+            ['Mac', 'Safari and Chrome both work, and the steps match the Windows ones. Check your Downloads folder or the browser’s download history, then add the file to your audio library or editing project if you have the rights to use it.'],
+          ),
+        ],
+      },
+      {
+        id: 'troubleshooting',
+        title: 'TikTok MP3 Download Not Working? Troubleshooting',
+        blocks: [
+          p('A failed download usually has a simple cause. Work through these in order before trying another site or installing anything:'),
+          ol(
+            ['The link is incomplete.', 'Go back to the post and copy the full link again. It should be the individual video, not a profile or an edited link.'],
+            ['The video is unavailable.', 'Private, deleted and region-restricted videos may not load at all. Try a different public post you have permission to save.'],
+            ['No audio option appears.', 'Not every video offers a separate audio download. If the page shows no MP3 button for that link, it may simply not be available for that post.'],
+            ['The page is slow or stuck.', 'Check your connection, refresh and paste the link again. A different browser can also help.'],
+            ['The download was blocked or interrupted.', 'Check your browser’s download history, free storage space and any security prompt. Don’t disable security features to force a download.'],
+            ['The file won’t play.', 'Confirm the download finished and the extension is .mp3. If the file looks incomplete, delete it and download it again.'],
+            ['You can’t find the file.', 'Check the Downloads folder or the browser’s download list. On iPhone, open the Files app first.'],
+          ),
+          p('If the problem continues, the source may be temporarily unavailable or unsupported.'),
+        ],
+      },
+      {
+        id: 'copyright',
+        title: 'Copyright, Permission and Safe Use',
+        blocks: [
+          h3('Copyright and permission'),
+          p('A lot of the music on TikTok is copyrighted. Saving a track for private listening is a different matter from publishing it in your own video or using it commercially. Save content you own or have permission to use, and check the usage rights, along with TikTok’s own rules in its [support center](https://support.tiktok.com), before the sound goes into anything public.'),
+          h3('Keep your account and device safe'),
+          p('A downloader only needs a public video link. For safer use:'),
+          ul(
+            'Never enter your TikTok password or verification codes into any downloader. If a site asks for them, close it.',
+            'Ignore unexpected software installs, suspicious redirects and extensions that ask for unnecessary permissions.',
+            'Read the site’s [privacy policy](/privacy) to see how it handles submitted links.',
+            'Keep personal or sensitive recordings private.',
+          ),
+        ],
+      },
+    ],
+    faqTitle: 'Frequently Asked Questions',
+    faq: [
+      { question: 'Can I download only the music from a TikTok video?', answer: 'Yes, when the video offers an audio option. You save the sound as an MP3 and skip the video file entirely.' },
+      { question: 'How do I convert TikTok to MP3?', answer: 'Copy the link of a public TikTok video, paste it into the converter, submit it and tap the MP3 or audio button. Then save the file to your device.' },
+      { question: 'What format does the audio come in?', answer: 'MP3, which plays on virtually every phone, computer and music app.' },
+      { question: 'Will the MP3 sound better than the TikTok?', answer: 'No. Converting doesn’t improve quality, so the file reflects the source audio of the original post.' },
+      { question: 'Can I download a full song from a TikTok video?', answer: 'Not necessarily. Many TikTok sounds are short excerpts, edits or remixes, so you may get only that portion. Use it to identify the song, then find the full track on a licensed music service.' },
+      { question: 'Can I convert audio from a private account?', answer: 'No. The converter works with public videos only.' },
+      { question: 'Do I need a TikTok account or an app?', answer: 'Neither. Copy a public video link, paste it into the page and save the file from your browser.' },
+      { question: 'Is it free?', answer: 'Yes. At the time of writing the converter is free and requires no sign-up. Check the page for any changes.' },
+      { question: 'Can I use a saved sound in my own videos?', answer: 'For personal listening, generally yes. For anything you publish, especially commercially, check the usage rights first, because many tracks are copyrighted.' },
+      { question: 'Where are downloaded MP3 files saved?', answer: 'In your browser’s Downloads folder, or the Files app on an iPhone. The exact location depends on your device and browser settings.' },
+      { question: 'Is it safe to use a TikTok to MP3 converter?', answer: 'It’s safe when you use common sense: never share passwords or codes, skip unexpected installs, and read the privacy policy. No tool can promise perfect safety, so stick to public content.' },
+      { question: 'Why isn’t my link working?', answer: 'The usual suspects are an incomplete link, a private or deleted video, or a region restriction. Copy the full link again from the app and retry. The troubleshooting section above lists every common cause.' },
+    ],
+    finalTitle: 'Final Thoughts',
+    finalText:
+      'Sounds on TikTok are easy to lose and hard to name. Saving one as an MP3 takes a public link, a browser and a few seconds, and you end up with a clean audio file for your playlist, your editor or your ringtone list. Keep expectations realistic: the quality is the original’s, the file may be only part of a song, private videos are off limits, and anything you publish still needs the right permissions.',
+    ctaLabel: 'Paste a link and convert to MP3',
+    moreText: 'When you’re ready, paste a link into the converter above and see whether the video offers an audio download.',
+  },
+
+  /* ------------------------------------------------------------------ ES */
+  es: {
+    metaTitle: 'Convertidor de TikTok a MP3 – Gratis, guarda sonidos de TikTok',
+    metaDescription:
+      'Convierte vídeos públicos de TikTok a MP3 y guarda el sonido como archivo de audio independiente. Gratis y sin registro. Funciona en iPhone, Android, Windows y Mac.',
+    heroTitleStart: 'Convertidor de TikTok a MP3:',
+    heroTitleHighlight: 'guarda sonidos de TikTok en MP3',
+    heroDescription:
+      'Pega el enlace de un vídeo público de TikTok y guarda el sonido como archivo MP3 independiente. Gratis, sin registro y sin archivo de vídeo.',
+    intro: [
+      'Oyes unos segundos de una canción en un TikTok, se te queda en la cabeza y, de pronto, ya no está. El vídeo pasa, el sonido no tiene un nombre evidente y la app no te lo pone precisamente fácil para guardar el audio por separado.',
+      'Ese es el hueco que cubre un convertidor de TikTok a MP3. Pegas el enlace de un vídeo público, eliges la opción de audio si se ofrece y guardas el sonido como un archivo independiente que puedes reproducir en cualquier app de música, usar en un proyecto de edición o poner como tono de llamada. No se descarga ningún vídeo.',
+      'Esta guía explica cómo funciona el proceso, qué esperar de los resultados, quién le saca más partido, cómo solucionar una descarga que falla y los límites que conviene conocer antes de empezar. Si solo quieres probarlo, el [convertidor de TikTok a MP3](/tiktok-mp3) es gratis y no requiere registro.',
+    ],
+    tocTitle: 'En esta guía',
+    sections: [
+      {
+        id: 'que-es',
+        title: '¿Qué es un convertidor de TikTok a MP3?',
+        blocks: [
+          p('Un convertidor de TikTok a MP3 toma el enlace de un vídeo público de TikTok y comprueba si el audio se puede guardar por separado. Cuando se puede, obtienes un archivo de audio normal en lugar de un vídeo. La gente también lo llama descargador de sonidos de TikTok, descargador de música de TikTok o guardador de audio de TikTok. Es la misma idea.'),
+          p('Antes, dos advertencias honestas. El convertidor funciona solo con vídeos públicos, ya que las publicaciones privadas, eliminadas o con restricción regional pueden no cargarse. Y convertir un archivo nunca lo mejora: la calidad del audio es la que tuviera la publicación original.'),
+          p('Dentro de esos límites, resuelve un problema sencillo. TikTok mantiene los sonidos ligados a los vídeos y un convertidor te permite extraer el sonido y conservarlo.'),
+        ],
+      },
+      {
+        id: 'como-guardar',
+        title: 'Cómo guardar audio de TikTok como MP3 en tres pasos',
+        blocks: [
+          p('No necesitas cuenta y nunca tienes que introducir tu contraseña de TikTok en ningún sitio.'),
+          steps(
+            ['Copia el enlace del vídeo.', 'En la app de TikTok, abre el vídeo, toca Compartir y después Copiar enlace. Usa el enlace completo de la publicación concreta, no el de un perfil. Un enlace cortado o alterado es la causa más común de que falle una descarga, y la cuenta del vídeo debe ser pública.'],
+            ['Pégalo en el convertidor.', 'Pega el enlace en el cuadro de la parte superior de esta página y envíalo. La página tarda unos segundos en leer el vídeo.'],
+            ['Elige la opción de audio y guarda.', 'Si aparece un botón de MP3 o de audio, púlsalo y el archivo se guardará en tu móvil u ordenador. Si no se muestra ninguna opción de audio, es posible que ese vídeo no la ofrezca.'],
+          ),
+          p('El archivo guardado es solo el sonido, así que está listo para una lista de reproducción o un editor en cuanto llega. ¿Buscas historias en vez de sonidos? El mismo sitio también cubre eso, desde la [página de inicio de MusicalDown](/).'),
+        ],
+      },
+      {
+        id: 'que-esperar',
+        title: 'Qué esperar de una descarga de TikTok en MP3',
+        blocks: [
+          h3('Solo el sonido, sin vídeo'),
+          p('Todo el sentido está en separar. Te quedas con el audio y te ahorras el archivo de vídeo, lo que ahorra almacenamiento y evita tener que recortar un clip antes de poder usarlo.'),
+          h3('Un archivo MP3 estándar'),
+          p('El MP3 se reproduce en casi cualquier móvil, portátil y app de música, y el software de edición lo acepta sin problemas. No hay que buscar un reproductor especial ni hacer una conversión adicional.'),
+          h3('Una calidad que coincide con el origen'),
+          p('Un convertidor no puede añadir detalle que nunca existió. Una subida limpia da un audio limpio y una apagada sigue apagada. Esto es así con todas las herramientas, así que desconfía de cualquier página que prometa que el audio sonará mejor que el original.'),
+          h3('Muchas veces un fragmento, no la canción completa'),
+          p('Un sonido de TikTok suele ser un extracto corto, un segmento editado o un remix, así que el archivo que guardes puede ser solo esa parte. Si quieres la canción completa, usa el fragmento guardado para identificarla y busca después la versión completa en un servicio de música con licencia.'),
+          h3('Una forma rápida de identificar un sonido'),
+          p('Si has estado intentando localizar una canción que oíste en un vídeo, guardar el audio suele ser el camino más rápido. Cuando el archivo está en tu dispositivo puedes reproducirlo tantas veces como necesites.'),
+          h3('Sin registro y sin software'),
+          p('Funciona en el navegador que ya tienes abierto. No hay nada que instalar, ninguna extensión que añadir y ningún formulario de registro que rellenar.'),
+        ],
+      },
+      {
+        id: 'usos',
+        title: 'Formas prácticas de usar los sonidos de TikTok guardados',
+        blocks: [
+          ul(
+            'Escuchar sin conexión en un trayecto o un vuelo, sin necesidad de app ni de internet.',
+            'Guardar un sonido que quizá quieras usar como referencia en tu propio contenido.',
+            'Convertir un clip corto en tono de llamada o de notificación.',
+            'Guardar una locución o un fragmento hablado por separado de su vídeo.',
+            'Crear una colección personal de temas, remixes y fragmentos difíciles de encontrar en otro sitio.',
+          ),
+        ],
+      },
+      {
+        id: 'quien',
+        title: '¿Quién guarda audio de TikTok?',
+        blocks: [
+          p('En TikTok el sonido a menudo importa más que la imagen, y quienes lo guardan suelen saber exactamente para qué lo quieren.'),
+          cards(
+            3,
+            ['Creadores y editores de vídeo', 'Quieren una pista lista para arrastrar directamente a la línea de tiempo, en lugar de extraer antes el audio de un vídeo terminado.'],
+            ['Aficionados a la música', 'Encuentran una canción, un remix o un fragmento en la app y quieren conservarlo en su propia biblioteca en vez de depender de volver a encontrar ese vídeo.'],
+            ['Usuarios habituales', 'Tienen tareas más pequeñas en mente: un tono de llamada, un clip de voz divertido, un sonido para el camino al trabajo. Lo que comparten es el deseo de tener el audio en sus propios términos.'],
+          ),
+        ],
+      },
+      {
+        id: 'dispositivos',
+        title: 'TikTok a MP3 en iPhone, Android, PC y Mac',
+        blocks: [
+          p('Como todo ocurre en una página web, el dispositivo importa mucho menos que el navegador, y cualquiera actual sirve.'),
+          cards(
+            2,
+            ['iPhone', 'Abre el convertidor en Safari, pega el enlace y envíalo. Tras la descarga, mira en la app Archivos, normalmente en la carpeta Descargas vinculada a tu navegador. La ubicación exacta puede variar según tu versión de iOS y los ajustes del navegador, y no necesitas la App Store en ningún momento.'],
+            ['Android', 'Usa Chrome o el navegador que ya tengas. Pega el enlace, toca la opción de audio y revisa la lista de descargas del navegador o tu gestor de archivos cuando termine. No hay APK ni instalaciones externas.'],
+            ['PC con Windows', 'Abre la página en Chrome o Edge, pega la URL del vídeo y elige la opción MP3. El archivo se guarda en tu carpeta Descargas salvo que hayas fijado otra ubicación, y luego puedes reproducirlo en cualquier reproductor o moverlo a tu biblioteca de música.'],
+            ['Mac', 'Safari y Chrome funcionan, y los pasos son los mismos que en Windows. Revisa tu carpeta Descargas o el historial de descargas del navegador y añade después el archivo a tu biblioteca de audio o proyecto de edición si tienes derecho a usarlo.'],
+          ),
+        ],
+      },
+      {
+        id: 'solucion-de-problemas',
+        title: '¿No funciona la descarga de TikTok en MP3? Solución de problemas',
+        blocks: [
+          p('Una descarga fallida suele tener una causa sencilla. Repasa estos puntos en orden antes de probar otro sitio o instalar nada:'),
+          ol(
+            ['El enlace está incompleto.', 'Vuelve a la publicación y copia de nuevo el enlace completo. Debe ser el del vídeo concreto, no el de un perfil ni un enlace modificado.'],
+            ['El vídeo no está disponible.', 'Los vídeos privados, eliminados o con restricción regional pueden no cargarse en absoluto. Prueba con otra publicación pública que tengas permiso para guardar.'],
+            ['No aparece ninguna opción de audio.', 'No todos los vídeos ofrecen una descarga de audio por separado. Si la página no muestra botón de MP3 para ese enlace, puede que simplemente no esté disponible para esa publicación.'],
+            ['La página va lenta o se queda bloqueada.', 'Revisa tu conexión, actualiza y vuelve a pegar el enlace. Cambiar de navegador también puede ayudar.'],
+            ['La descarga se bloqueó o se interrumpió.', 'Revisa el historial de descargas del navegador, el espacio libre y cualquier aviso de seguridad. No desactives funciones de seguridad para forzar una descarga.'],
+            ['El archivo no se reproduce.', 'Confirma que la descarga terminó y que la extensión es .mp3. Si el archivo parece incompleto, bórralo y vuelve a descargarlo.'],
+            ['No encuentras el archivo.', 'Revisa la carpeta Descargas o la lista de descargas del navegador. En iPhone, abre primero la app Archivos.'],
+          ),
+          p('Si el problema continúa, puede que el origen no esté disponible temporalmente o no sea compatible.'),
+        ],
+      },
+      {
+        id: 'derechos',
+        title: 'Derechos de autor, permiso y uso seguro',
+        blocks: [
+          h3('Derechos de autor y permiso'),
+          p('Mucha de la música de TikTok tiene derechos de autor. Guardar una pista para escucharla en privado es distinto de publicarla en tu propio vídeo o usarla comercialmente. Guarda contenido que sea tuyo o que tengas permiso para usar, y comprueba los derechos de uso, junto con las normas de TikTok en su [centro de ayuda](https://support.tiktok.com), antes de que el sonido acabe en algo público.'),
+          h3('Mantén seguros tu cuenta y tu dispositivo'),
+          p('Un descargador solo necesita el enlace de un vídeo público. Para usarlo con más seguridad:'),
+          ul(
+            'Nunca introduzcas tu contraseña de TikTok ni códigos de verificación en ningún descargador. Si un sitio te los pide, ciérralo.',
+            'Ignora las instalaciones de software inesperadas, las redirecciones sospechosas y las extensiones que piden permisos innecesarios.',
+            'Lee la [política de privacidad](/privacy) del sitio para saber cómo trata los enlaces enviados.',
+            'Mantén en privado las grabaciones personales o sensibles.',
+          ),
+        ],
+      },
+    ],
+    faqTitle: 'Preguntas frecuentes',
+    faq: [
+      { question: '¿Puedo descargar solo la música de un vídeo de TikTok?', answer: 'Sí, cuando el vídeo ofrece una opción de audio. Guardas el sonido como MP3 y te saltas por completo el archivo de vídeo.' },
+      { question: '¿Cómo convierto TikTok a MP3?', answer: 'Copia el enlace de un vídeo público de TikTok, pégalo en el convertidor, envíalo y pulsa el botón de MP3 o audio. Después guarda el archivo en tu dispositivo.' },
+      { question: '¿En qué formato llega el audio?', answer: 'MP3, que se reproduce en prácticamente cualquier móvil, ordenador y app de música.' },
+      { question: '¿Sonará mejor el MP3 que el TikTok?', answer: 'No. Convertir no mejora la calidad, así que el archivo refleja el audio de origen de la publicación original.' },
+      { question: '¿Puedo descargar una canción completa de un vídeo de TikTok?', answer: 'No necesariamente. Muchos sonidos de TikTok son extractos cortos, ediciones o remixes, así que puede que obtengas solo esa parte. Úsalo para identificar la canción y busca después la pista completa en un servicio de música con licencia.' },
+      { question: '¿Puedo convertir audio de una cuenta privada?', answer: 'No. El convertidor funciona solo con vídeos públicos.' },
+      { question: '¿Necesito una cuenta de TikTok o una app?', answer: 'Ninguna de las dos. Copia el enlace de un vídeo público, pégalo en la página y guarda el archivo desde tu navegador.' },
+      { question: '¿Es gratis?', answer: 'Sí. En el momento de escribir esto, el convertidor es gratuito y no requiere registro. Consulta la página por si hubiera cambios.' },
+      { question: '¿Puedo usar un sonido guardado en mis propios vídeos?', answer: 'Para escucharlo en privado, por lo general sí. Para cualquier cosa que publiques, sobre todo con fines comerciales, comprueba antes los derechos de uso, porque muchas pistas tienen derechos de autor.' },
+      { question: '¿Dónde se guardan los archivos MP3 descargados?', answer: 'En la carpeta Descargas de tu navegador, o en la app Archivos en un iPhone. La ubicación exacta depende de tu dispositivo y de los ajustes del navegador.' },
+      { question: '¿Es seguro usar un convertidor de TikTok a MP3?', answer: 'Lo es si usas el sentido común: no compartas contraseñas ni códigos, evita instalaciones inesperadas y lee la política de privacidad. Ninguna herramienta puede prometer una seguridad perfecta, así que limítate a contenido público.' },
+      { question: '¿Por qué no funciona mi enlace?', answer: 'Los sospechosos habituales son un enlace incompleto, un vídeo privado o eliminado, o una restricción regional. Copia de nuevo el enlace completo desde la app y reinténtalo. La sección de solución de problemas de arriba recoge todas las causas habituales.' },
+    ],
+    finalTitle: 'Reflexión final',
+    finalText:
+      'Los sonidos de TikTok son fáciles de perder y difíciles de nombrar. Guardar uno como MP3 requiere un enlace público, un navegador y unos segundos, y acabas con un archivo de audio limpio para tu lista de reproducción, tu editor o tu lista de tonos de llamada. Mantén expectativas realistas: la calidad es la del original, el archivo puede ser solo parte de una canción, los vídeos privados están fuera de alcance y todo lo que publiques sigue necesitando los permisos adecuados.',
+    ctaLabel: 'Pega un enlace y convierte a MP3',
+    moreText: 'Cuando estés listo, pega un enlace en el convertidor de arriba y comprueba si el vídeo ofrece una descarga de audio.',
+  },
+
+  /* ------------------------------------------------------------------ ID */
+  id: {
+    metaTitle: 'Konverter TikTok ke MP3 – Gratis, Simpan Suara TikTok',
+    metaDescription:
+      'Konversi video TikTok publik ke MP3 dan simpan suaranya sebagai file audio tersendiri. Gratis, tanpa pendaftaran. Berfungsi di iPhone, Android, Windows, dan Mac.',
+    heroTitleStart: 'Konverter TikTok ke MP3:',
+    heroTitleHighlight: 'Simpan Suara TikTok sebagai MP3',
+    heroDescription:
+      'Tempel tautan video TikTok publik dan simpan suaranya sebagai file MP3 tersendiri. Gratis, tanpa pendaftaran, tanpa file video.',
+    intro: [
+      'Anda mendengar beberapa detik sebuah lagu di TikTok, lagu itu terus terngiang di kepala, lalu hilang. Videonya terus bergulir, suaranya tidak punya nama yang jelas, dan aplikasinya tidak benar-benar memudahkan Anda menyimpan audionya saja.',
+      'Itulah celah yang diisi oleh konverter TikTok ke MP3. Tempel tautan video publik, pilih opsi audio jika tersedia, dan simpan suaranya sebagai file tersendiri yang bisa diputar di aplikasi musik mana pun, dimasukkan ke proyek editing, atau dijadikan nada dering. Tidak ada file video yang ikut terunduh.',
+      'Panduan ini membahas cara kerja prosesnya, apa yang bisa diharapkan dari hasilnya, siapa yang paling terbantu, cara memperbaiki unduhan yang gagal, dan batasan yang perlu diketahui sebelum memulai. Jika ingin langsung mencoba, [konverter TikTok ke MP3](/tiktok-mp3) ini gratis dan tidak perlu mendaftar.',
+    ],
+    tocTitle: 'Dalam panduan ini',
+    sections: [
+      {
+        id: 'apa-itu',
+        title: 'Apa Itu Konverter TikTok ke MP3?',
+        blocks: [
+          p('Konverter TikTok ke MP3 mengambil tautan video TikTok publik dan memeriksa apakah audionya bisa disimpan terpisah. Jika bisa, Anda mendapatkan file audio biasa, bukan video. Orang juga menyebutnya pengunduh suara TikTok, pengunduh musik TikTok, atau penyimpan audio TikTok. Semuanya ide yang sama.'),
+          p('Dua catatan jujur lebih dulu. Konverter hanya bekerja dengan video publik, karena postingan privat, yang dihapus, atau dibatasi wilayah mungkin tidak termuat. Dan mengonversi file tidak pernah memperbaikinya: kualitas audio yang Anda dapat sama dengan yang dimiliki postingan aslinya.'),
+          p('Dalam batasan itu, alat ini menyelesaikan masalah sederhana. TikTok mengikat suara pada video, dan konverter memungkinkan Anda mengambil suaranya dan menyimpannya.'),
+        ],
+      },
+      {
+        id: 'cara-simpan',
+        title: 'Cara Menyimpan Audio TikTok sebagai MP3 dalam Tiga Langkah',
+        blocks: [
+          p('Anda tidak perlu akun, dan tidak pernah perlu memasukkan kata sandi TikTok di mana pun.'),
+          steps(
+            ['Salin tautan video.', 'Di aplikasi TikTok, buka video, ketuk Bagikan, lalu Salin tautan. Gunakan tautan lengkap ke postingan tertentu, bukan tautan profil. Tautan yang terpotong atau rusak adalah penyebab paling umum unduhan gagal, dan akun pemilik video harus publik.'],
+            ['Tempel ke konverter.', 'Masukkan tautan ke kotak di bagian atas halaman ini lalu kirim. Halaman butuh beberapa detik untuk membaca video.'],
+            ['Pilih opsi audio dan simpan.', 'Jika tombol MP3 atau audio muncul, ketuk dan file akan masuk ke ponsel atau komputer Anda. Jika tidak ada opsi audio yang ditampilkan, video itu mungkin tidak menyediakannya.'],
+          ),
+          p('File yang disimpan hanya berisi suara, jadi siap untuk playlist atau editor begitu masuk. Mencari story, bukan suara? Situs yang sama juga mencakup itu, dari [beranda MusicalDown](/).'),
+        ],
+      },
+      {
+        id: 'harapan',
+        title: 'Yang Bisa Diharapkan dari Unduhan MP3 TikTok',
+        blocks: [
+          h3('Hanya suara, tanpa video'),
+          p('Inti dari semuanya adalah pemisahan. Anda menyimpan audio dan melewati file video, yang menghemat penyimpanan dan membebaskan Anda dari memotong klip sebelum bisa menggunakannya.'),
+          h3('File MP3 standar'),
+          p('MP3 diputar di hampir semua ponsel, laptop, dan aplikasi musik, dan perangkat lunak editing menerimanya tanpa masalah. Tidak perlu mencari pemutar khusus dan tidak ada langkah konversi tambahan.'),
+          h3('Kualitas sesuai sumbernya'),
+          p('Konverter tidak bisa menambah detail yang memang tidak pernah ada. Unggahan yang bersih menghasilkan audio bersih, dan yang pengap tetap pengap. Ini berlaku untuk semua alat, jadi waspadalah terhadap halaman mana pun yang menjanjikan audio terdengar lebih baik dari aslinya.'),
+          h3('Sering hanya klip, bukan lagu penuh'),
+          p('Suara TikTok sering kali berupa potongan pendek, segmen yang diedit, atau remix, jadi file yang Anda simpan mungkin hanya bagian itu. Jika ingin lagu lengkap, gunakan klip yang disimpan untuk mengenali lagunya, lalu cari versi lengkapnya lewat layanan musik berlisensi.'),
+          h3('Cara cepat mengenali sebuah suara'),
+          p('Jika Anda sedang berusaha melacak lagu yang didengar di video, menyimpan audionya sering menjadi jalan tercepat. Setelah file ada di perangkat, Anda bisa memutarnya berulang kali sesuka Anda.'),
+          h3('Tanpa pendaftaran dan tanpa perangkat lunak'),
+          p('Berjalan di browser yang sudah Anda buka. Tidak ada yang perlu dipasang, tidak ada ekstensi yang ditambahkan, dan tidak ada formulir pendaftaran yang diisi.'),
+        ],
+      },
+      {
+        id: 'kegunaan',
+        title: 'Cara Praktis Menggunakan Suara TikTok yang Disimpan',
+        blocks: [
+          ul(
+            'Mendengarkan secara offline saat perjalanan atau penerbangan, tanpa aplikasi atau koneksi.',
+            'Menyimpan suara yang mungkin ingin dijadikan referensi untuk konten Anda nanti.',
+            'Mengubah klip pendek menjadi nada dering atau nada notifikasi.',
+            'Menyimpan voiceover atau potongan ucapan terpisah dari videonya.',
+            'Membangun koleksi pribadi berisi lagu, remix, dan potongan yang sulit ditemukan di tempat lain.',
+          ),
+        ],
+      },
+      {
+        id: 'siapa',
+        title: 'Siapa yang Menyimpan Audio TikTok?',
+        blocks: [
+          p('Di TikTok, suara sering lebih penting daripada gambarnya, dan orang yang menyimpannya biasanya tahu persis untuk apa mereka membutuhkannya.'),
+          cards(
+            3,
+            ['Kreator & editor video', 'Menginginkan lagu siap pakai yang bisa langsung dijatuhkan ke timeline, alih-alih mengekstrak audio dari video jadi terlebih dahulu.'],
+            ['Penggemar musik', 'Menemukan lagu, remix, atau potongan di aplikasi dan ingin menyimpannya di pustaka sendiri daripada bergantung pada menemukan video itu lagi.'],
+            ['Pengguna sehari-hari', 'Punya keperluan yang lebih kecil: nada dering, klip suara lucu, suara untuk perjalanan ke tempat kerja. Kesamaan mereka adalah keinginan memiliki audio dengan cara mereka sendiri.'],
+          ),
+        ],
+      },
+      {
+        id: 'perangkat',
+        title: 'TikTok ke MP3 di iPhone, Android, PC, dan Mac',
+        blocks: [
+          p('Karena semuanya terjadi di halaman web, perangkat jauh lebih tidak penting daripada browser, dan browser terkini mana pun bisa dipakai.'),
+          cards(
+            2,
+            ['iPhone', 'Buka konverter di Safari, tempel tautan lalu kirim. Setelah diunduh, lihat di aplikasi File, biasanya di folder Unduhan yang terkait browser Anda. Lokasi simpan yang tepat bisa berbeda tergantung versi iOS dan pengaturan browser, dan Anda tidak membutuhkan App Store sama sekali.'],
+            ['Android', 'Gunakan Chrome atau browser apa pun yang sudah ada. Tempel tautan, ketuk opsi audio, lalu cek daftar Unduhan browser atau pengelola file setelah selesai. Tanpa APK dan tanpa side-loading.'],
+            ['PC Windows', 'Buka halaman di Chrome atau Edge, tempel URL video dan pilih opsi MP3. File disimpan di folder Unduhan kecuali Anda menetapkan lokasi lain, lalu bisa diputar di pemutar media mana pun atau dipindahkan ke pustaka musik Anda.'],
+            ['Mac', 'Safari dan Chrome sama-sama berfungsi, dan langkahnya sama dengan Windows. Cek folder Unduhan atau riwayat unduhan browser, lalu tambahkan file ke pustaka audio atau proyek editing jika Anda berhak menggunakannya.'],
+          ),
+        ],
+      },
+      {
+        id: 'pemecahan-masalah',
+        title: 'Unduhan MP3 TikTok Tidak Berfungsi? Pemecahan Masalah',
+        blocks: [
+          p('Unduhan yang gagal biasanya punya penyebab sederhana. Periksa berurutan sebelum mencoba situs lain atau memasang apa pun:'),
+          ol(
+            ['Tautannya tidak lengkap.', 'Kembali ke postingan dan salin tautan lengkapnya lagi. Harus tautan video tertentu, bukan profil atau tautan yang telah diedit.'],
+            ['Videonya tidak tersedia.', 'Video privat, yang dihapus, dan yang dibatasi wilayah mungkin tidak termuat sama sekali. Coba postingan publik lain yang Anda punya izin untuk menyimpannya.'],
+            ['Tidak ada opsi audio yang muncul.', 'Tidak semua video menyediakan unduhan audio terpisah. Jika halaman tidak menampilkan tombol MP3 untuk tautan itu, mungkin memang tidak tersedia untuk postingan tersebut.'],
+            ['Halaman lambat atau macet.', 'Periksa koneksi, muat ulang, lalu tempel tautan lagi. Browser lain juga bisa membantu.'],
+            ['Unduhan diblokir atau terputus.', 'Periksa riwayat unduhan browser, ruang penyimpanan kosong, dan prompt keamanan apa pun. Jangan menonaktifkan fitur keamanan untuk memaksa unduhan.'],
+            ['File tidak bisa diputar.', 'Pastikan unduhan selesai dan ekstensinya .mp3. Jika file tampak tidak lengkap, hapus dan unduh ulang.'],
+            ['Anda tidak menemukan file.', 'Cek folder Unduhan atau daftar unduhan browser. Di iPhone, buka aplikasi File lebih dulu.'],
+          ),
+          p('Jika masalah berlanjut, sumbernya mungkin sementara tidak tersedia atau tidak didukung.'),
+        ],
+      },
+      {
+        id: 'hak-cipta',
+        title: 'Hak Cipta, Izin, dan Penggunaan yang Aman',
+        blocks: [
+          h3('Hak cipta dan izin'),
+          p('Banyak musik di TikTok berhak cipta. Menyimpan lagu untuk didengarkan pribadi berbeda dengan memublikasikannya di video Anda sendiri atau menggunakannya secara komersial. Simpan konten yang Anda miliki atau punya izin untuk menggunakannya, dan periksa hak penggunaan, beserta aturan TikTok di [pusat bantuan](https://support.tiktok.com)-nya, sebelum suara dipakai di sesuatu yang publik.'),
+          h3('Jaga akun dan perangkat Anda tetap aman'),
+          p('Pengunduh hanya membutuhkan tautan video publik. Untuk penggunaan yang lebih aman:'),
+          ul(
+            'Jangan pernah memasukkan kata sandi TikTok atau kode verifikasi ke pengunduh mana pun. Jika situs memintanya, tutup.',
+            'Abaikan pemasangan perangkat lunak yang tak terduga, pengalihan mencurigakan, dan ekstensi yang meminta izin tidak perlu.',
+            'Baca [kebijakan privasi](/privacy) situs untuk melihat bagaimana tautan yang dikirim ditangani.',
+            'Jaga kerahasiaan rekaman pribadi atau sensitif.',
+          ),
+        ],
+      },
+    ],
+    faqTitle: 'Pertanyaan yang Sering Diajukan',
+    faq: [
+      { question: 'Bisakah saya mengunduh hanya musik dari video TikTok?', answer: 'Bisa, jika video menyediakan opsi audio. Anda menyimpan suaranya sebagai MP3 dan melewati file video sepenuhnya.' },
+      { question: 'Bagaimana cara mengonversi TikTok ke MP3?', answer: 'Salin tautan video TikTok publik, tempel ke konverter, kirim, lalu ketuk tombol MP3 atau audio. Kemudian simpan file ke perangkat Anda.' },
+      { question: 'Audio tersedia dalam format apa?', answer: 'MP3, yang bisa diputar di hampir semua ponsel, komputer, dan aplikasi musik.' },
+      { question: 'Apakah MP3-nya akan terdengar lebih baik daripada TikTok-nya?', answer: 'Tidak. Konversi tidak meningkatkan kualitas, jadi file mencerminkan audio sumber dari postingan aslinya.' },
+      { question: 'Bisakah saya mengunduh lagu penuh dari video TikTok?', answer: 'Belum tentu. Banyak suara TikTok berupa potongan pendek, hasil edit, atau remix, jadi Anda mungkin hanya mendapat bagian itu. Gunakan untuk mengenali lagunya, lalu cari lagu lengkapnya di layanan musik berlisensi.' },
+      { question: 'Bisakah saya mengonversi audio dari akun privat?', answer: 'Tidak. Konverter hanya bekerja dengan video publik.' },
+      { question: 'Apakah saya perlu akun TikTok atau aplikasi?', answer: 'Tidak keduanya. Salin tautan video publik, tempel ke halaman, dan simpan file dari browser Anda.' },
+      { question: 'Apakah gratis?', answer: 'Ya. Saat artikel ini ditulis, konverter gratis dan tidak memerlukan pendaftaran. Periksa halaman jika ada perubahan.' },
+      { question: 'Bisakah saya menggunakan suara yang disimpan di video saya sendiri?', answer: 'Untuk didengarkan pribadi, umumnya bisa. Untuk apa pun yang Anda publikasikan, terutama secara komersial, periksa hak penggunaan terlebih dahulu, karena banyak lagu berhak cipta.' },
+      { question: 'Di mana file MP3 yang diunduh disimpan?', answer: 'Di folder Unduhan browser Anda, atau aplikasi File di iPhone. Lokasi pastinya bergantung pada perangkat dan pengaturan browser Anda.' },
+      { question: 'Apakah aman menggunakan konverter TikTok ke MP3?', answer: 'Aman jika Anda menggunakan akal sehat: jangan bagikan kata sandi atau kode, lewati pemasangan tak terduga, dan baca kebijakan privasi. Tidak ada alat yang bisa menjanjikan keamanan sempurna, jadi tetaplah pada konten publik.' },
+      { question: 'Mengapa tautan saya tidak berfungsi?', answer: 'Penyebab yang biasa adalah tautan tidak lengkap, video privat atau dihapus, atau pembatasan wilayah. Salin ulang tautan lengkap dari aplikasi lalu coba lagi. Bagian pemecahan masalah di atas memuat semua penyebab umum.' },
+    ],
+    finalTitle: 'Penutup',
+    finalText:
+      'Suara di TikTok mudah hilang dan sulit dinamai. Menyimpannya sebagai MP3 hanya butuh tautan publik, browser, dan beberapa detik, dan Anda mendapat file audio bersih untuk playlist, editor, atau daftar nada dering. Tetap realistis: kualitasnya sama dengan aslinya, file mungkin hanya sebagian lagu, video privat tidak bisa diakses, dan apa pun yang Anda publikasikan tetap memerlukan izin yang tepat.',
+    ctaLabel: 'Tempel tautan dan konversi ke MP3',
+    moreText: 'Jika sudah siap, tempel tautan ke konverter di atas dan lihat apakah video menyediakan unduhan audio.',
+  },
+
+  /* ------------------------------------------------------------------ VI */
+  vi: {
+    metaTitle: 'Chuyển TikTok sang MP3 – Miễn phí, lưu âm thanh TikTok',
+    metaDescription:
+      'Chuyển video TikTok công khai sang MP3 và lưu âm thanh thành tệp riêng. Miễn phí, không cần đăng ký. Dùng được trên iPhone, Android, Windows và Mac.',
+    heroTitleStart: 'Chuyển TikTok sang MP3:',
+    heroTitleHighlight: 'lưu âm thanh TikTok thành MP3',
+    heroDescription:
+      'Dán liên kết video TikTok công khai và lưu âm thanh thành tệp MP3 riêng. Miễn phí, không đăng ký, không kèm tệp video.',
+    intro: [
+      'Bạn nghe vài giây một bản nhạc trong TikTok, nó cứ quanh quẩn trong đầu, rồi biến mất. Video trôi qua, âm thanh không có tên rõ ràng, và ứng dụng không giúp bạn dễ dàng giữ riêng phần âm thanh.',
+      'Đó chính là khoảng trống mà công cụ chuyển TikTok sang MP3 lấp đầy. Dán liên kết video công khai, chọn tùy chọn âm thanh nếu có, rồi lưu âm thanh thành tệp riêng để phát trong bất kỳ ứng dụng nhạc nào, đưa vào dự án biên tập hoặc dùng làm nhạc chuông. Không có tệp video nào đi kèm.',
+      'Hướng dẫn này giải thích cách quy trình hoạt động, điều nên mong đợi ở kết quả, ai hưởng lợi nhiều nhất, cách xử lý khi tải xuống thất bại và những giới hạn cần biết trước khi bắt đầu. Nếu chỉ muốn thử, [công cụ chuyển TikTok sang MP3](/tiktok-mp3) này miễn phí và không cần đăng ký.',
+    ],
+    tocTitle: 'Trong hướng dẫn này',
+    sections: [
+      {
+        id: 'la-gi',
+        title: 'Công cụ chuyển TikTok sang MP3 là gì?',
+        blocks: [
+          p('Công cụ chuyển TikTok sang MP3 nhận liên kết của một video TikTok công khai và kiểm tra xem âm thanh có thể lưu riêng hay không. Khi có thể, bạn nhận được tệp âm thanh thuần thay vì video. Người ta cũng gọi nó là công cụ tải âm thanh TikTok, tải nhạc TikTok hoặc lưu audio TikTok. Tất cả đều cùng một ý tưởng.'),
+          p('Trước hết là hai lưu ý thẳng thắn. Công cụ chỉ hoạt động với video công khai, vì bài đăng riêng tư, đã xóa hoặc bị hạn chế theo khu vực có thể không tải được. Và chuyển đổi tệp không bao giờ làm nó tốt hơn: chất lượng âm thanh bạn nhận được chính là chất lượng của bài đăng gốc.'),
+          p('Trong những giới hạn đó, nó giải quyết một vấn đề đơn giản. TikTok gắn âm thanh với video, còn công cụ chuyển đổi cho phép bạn tách âm thanh ra và giữ lại.'),
+        ],
+      },
+      {
+        id: 'cach-luu',
+        title: 'Cách lưu âm thanh TikTok thành MP3 trong ba bước',
+        blocks: [
+          p('Bạn không cần tài khoản, và không bao giờ phải nhập mật khẩu TikTok ở bất cứ đâu.'),
+          steps(
+            ['Sao chép liên kết video.', 'Trong ứng dụng TikTok, mở video, nhấn Chia sẻ, rồi Sao chép liên kết. Hãy dùng liên kết đầy đủ của bài đăng cụ thể, không phải liên kết trang cá nhân. Liên kết bị cắt hoặc sai là lý do phổ biến nhất khiến tải xuống thất bại, và tài khoản đăng video phải ở chế độ công khai.'],
+            ['Dán vào công cụ chuyển đổi.', 'Dán liên kết vào ô ở đầu trang này rồi gửi. Trang cần vài giây để đọc video.'],
+            ['Chọn tùy chọn âm thanh và lưu.', 'Nếu có nút MP3 hoặc âm thanh, hãy nhấn vào và tệp sẽ được lưu vào điện thoại hoặc máy tính của bạn. Nếu không hiển thị tùy chọn âm thanh nào, video đó có thể không hỗ trợ.'],
+          ),
+          p('Tệp đã lưu chỉ có âm thanh, nên sẵn sàng cho danh sách phát hoặc trình biên tập ngay khi tải xong. Muốn tìm story thay vì âm thanh? Cùng trang web này cũng hỗ trợ, từ [trang chủ MusicalDown](/).'),
+        ],
+      },
+      {
+        id: 'ky-vong',
+        title: 'Nên mong đợi gì từ bản tải MP3 TikTok',
+        blocks: [
+          h3('Chỉ có âm thanh, không có video'),
+          p('Toàn bộ mục đích là tách riêng. Bạn giữ phần âm thanh và bỏ qua tệp video, giúp tiết kiệm dung lượng và không phải cắt clip trước khi dùng.'),
+          h3('Tệp MP3 tiêu chuẩn'),
+          p('MP3 phát được trên hầu hết điện thoại, laptop và ứng dụng nhạc, và phần mềm biên tập chấp nhận nó mà không rắc rối. Không cần tìm trình phát đặc biệt và không có bước chuyển đổi thêm.'),
+          h3('Chất lượng tương ứng với nguồn'),
+          p('Công cụ chuyển đổi không thể thêm chi tiết vốn không tồn tại. Bản tải lên sạch cho âm thanh sạch, còn bản bị rè vẫn bị rè. Điều này đúng với mọi công cụ, vì vậy hãy cảnh giác với bất kỳ trang nào hứa hẹn âm thanh hay hơn bản gốc.'),
+          h3('Thường là một đoạn clip, không phải cả bài hát'),
+          p('Âm thanh TikTok thường là đoạn trích ngắn, đoạn đã chỉnh sửa hoặc bản phối lại, nên tệp bạn lưu có thể chỉ là phần đó. Nếu muốn bản đầy đủ, hãy dùng clip đã lưu để nhận biết bài hát, rồi tìm bản đầy đủ qua dịch vụ nhạc có bản quyền.'),
+          h3('Cách nhanh để nhận biết một âm thanh'),
+          p('Nếu bạn đang cố tìm một bài hát nghe được trong video, lưu âm thanh thường là cách nhanh nhất. Khi tệp đã có trên thiết bị, bạn có thể phát lại bao nhiêu lần tùy ý.'),
+          h3('Không đăng ký và không cần phần mềm'),
+          p('Chạy ngay trong trình duyệt bạn đang mở. Không có gì để cài, không phải thêm tiện ích mở rộng và không có biểu mẫu đăng ký nào để điền.'),
+        ],
+      },
+      {
+        id: 'cach-dung',
+        title: 'Những cách thực tế để dùng âm thanh TikTok đã lưu',
+        blocks: [
+          ul(
+            'Nghe ngoại tuyến khi đi làm hoặc đi máy bay, không cần ứng dụng hay kết nối.',
+            'Giữ lại một âm thanh bạn có thể muốn tham khảo cho nội dung của mình sau này.',
+            'Biến một clip ngắn thành nhạc chuông hoặc âm báo thông báo.',
+            'Lưu riêng phần lồng tiếng hoặc đoạn nói tách khỏi video của nó.',
+            'Xây dựng bộ sưu tập cá nhân gồm nhạc, bản phối và đoạn trích khó tìm ở nơi khác.',
+          ),
+        ],
+      },
+      {
+        id: 'ai-luu',
+        title: 'Ai lưu âm thanh TikTok?',
+        blocks: [
+          p('Trên TikTok, âm thanh thường quan trọng hơn hình ảnh, và những người lưu nó thường biết chính xác mình cần nó để làm gì.'),
+          cards(
+            3,
+            ['Người sáng tạo & biên tập video', 'Muốn có bản nhạc dùng ngay, kéo thẳng vào timeline, thay vì phải tách âm thanh từ video đã hoàn chỉnh trước.'],
+            ['Người yêu nhạc', 'Tìm thấy một bài hát, bản phối hoặc đoạn trích trong ứng dụng và muốn giữ trong thư viện riêng thay vì phụ thuộc vào việc tìm lại video đó.'],
+            ['Người dùng thông thường', 'Có những mục đích nhỏ hơn: nhạc chuông, clip giọng nói vui, một âm thanh cho đoạn đường đi làm. Điểm chung là mong muốn có âm thanh theo cách của riêng mình.'],
+          ),
+        ],
+      },
+      {
+        id: 'thiet-bi',
+        title: 'TikTok sang MP3 trên iPhone, Android, PC và Mac',
+        blocks: [
+          p('Vì mọi thứ diễn ra trong một trang web, thiết bị quan trọng ít hơn nhiều so với trình duyệt, và bất kỳ trình duyệt hiện đại nào cũng được.'),
+          cards(
+            2,
+            ['iPhone', 'Mở công cụ trong Safari, dán liên kết rồi gửi. Sau khi tải, hãy xem trong ứng dụng Tệp, thường ở thư mục Tải xuống gắn với trình duyệt. Vị trí lưu chính xác có thể khác tùy phiên bản iOS và cài đặt trình duyệt, và bạn không cần App Store ở bất kỳ bước nào.'],
+            ['Android', 'Dùng Chrome hoặc trình duyệt bạn đang có. Dán liên kết, nhấn tùy chọn âm thanh, rồi kiểm tra danh sách Tải xuống của trình duyệt hoặc trình quản lý tệp khi xong. Không cần APK và không cần cài đặt ngoài.'],
+            ['PC Windows', 'Mở trang bằng Chrome hoặc Edge, dán URL video và chọn tùy chọn MP3. Tệp được lưu vào thư mục Downloads trừ khi bạn đặt vị trí khác, sau đó bạn có thể phát bằng bất kỳ trình phát nào hoặc chuyển vào thư viện nhạc.'],
+            ['Mac', 'Safari và Chrome đều dùng được, và các bước giống như trên Windows. Kiểm tra thư mục Downloads hoặc lịch sử tải xuống của trình duyệt, rồi thêm tệp vào thư viện âm thanh hoặc dự án biên tập nếu bạn có quyền sử dụng.'],
+          ),
+        ],
+      },
+      {
+        id: 'khac-phuc-su-co',
+        title: 'Tải MP3 TikTok không được? Khắc phục sự cố',
+        blocks: [
+          p('Tải xuống thất bại thường có nguyên nhân đơn giản. Hãy kiểm tra lần lượt trước khi thử trang khác hoặc cài đặt bất cứ thứ gì:'),
+          ol(
+            ['Liên kết không đầy đủ.', 'Quay lại bài đăng và sao chép lại liên kết đầy đủ. Đó phải là video cụ thể, không phải trang cá nhân hay liên kết đã bị chỉnh sửa.'],
+            ['Video không khả dụng.', 'Video riêng tư, đã xóa và bị hạn chế theo khu vực có thể không tải được. Hãy thử bài đăng công khai khác mà bạn có quyền lưu.'],
+            ['Không có tùy chọn âm thanh nào xuất hiện.', 'Không phải video nào cũng cho tải âm thanh riêng. Nếu trang không hiện nút MP3 cho liên kết đó, có thể bài đăng đó không hỗ trợ.'],
+            ['Trang chậm hoặc bị treo.', 'Kiểm tra kết nối, làm mới và dán lại liên kết. Dùng trình duyệt khác cũng có thể giúp ích.'],
+            ['Tải xuống bị chặn hoặc bị gián đoạn.', 'Kiểm tra lịch sử tải xuống của trình duyệt, dung lượng trống và mọi cảnh báo bảo mật. Đừng tắt tính năng bảo mật để ép tải xuống.'],
+            ['Tệp không phát được.', 'Xác nhận quá trình tải đã hoàn tất và phần mở rộng là .mp3. Nếu tệp có vẻ chưa đầy đủ, hãy xóa và tải lại.'],
+            ['Bạn không tìm thấy tệp.', 'Kiểm tra thư mục Downloads hoặc danh sách tải xuống của trình duyệt. Trên iPhone, hãy mở ứng dụng Tệp trước.'],
+          ),
+          p('Nếu sự cố vẫn tiếp diễn, nguồn có thể tạm thời không khả dụng hoặc không được hỗ trợ.'),
+        ],
+      },
+      {
+        id: 'ban-quyen',
+        title: 'Bản quyền, sự cho phép và sử dụng an toàn',
+        blocks: [
+          h3('Bản quyền và sự cho phép'),
+          p('Rất nhiều nhạc trên TikTok có bản quyền. Lưu một bản nhạc để nghe riêng khác với việc đăng nó trong video của bạn hoặc dùng cho mục đích thương mại. Hãy lưu nội dung bạn sở hữu hoặc có quyền sử dụng, và kiểm tra quyền sử dụng, cùng với quy định của TikTok tại [trung tâm trợ giúp](https://support.tiktok.com), trước khi đưa âm thanh vào bất cứ thứ gì công khai.'),
+          h3('Giữ an toàn cho tài khoản và thiết bị'),
+          p('Công cụ tải chỉ cần liên kết video công khai. Để dùng an toàn hơn:'),
+          ul(
+            'Không bao giờ nhập mật khẩu TikTok hoặc mã xác minh vào bất kỳ công cụ tải nào. Nếu trang yêu cầu, hãy đóng lại.',
+            'Bỏ qua các yêu cầu cài phần mềm bất ngờ, chuyển hướng đáng ngờ và tiện ích mở rộng đòi quyền không cần thiết.',
+            'Đọc [chính sách quyền riêng tư](/privacy) của trang để biết cách xử lý các liên kết đã gửi.',
+            'Giữ riêng tư các bản ghi âm cá nhân hoặc nhạy cảm.',
+          ),
+        ],
+      },
+    ],
+    faqTitle: 'Câu hỏi thường gặp',
+    faq: [
+      { question: 'Tôi có thể chỉ tải nhạc từ video TikTok không?', answer: 'Có, khi video có tùy chọn âm thanh. Bạn lưu âm thanh thành MP3 và bỏ qua hoàn toàn tệp video.' },
+      { question: 'Làm thế nào để chuyển TikTok sang MP3?', answer: 'Sao chép liên kết video TikTok công khai, dán vào công cụ, gửi và nhấn nút MP3 hoặc âm thanh. Sau đó lưu tệp vào thiết bị của bạn.' },
+      { question: 'Âm thanh có định dạng gì?', answer: 'MP3, phát được trên hầu hết điện thoại, máy tính và ứng dụng nhạc.' },
+      { question: 'MP3 có nghe hay hơn TikTok không?', answer: 'Không. Chuyển đổi không cải thiện chất lượng, nên tệp phản ánh âm thanh nguồn của bài đăng gốc.' },
+      { question: 'Tôi có thể tải cả bài hát từ video TikTok không?', answer: 'Không nhất thiết. Nhiều âm thanh TikTok là đoạn trích ngắn, bản chỉnh sửa hoặc bản phối lại, nên bạn có thể chỉ nhận được phần đó. Hãy dùng nó để nhận biết bài hát, rồi tìm bản đầy đủ trên dịch vụ nhạc có bản quyền.' },
+      { question: 'Tôi có thể chuyển âm thanh từ tài khoản riêng tư không?', answer: 'Không. Công cụ chỉ hoạt động với video công khai.' },
+      { question: 'Tôi có cần tài khoản TikTok hoặc ứng dụng không?', answer: 'Không cần cả hai. Sao chép liên kết video công khai, dán vào trang và lưu tệp từ trình duyệt của bạn.' },
+      { question: 'Có miễn phí không?', answer: 'Có. Tại thời điểm viết bài, công cụ miễn phí và không cần đăng ký. Hãy kiểm tra trang nếu có thay đổi.' },
+      { question: 'Tôi có thể dùng âm thanh đã lưu trong video của mình không?', answer: 'Để nghe cá nhân thì nhìn chung là được. Với bất cứ thứ gì bạn đăng tải, đặc biệt là thương mại, hãy kiểm tra quyền sử dụng trước, vì nhiều bản nhạc có bản quyền.' },
+      { question: 'Tệp MP3 đã tải được lưu ở đâu?', answer: 'Trong thư mục Tải xuống của trình duyệt, hoặc ứng dụng Tệp trên iPhone. Vị trí chính xác phụ thuộc vào thiết bị và cài đặt trình duyệt.' },
+      { question: 'Dùng công cụ chuyển TikTok sang MP3 có an toàn không?', answer: 'An toàn nếu bạn dùng theo lẽ thường: không chia sẻ mật khẩu hay mã, bỏ qua các yêu cầu cài đặt bất ngờ và đọc chính sách quyền riêng tư. Không công cụ nào có thể hứa hẹn an toàn tuyệt đối, vì vậy hãy chỉ dùng nội dung công khai.' },
+      { question: 'Vì sao liên kết của tôi không hoạt động?', answer: 'Nguyên nhân thường gặp là liên kết không đầy đủ, video riêng tư hoặc đã xóa, hoặc hạn chế theo khu vực. Hãy sao chép lại liên kết đầy đủ từ ứng dụng rồi thử lại. Phần khắc phục sự cố ở trên liệt kê mọi nguyên nhân phổ biến.' },
+    ],
+    finalTitle: 'Lời kết',
+    finalText:
+      'Âm thanh trên TikTok dễ mất và khó gọi tên. Lưu một âm thanh thành MP3 chỉ cần một liên kết công khai, một trình duyệt và vài giây, và bạn có tệp âm thanh sạch cho danh sách phát, trình biên tập hoặc danh sách nhạc chuông. Hãy giữ kỳ vọng thực tế: chất lượng là của bản gốc, tệp có thể chỉ là một phần bài hát, video riêng tư nằm ngoài giới hạn, và mọi thứ bạn đăng vẫn cần có quyền phù hợp.',
+    ctaLabel: 'Dán liên kết và chuyển sang MP3',
+    moreText: 'Khi đã sẵn sàng, hãy dán liên kết vào công cụ ở trên và xem video có cho tải âm thanh hay không.',
+  },
+};
+
+/** Content for the "TikTok to MP3" page in the given language (falls back to English). */
+export function getMp3Content(lang: string): ArticleContent {
+  return MP3_PAGE[(lang in MP3_PAGE ? lang : defaultLang) as Lang];
+}

@@ -3,16 +3,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import HeroSection from '../components/marketing/HeroSection.astro';
+import ArticleBody from '../components/marketing/ArticleBody.astro';
+import { getMp3Content } from '../i18n/ui';
+
+// All text lives in MP3_PAGE (en) in src/i18n/ui.ts
+const c = getMp3Content('en');
 ---
-<BaseLayout title="Tiktok to mp3 - Download Tiktok music for Free | MusicallyDown" description="Convert TikTok videos to MP3 audio files using MusicallyDown online converter. Paste the TikTok video link to extract and download the audio in MP3 format for free.">
+<BaseLayout title={c.metaTitle} description={c.metaDescription} ogType="article">
   <Header slot="header" />
-  <HeroSection />
-  <main class="mx-auto max-w-4xl px-6 py-12">
-    <article class="prose prose-zinc prose-lg mx-auto dark:prose-invert">
-      <h1>TikTok to MP3 Converter</h1><p>Use this page to check whether an accessible TikTok video has an audio download option. Audio formats and quality depend on the source; converting a file does not improve its original quality.</p><h2>How to extract TikTok audio as MP3</h2>
-      <ol><li>Copy the link to a public TikTok video.</li><li>Paste the URL into the downloader above.</li><li>Choose the audio or MP3 option if it is offered, then save the file.</li></ol>
-      <h2>Important notes</h2><p>Only save content you own or have permission to use. Private, deleted, region-restricted, or unsupported links may not work. Never share your TikTok password with a downloader.</p>
-    </article>
-  </main>
+  <HeroSection
+    titleStart={c.heroTitleStart}
+    titleHighlight={c.heroTitleHighlight}
+    description={c.heroDescription}
+  />
+  <ArticleBody content={c} />
   <Footer slot="footer" />
 </BaseLayout>

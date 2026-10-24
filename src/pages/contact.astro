@@ -9,7 +9,7 @@ const siteUrl = Astro.site?.toString() ?? 'https://musicaldown.se';
 
 <BaseLayout
   title="Contact Us"
-  description="Questions or technical problems? Contact MusicalDown support at support@musicaldown.com. Include the problem link, never your password or personal details."
+  description="Questions or technical problems? Contact MusicalDown support at support@Musicaldown.se. Include the problem link, never your password or personal details."
 >
   <Fragment slot="head">
     <JsonLd
@@ -21,7 +21,7 @@ const siteUrl = Astro.site?.toString() ?? 'https://musicaldown.se';
         contactPoint: {
           '@type': 'ContactPoint',
           contactType: 'customer support',
-          email: 'support@musicaldown.com',
+          email: 'support@Musicaldown.se',
         },
       }}
     />
@@ -32,10 +32,19 @@ const siteUrl = Astro.site?.toString() ?? 'https://musicaldown.se';
   <main class="mx-auto max-w-4xl px-6 py-16 md:py-24">
     <article class="prose prose-zinc prose-lg mx-auto dark:prose-invert prose-a:text-[#ef124e] prose-a:no-underline hover:prose-a:underline">
       <h1>Contact Us</h1>
-      <p>Have a question, a bug to report or a removal request? Send us a message and include the TikTok link that caused the problem. Please never send your TikTok password or other personal information.</p>
+      <p>
+        Have a question, a bug to report or a removal request? Send us a message and include the
+        TikTok link that caused the problem. Please never send your TikTok password or other
+        personal information.
+      </p>
       <h2>Support</h2>
-      <p>Email us at <a href="mailto:support@musicaldown.com">support@musicaldown.com</a>. We read every message and aim to reply within 2–3 business days.</p>
-      <p><a href="/">Back to home</a></p>
+      <p>
+        Email us at <a href="mailto:support@Musicaldown.se">support@Musicaldown.se</a>. We read
+        every message and aim to reply within 2–3 business days.
+      </p>
+      <p>
+        <a href="/">Back to home</a>
+      </p>
     </article>
   </main>
 

@@ -9,7 +9,7 @@ const siteUrl = Astro.site?.toString() ?? 'https://musicaldown.se';
 
 <BaseLayout
   title="Contacto"
-  description="¿Preguntas o problemas técnicos? Escribe al soporte de MusicalDown en support@musicaldown.com. Incluye el enlace con el problema y nunca tu contraseña ni datos personales."
+  description="¿Preguntas o problemas técnicos? Escribe al soporte de MusicalDown en support@Musicaldown.se. Incluye el enlace con el problema y nunca tu contraseña ni datos personales."
 >
   <Fragment slot="head">
     <JsonLd
@@ -21,7 +21,7 @@ const siteUrl = Astro.site?.toString() ?? 'https://musicaldown.se';
         contactPoint: {
           '@type': 'ContactPoint',
           contactType: 'customer support',
-          email: 'support@musicaldown.com',
+          email: 'support@Musicaldown.se',
         },
       }}
     />
@@ -32,10 +32,19 @@ const siteUrl = Astro.site?.toString() ?? 'https://musicaldown.se';
   <main class="mx-auto max-w-4xl px-6 py-16 md:py-24">
     <article class="prose prose-zinc prose-lg mx-auto dark:prose-invert prose-a:text-[#ef124e] prose-a:no-underline hover:prose-a:underline">
       <h1>Contacto</h1>
-      <p>¿Tienes una pregunta, un error que informar o una solicitud de retirada? Escríbenos e incluye el enlace de TikTok que causó el problema. Por favor, nunca envíes tu contraseña de TikTok ni otros datos personales.</p>
+      <p>
+        ¿Tienes una pregunta, un error que informar o una solicitud de retirada? Escríbenos e
+        incluye el enlace de TikTok que causó el problema. Por favor, nunca envíes tu contraseña de
+        TikTok ni otros datos personales.
+      </p>
       <h2>Soporte</h2>
-      <p>Escríbenos a <a href="mailto:support@musicaldown.com">support@musicaldown.com</a>. Leemos todos los mensajes y respondemos en un plazo de 2 a 3 días hábiles.</p>
-      <p><a href="/es/">Volver al inicio</a></p>
+      <p>
+        Escríbenos a <a href="mailto:support@Musicaldown.se">support@Musicaldown.se</a>. Leemos
+        todos los mensajes y respondemos en un plazo de 2 a 3 días hábiles.
+      </p>
+      <p>
+        <a href="/es/">Volver al inicio</a>
+      </p>
     </article>
   </main>
 

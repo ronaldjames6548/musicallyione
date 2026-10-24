@@ -31,7 +31,7 @@ const navItems = [
   { label: t('nav.home'), href: getLocalizedPath(lang, '/') },
   { label: t('nav.stories'), href: getLocalizedPath(lang, '/download-tiktok-stories') },
   { label: t('nav.mp3'), href: getLocalizedPath(lang, '/tiktok-mp3') },
-  { label: t('nav.how'), href: getLocalizedPath(lang, '/how-to-use') },
+  { label: t('nav.how'), href: `${getLocalizedPath(lang, '/')}#how-it-works` },
 ];
 ---
 
@@ -52,10 +52,7 @@ const navItems = [
 <path d="M0 0 C0.66 0 1.32 0 2 0 C2 1.65 2 3.3 2 5 C-0.62 6.31 -2.23 5.9 -5.12 5.56 C-6.04 5.46 -6.95 5.36 -7.88 5.25 C-8.58 5.17 -9.28 5.09 -10 5 C-10 4.67 -10 4.34 -10 4 C-6.7 4 -3.4 4 0 4 C0 2.68 0 1.36 0 0 Z " fill="#FEC1D3" transform="translate(21,16)"/>
 </svg>
       <span>
-        Musically
-        <span class="text-[var(--color-red-600)] dark:text-[var(--color-primary-400)]">
-          IO
-        </span>
+        Musical<span class="text-[var(--color-red-600)] dark:text-[var(--color-primary-400)]">Down</span>
       </span>
     </a>
 

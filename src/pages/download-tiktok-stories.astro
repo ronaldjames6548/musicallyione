@@ -1,84 +1,18 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import JsonLd from '../components/seo/JsonLd.astro';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import HeroSection from '../components/marketing/HeroSection.astro';
-import LogoCloud from '../components/marketing/LogoCloud.astro';
-import BentoGrid from '../components/marketing/BentoGrid.astro';
-import FaqAccordion from '../components/marketing/FaqAccordion.astro';
-import { getLangFromUrl, useTranslations } from '../i18n/utils';
-
-const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
-
-const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://astro-seo-theme.vercel.app';
 ---
-
-<BaseLayout
-  title={t('site.title')}
-  description={t('site.description')}
-  appendSiteName={false}
->
-  <Fragment slot="head">
-    <JsonLd
-      type="WebSite"
-      data={{
-        name: t('site.name'),
-        url: siteUrl,
-        description: t('site.description'),
-        searchUrl: `${siteUrl}/search`,
-      }}
-    />
-    <JsonLd
-      type="Organization"
-      data={{
-        name: t('site.name'),
-        url: siteUrl,
-        description: t('site.description'),
-      }}
-    />
-  </Fragment>
+<BaseLayout title="Download TikTok Stories | MusicallyDown" description="Paste a public or otherwise accessible TikTok Story link and review the download options returned. Availability depends on the source and not every Story can be processed.">
   <Header slot="header" />
-
   <HeroSection />
-
-  <LogoCloud  />
-
-  <BentoGrid
-    title="Everything you need to rank higher"
-    subtitle="Built from the ground up for technical SEO and modern AI search engines."
-    items={[
-      {
-        title: 'Zero-JS by Default',
-        description:
-          'Ship less JavaScript and achieve perfect 100/100 Lighthouse scores. React is only loaded for interactive islands when absolutely necessary.',
-        colSpan: 2,
-        icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>',
-      },
-      {
-        title: 'Automatic JSON-LD',
-        description:
-          'Dynamic Schema.org structured data generation for Articles, FAQs, Organizations, and Breadcrumbs.',
-        icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" /></svg>',
-      },
-      {
-        title: 'GEO & AEO Ready',
-        description:
-          'Optimized content structures and semantic HTML designed for Generative AI and Featured Snippets.',
-        icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" /></svg>',
-      },
-      {
-        title: 'i18n Support',
-        description: 'First-class support for multiple languages with automatic hreflang tags.',
-        colSpan: 2,
-        icon: '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418" /></svg>',
-      },
-    ]}
-  />
-
-  <FaqAccordion />
-
-
+  <main class="mx-auto max-w-4xl px-6 py-12">
+    <article class="prose prose-zinc prose-lg mx-auto dark:prose-invert">
+      <h1>Download TikTok Stories</h1><p>Paste a public or otherwise accessible TikTok Story link and review the download options returned. Availability depends on the source and not every Story can be processed.</p><h2>How to save an accessible TikTok Story</h2>
+      <ol><li>Copy the Story link from TikTok.</li><li>Paste the link into the downloader above and submit it.</li><li>Review the available result and save the file if an option is provided.</li></ol>
+      <h2>Important notes</h2><p>Only save content you own or have permission to use. Private, deleted, region-restricted, or unsupported links may not work. Never share your TikTok password with a downloader.</p>
+    </article>
+  </main>
   <Footer slot="footer" />
 </BaseLayout>

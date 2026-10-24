@@ -1,18 +1,54 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import JsonLd from '../../components/seo/JsonLd.astro';
 import Header from '../../components/layout/Header.astro';
 import Footer from '../../components/layout/Footer.astro';
 import HeroSection from '../../components/marketing/HeroSection.astro';
+import LogoCloud from '../../components/marketing/LogoCloud.astro';
+import BentoGrid from '../../components/marketing/BentoGrid.astro';
+import FaqAccordion from '../../components/marketing/FaqAccordion.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://musicaldown.se';
 ---
 
 <BaseLayout
-  title="Tải Video TikTok Không Logo"
-  description="Tải video TikTok không có watermark về máy tính, iPhone và Android. Miễn phí, nhanh, không cần cài ứng dụng."
+  title={t('site.title')}
+  description={t('site.description')}
   appendSiteName={false}
 >
+  <Fragment slot="head">
+    <JsonLd
+      type="WebSite"
+      data={{
+        name: t('site.name'),
+        url: siteUrl,
+        description: t('site.description'),
+        searchUrl: `${siteUrl}/search`,
+      }}
+    />
+    <JsonLd
+      type="Organization"
+      data={{
+        name: t('site.name'),
+        url: siteUrl,
+        description: t('site.description'),
+      }}
+    />
+  </Fragment>
   <Header slot="header" />
 
   <HeroSection />
+
+  <LogoCloud  />
+
+  <BentoGrid />
+
+  <FaqAccordion />
+
 
   <Footer slot="footer" />
 </BaseLayout>

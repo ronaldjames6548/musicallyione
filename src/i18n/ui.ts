@@ -23,7 +23,7 @@ export const ui = {
   en: {
     // Main Site
     'site.name': 'MusicallyDown',
-    'site.title': 'MusicallyDown – TikTok Video Downloader Without Watermark TikTok to MP3',
+    'site.title': 'MusicallyDown – TikTok Downloader Without Watermark & MP3',
     'site.description':
       'Download TikTok videos without watermark in HD with Free MusicallyDown TikTok downloader. Save TikTok video as MP4 or MP3, free, with no app and no sign-up.',
 
@@ -453,8 +453,7 @@ export const ui = {
   },
   es: {
     'site.name': 'MusicallyDown',
-    'site.title':
-      'MusicallyDown – Descargar TikTok Sin Marca de Agua y MP3',
+    'site.title': 'MusicallyDown – Descargar TikTok Sin Marca de Agua y MP3',
     'site.description':
       'Descarga videos públicos de TikTok sin marca de agua cuando esté disponible. Guarda videos en MP4 o extrae audio en MP3 gratis, sin instalar aplicaciones.',
     'nav.home': 'Inicio',
@@ -820,7 +819,7 @@ export const ui = {
   },
   id: {
     'site.name': 'MusicallyDown',
-    'site.title': 'MusicallyDown – Pengunduh Video TikTok Tanpa Tanda Air & MP3',
+    'site.title': 'MusicallyDown – Unduh Video TikTok Tanpa Watermark & MP3',
     'site.description':
       'Unduh video TikTok publik tanpa watermark jika tersedia. Simpan video sebagai MP4 atau ekstrak audio MP3 secara gratis melalui browser tanpa memasang aplikasi.',
     'nav.home': 'Beranda',
@@ -1181,7 +1180,7 @@ export const ui = {
   },
   vi: {
     'site.name': 'MusicallyDown',
-    'site.title': 'MusicallyDown – Tải video TikTok không logo và chuyển TikTok sang MP3',
+    'site.title': 'MusicallyDown – Tải Video TikTok Không Logo & MP3 Miễn Phí',
     'site.description':
       'Tải video TikTok công khai không watermark khi có tùy chọn. Lưu video MP4 hoặc trích xuất âm thanh MP3 miễn phí ngay trên trình duyệt, không cần cài ứng dụng.',
     'nav.home': 'Trang chủ',

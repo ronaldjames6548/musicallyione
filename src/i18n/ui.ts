@@ -213,7 +213,7 @@ export const ui = {
     'contact.hqLabel': 'Headquarters',
 
     // About Page
-    'about.title': 'About MusicallyDown – Free TikTok Video & MP3 Downloader', // meta title
+    'about.title': 'About MusicallyDown – Free TikTok Video Downloader', // meta title
     'about.metaDescription':
       'Learn what Musicallydown is, how our free TikTok downloader works, what we do with your data, and how we encourage responsible, permission-based downloading.',
     'about.titleStart': 'About ',
@@ -918,7 +918,7 @@ export const ui = {
     'contact.emailLabel': 'Email',
     'contact.phoneLabel': 'Phone',
     'contact.hqLabel': 'Headquarters',
-    'about.title': 'About Musicallydown – Free TikTok Video & MP3 Downloader',
+    'about.title': 'About Musicallydown – Free TikTok Video Downloader',
     'about.metaDescription':
       'Learn what Musicallydown is, how our free TikTok downloader works, what we do with your data, and how we encourage responsible, permission-based downloading.',
     'about.titleStart': 'About ',
@@ -1280,7 +1280,7 @@ export const ui = {
     'contact.emailLabel': 'Email',
     'contact.phoneLabel': 'Phone',
     'contact.hqLabel': 'Headquarters',
-    'about.title': 'About Musicallydown – Free TikTok Video & MP3 Downloader',
+    'about.title': 'About Musicallydown – Free TikTok Video Downloader',
     'about.metaDescription':
       'Learn what Musicallydown is, how our free TikTok downloader works, what we do with your data, and how we encourage responsible, permission-based downloading.',
     'about.titleStart': 'About ',

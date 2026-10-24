@@ -2,22 +2,18 @@
 /**
  * LogoCloud.astro — Social Proof component
  *
- * Displays a row of customer/partner logos.
- * Great for building trust on B2B SaaS landing pages.
+ * Displays highlights, how-it-works steps, a feature grid and intro text.
+ * All copy comes from src/i18n/ui.ts via t().
  */
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 
-interface Logo {
-  name: string;
-  src: string;
-  darkSrc?: string;
-  className?: string;
+interface Props {
+  section1title?: string;
+  section1highlight?: string;
+  section1paragraph?: string;
+  section1paragraph2?: string;
 }
 
-interface Props {
-  title?: string;
-  logos: Logo[];
-}
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
@@ -28,15 +24,70 @@ const {
   section1paragraph2 = t('section1.paragraph2'),
 } = Astro.props;
 
+// Feature cards: only the styling + icon live here, the text comes from ui.ts.
+// Full class names are written out so Tailwind can detect them.
+const features = [
+  { key: 'features.item1', icon: 'HD', iconBg: 'bg-violet-100',  hover: 'hover:border-violet-200' },
+  { key: 'features.item2', icon: '▣',  iconBg: 'bg-teal-100',    hover: 'hover:border-teal-200' },
+  { key: 'features.item3', icon: '♫',  iconBg: 'bg-amber-100',   hover: 'hover:border-amber-200' },
+  { key: 'features.item4', icon: '◈',  iconBg: 'bg-pink-100',    hover: 'hover:border-pink-200' },
+  { key: 'features.item5', icon: '▤',  iconBg: 'bg-indigo-100',  hover: 'hover:border-indigo-200' },
+  { key: 'features.item6', icon: '✓',  iconBg: 'bg-emerald-100', hover: 'hover:border-emerald-200' },
+];
 ---
 
+<!-- Highlights bar -->
+<section class="border-b border-slate-200 bg-white" aria-label={t('highlights.ariaLabel')}>
+  <div class="mx-auto grid max-w-6xl grid-cols-2 gap-5 px-5 py-7 sm:px-8 md:grid-cols-4">
+    <div class="flex items-center gap-3"><span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-violet-50 text-lg" aria-hidden="true">↗</span><div><p class="font-bold text-slate-900">{t('highlights.item1.title')}</p><p class="text-xs text-slate-500">{t('highlights.item1.text')}</p></div></div>
+    <div class="flex items-center gap-3"><span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-teal-50 text-lg" aria-hidden="true">▣</span><div><p class="font-bold text-slate-900">{t('highlights.item2.title')}</p><p class="text-xs text-slate-500">{t('highlights.item2.text')}</p></div></div>
+    <div class="flex items-center gap-3"><span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-indigo-50 text-lg" aria-hidden="true">♫</span><div><p class="font-bold text-slate-900">{t('highlights.item3.title')}</p><p class="text-xs text-slate-500">{t('highlights.item3.text')}</p></div></div>
+    <div class="flex items-center gap-3"><span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-amber-50 text-lg" aria-hidden="true">⌁</span><div><p class="font-bold text-slate-900">{t('highlights.item4.title')}</p><p class="text-xs text-slate-500">{t('highlights.item4.text')}</p></div></div>
+  </div>
+</section>
+
+<!-- Section 1: title + paragraphs -->
 <section class="border-t border-[var(--border)] bg-[var(--bg-secondary)]/50 py-12 md:py-16">
-  <div class="mx-auto max-w-7xl px-6 text-center">
-  <h1 class="font-display text-3xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-4xl">
-    {section1title}<span class="text-[#ef124e]"> {section1highlight}</span>
-  </h1>
+  <div class="mx-auto max-w-6xl px-5 sm:px-8">
+    <h1 class="font-display text-3xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-4xl">
+      {section1title}<span class="text-[#ef124e]"> {section1highlight}</span>
+    </h1>
     <p class="mt-3 text-[var(--text-secondary)] leading-relaxed">{section1paragraph} {section1paragraph2}</p>
-    
-    
+  </div>
+</section>
+
+<!-- How it works -->
+<section id="how-it-works" class="scroll-mt-20 py-12 md:py-16">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8">
+    <div class="mx-auto max-w-4xl text-center">
+      <p class="text-sm font-extrabold uppercase tracking-[.18em] text-violet-600">{t('how.eyebrow')}</p>
+      <h2 class="mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">{t('how.title')}</h2>
+      <p class="mt-4 leading-7 text-slate-600">{t('how.description')}</p>
+    </div>
+    <div class="mt-12 grid gap-5 md:grid-cols-3">
+      <article class="rounded-3xl border border-slate-200 bg-white p-7 shadow-card"><div class="flex items-center justify-between"><span class="grid h-12 w-12 place-items-center rounded-2xl bg-violet-100 text-lg font-black text-violet-700">01</span><span class="text-2xl" aria-hidden="true">↗</span></div><h3 class="mt-6 text-xl font-extrabold text-slate-950">{t('how.step1.title')}</h3><p class="mt-3 leading-7 text-slate-600">{t('how.step1.text')}</p></article>
+      <article class="rounded-3xl border border-slate-200 bg-white p-7 shadow-card"><div class="flex items-center justify-between"><span class="grid h-12 w-12 place-items-center rounded-2xl bg-teal-100 text-lg font-black text-teal-700">02</span><span class="text-2xl" aria-hidden="true">⌁</span></div><h3 class="mt-6 text-xl font-extrabold text-slate-950">{t('how.step2.title')}</h3><p class="mt-3 leading-7 text-slate-600">{t('how.step2.text')}</p></article>
+      <article class="rounded-3xl border border-slate-200 bg-white p-7 shadow-card"><div class="flex items-center justify-between"><span class="grid h-12 w-12 place-items-center rounded-2xl bg-amber-100 text-lg font-black text-amber-700">03</span><span class="text-2xl" aria-hidden="true">↓</span></div><h3 class="mt-6 text-xl font-extrabold text-slate-950">{t('how.step3.title')}</h3><p class="mt-3 leading-7 text-slate-600">{t('how.step3.text')}</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- Features grid -->
+<section class="bg-white py-12 md:py-16" aria-labelledby="features-heading">
+  <div class="mx-auto max-w-6xl px-5 sm:px-8">
+    <div class="max-w-2xl">
+      <p class="text-sm font-extrabold uppercase tracking-[.18em] text-violet-600">{t('features.eyebrow')}</p>
+      <h2 id="features-heading" class="mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">{t('features.title')}</h2>
+      <p class="mt-4 leading-7 text-slate-600">{t('features.description')}</p>
+    </div>
+    <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {features.map((f) => (
+        <article class={`rounded-3xl border border-slate-200 bg-white p-6 transition duration-200 hover:-translate-y-1 hover:shadow-card ${f.hover}`}>
+          <span class={`grid h-12 w-12 place-items-center rounded-2xl text-xl ${f.iconBg}`} aria-hidden="true">{f.icon}</span>
+          <h3 class="mt-5 text-lg font-extrabold text-slate-950">{t(`${f.key}.title`)}</h3>
+          <p class="mt-2 leading-7 text-slate-600">{t(`${f.key}.text`)}</p>
+        </article>
+      ))}
+    </div>
   </div>
 </section>

@@ -28,32 +28,10 @@ const Icons = {
 };
 
 const navItems = [
-  {
-    label: t('nav.product'),
-    dropdown: [
-      {
-        title: t('nav.features'),
-        description: t('nav.featuresDesc'),
-        href: getLocalizedPath(lang, '/#features'),
-        icon: Icons.features,
-      },
-      {
-        title: t('nav.pricing'),
-        description: t('nav.pricingDesc'),
-        href: getLocalizedPath(lang, '/pricing'),
-        icon: Icons.pricing,
-      },
-      {
-        title: t('nav.caseStudies'),
-        description: t('nav.caseStudiesDesc'),
-        href: getLocalizedPath(lang, '/case-studies'),
-        icon: Icons.caseStudies,
-      },
-    ],
-  },
-  { label: t('nav.blog'), href: getLocalizedPath(lang, '/blog') },
-  { label: t('nav.about'), href: getLocalizedPath(lang, '/about') },
-  { label: t('nav.contact'), href: getLocalizedPath(lang, '/contact') },
+  { label: t('nav.home'), href: getLocalizedPath(lang, '/') },
+  { label: t('nav.stories'), href: getLocalizedPath(lang, '/download-tiktok-stories') },
+  { label: t('nav.mp3'), href: getLocalizedPath(lang, '/tiktok-to-mp3') },
+  { label: t('nav.how'), href: getLocalizedPath(lang, '/how-to-use') },
 ];
 ---
 

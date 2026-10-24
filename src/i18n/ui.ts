@@ -35,6 +35,7 @@ export const ui = {
     'nav.how': 'How to Use',
     'nav.contact': 'Contact',
     'nav.faq': 'FAQ',
+    'nav.about': 'About',
 
     // Hero
     'hero.badge1': 'No Watermark',
